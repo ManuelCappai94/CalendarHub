@@ -1,0 +1,854 @@
+@import url("https://fonts.googleapis.com/css2?family=Joti+One&family=Kaushan+Script&family=Lacquer&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rowdies:wght@300;400;700&display=swap");
+
+/* CSS HEX */
+:root {
+--darker: #880d1eff;
+--navBar: #dd2d4aff;
+--body: #f26a8dff;
+--today: #F1436E;
+--offset: #f49cbbff;
+--lighter: #cbeef3ff;
+}
+
+
+.lacquer-regular {
+  font-family: "Lacquer", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+.kaushan-script-regular {
+  font-family: "Kaushan Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.joti-one-regular {
+  font-family: "Joti One", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+
+.main {
+    background: white;
+    margin:0 auto;
+    /* display: flex; */
+    z-index: 1;
+    /* color: #000000; */
+}
+
+
+/* interno navbar */
+#navbar {
+    /* position: absolute; */
+    background-color: var(--navBar);
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;/* direziona gli elementi come una colonna*/
+    gap: 0.5rem;
+    padding: 0.5rem;
+    width:100%;
+    max-width: 1203px; /*per evitare che si allarghi troppo*/ 
+    box-sizing: border-box;  
+    /* margin-top: 0; */
+    height: 9rem; /*altezza fissa, per cordinarla con il resto del body*/
+    z-index: 50; /* forza un elemento a stare sopra, crea degli starti*/
+    position: fixed;
+    top: 0; /* essenziale assieme a position per tenere ferma la nav*/
+     /*serve per centrare il div nello schermo (auto non funziona) */
+     left: 0.1rem;
+     margin-bottom: 0;
+}
+/* primo layer */
+#first-layer {
+    display: flex;
+    justify-content: space-between; /* così metto il div pulsnati a sx e l'anno adx*/
+    gap: 0.5rem;
+   
+}
+.mode-btns {
+    display: flex;
+    gap: 0.2rem;
+    
+}
+
+#day-btn {
+    display: flex;
+    justify-content:space-evenly;
+    padding-top:5px;
+    width: 6rem;
+    height: 25px;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: -2px 2px 3px 1px black;
+    cursor: pointer;
+    background-color: var(--offset);
+    font-family: "Kaushan Script", cursive; 
+    font-weight: bold;
+}
+
+#week-btn {
+    display: flex;
+    justify-content:space-evenly;
+    padding-top:5px;
+    width: 6rem;
+    height: 25px;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: -2px 2px 3px 1px black;
+    background-color:var(--offset);
+    font-family: "Kaushan Script", cursive;
+    font-weight: bold;
+
+}
+#month-btn {
+    display: flex;
+    justify-content:space-evenly;
+    padding-top:5px;
+    width: 6rem;
+    height: 25px;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: -2px 2px 3px 1px black;
+    background-color: var(--offset);
+    font-family: "Kaushan Script", cursive;
+    font-weight: bold;
+}
+/* 2 layer */
+#show-year {
+    /* margin: 2px 5px 2px 700px; */
+    display:flex;  
+    /* margin-left: auto; spinge il contenuto del div a dx */
+    margin-right: 5%;
+    align-items: center;
+    gap: 0.5rem;
+    /* border: 2px solid black; */
+}
+.left-arrow {
+    border: 2px solid black;
+    width:20px;
+    height: 10px;
+    cursor: pointer;
+    
+    
+}
+.big-numbers {
+     display: flex;
+    justify-content: center; 
+    background-color: none;
+    width: 7rem;
+    font-family: "Kaushan Script", cursive;
+    font-weight: bold;
+    
+    /* font-family: fantasy; */
+    /* border: 1px linear black; */
+}
+
+/* questo decide solo l'anno */
+.year{
+    padding-top: 0.5rem;
+    font-size:60px;
+    cursor: pointer;
+    /* background: none;
+    border: none; */
+}
+.right-arrow {
+    width: 20px;
+    height: 10px;
+    cursor: pointer;
+    border: 2px solid black;
+    
+    
+}
+/* 3° layer */
+#layer {
+    display: flex;
+    position: fixed;
+    top: 4.5rem;
+    justify-content: space-between; /*gestisce distribuzione orizzontale, primo a sx ultimo a dx (sb), in questo caso mi mette il mese a dx e la barra a sx, perchè sono 2 div separati*/
+   gap:0.5rem;
+    /* align-items: center; */
+}
+
+.display-overlay {
+    /* margin-left: 70px; */
+    display: flex;
+    align-items: center;
+    /* padding-bottom: 5px; */
+    margin-left: 5%;
+    display: none;
+}
+
+/* .display-overlay.month {
+    
+    /* width: 200px; 
+    
+ } */
+.text {
+    font-size: 2rem;
+    padding: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin: 0 20px;
+    /* font-family: "Joti One", serif; */
+}
+.display-overlay.week{
+    width: 380px;
+    margin-left: 0;
+    margin-top: 5px;
+
+}
+.big-numbers.text.week-displayed {
+    font-size: 1.5rem ;
+    width: 330px;
+    margin: 0;
+}
+
+.display-overlay.day{
+      width: 380px;
+    margin-left: 0;
+    /* margin-top: 5px; */
+}
+
+.big-numbers.text.day-displayed {
+     font-size: 1.7rem ;
+    width: 330px;
+    margin: 0;
+}
+
+/* classe da aggiungere in base alla vista */
+.show-display{
+    display:block;
+    display: flex;
+}
+
+.src-new {
+    display:flex;
+    /* align-items: center; */
+    gap: 2rem; /*gestisco le distanze tra il bottone e la barra*/
+    position: fixed;
+    left: 32rem;
+}
+.src-bar {
+    padding-top: 20px;
+}
+
+.src-bar input[type="search"] {
+    width:300px;
+    border: 4px solid #333;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    flex:1;
+    padding: 0 10px;
+}
+
+/* bottone a dx della srcbar */
+.new-btn {
+    width: 20px;
+    height: 20px;
+    margin-top: 20px;
+    margin-left: 1rem ;
+    border-radius: 25px;
+    border: 2px solid black;
+    cursor: pointer;
+    
+}
+/*********modal-date-input*********************************************/
+
+#select-day{
+    position: fixed;
+    z-index: 500;
+    top: 5rem;
+    left: 15rem;
+    width: 170px ;
+    height: 40px;
+    background-color: var(--body);
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: -2px 4px 10px 3px black;
+    /* backdrop-filter: blur(5px);  */
+
+}
+/* rimuovere gli spinner da input type by chatGPT */
+.date-input input[type=number]::-webkit-outer-spin-button,
+.date-input input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.day-select {
+    display: none;
+}
+.input-year {
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 50px;
+    padding-top: 10px;
+    padding-left: 5px;
+    
+    
+}
+.input-month {
+        border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 30px;
+    padding-top: 10px;
+    
+   
+}
+.input-day {
+       border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 30px;
+    padding-top: 10px;
+}
+
+.slash {
+    /* font-size: 5px; */
+    font-weight: bold;
+    font-size: 25px;
+    
+}
+
+.reset {
+    position: fixed;
+    left: 26rem;
+    width: 4rem;
+    height: 30px;
+    border: 3px solid black;
+    border-radius: 6px;
+   margin-top: 15px;
+   margin-left: 10px;
+    font-family: "Lacquer", system-ui;
+    font-weight: bold;
+    font-size: 1rem;
+    box-shadow: -1px 1px 3px 1px black;
+    cursor: pointer;
+}
+
+
+
+
+/*************************** VISTA MESE******************************** */
+#month-body{
+    /* background: blueviolet; */
+    margin: 9rem 0 0 0.1rem ;
+    width: 100%;
+    max-width:1200px; /*cosi si evita che si allarghi troppo in schermi troppo grandi*/
+    box-sizing: border-box; /*larghezza e altezza includono anche padding e bordo, il contenuto si restringe automaticamente, assicura che il layout resti allineato */  
+    border-left: 1px solid black;
+    
+    
+    
+}
+.month-view {
+    display: none;
+}
+
+.month-structure {
+    display: grid;
+    grid-template-columns: repeat(7,1fr); /*fr: fraction*/
+    grid-template-rows: 3rem repeat(6, 10rem);
+    
+    
+}
+.offset {
+    background-color: var(--offset);
+}
+.set{
+
+    background-color: var(--body);
+}
+.today{
+    background-color:  var(--today);
+}
+.selected {
+    background-color: var(--navBar);
+}
+
+.hide {
+    display: none;
+}
+
+.day-grid  {
+    position: sticky; /* usato al posto dei fixed necessario dare il top*/
+    top:8rem;
+    display: flex;
+    width: 100%;
+    height:3rem;
+    background-color: var(--lighter);
+    border: 2px solid black;
+    border-radius: 3px;
+    justify-content: center;
+    z-index: 10; 
+    
+}
+.day-grid-btn {
+   
+    font-family: "Lacquer", system-ui;
+    font-size: 1.3rem;
+    font-weight: normal;  
+    padding-top: 0.6rem;
+}
+
+div.box-grid  {
+    /* width: 6rem;
+    height: 6rem; */
+    /* background-color: blueviolet; */
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    width: 99%;
+    display:flex;
+    /* flex-direction: column; mi ha messo sopra lo span, e sotto il bottone */
+    align-items: flex-start;
+    padding: 2px; 
+    overflow: hidden; /*cosi il testo non sborda fuori */ 
+}
+.inside-box {
+    width: 2rem;
+    border: 2px solid black;
+    border-radius: 17px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    padding-right: 5px;
+   
+    
+}
+.number-box {
+    font-size: 1.2rem;
+    /* font-weight: normal; */
+    cursor: default; /*così il mouse sopra al numero rimane standard*/
+    font-family: "Kaushan Script", cursive;
+    font-weight: bold;
+    
+}
+/*------------------------week-body---------------------------------*/
+#week-body{
+    background-color: var(--body);
+    margin: 9rem 0 0 0.1rem; 
+    width: 100%;
+    max-width:1200px;
+     /*cosi si evita che si allarghi troppo in schermi troppo grandi*/
+    box-sizing: border-box; /*larghezza e altezza includono anche padding e bordo, il contenuto si restringe automaticamente, assicura che il layout resti allineato */
+    
+}
+
+/* nelle colonne, il primo valore è una grandezza fissa che immposto, nella seconda ne faccio ripetere 7 volte con nuna misura da 10 rem */
+#full-week-view {
+    display: grid;
+    grid-template-columns: 5rem repeat(7, 10rem);
+    grid-template-rows: repeat(24, 5rem);  
+}
+
+.week-view {
+    display: none;
+}
+
+/* caselle contenente orario */
+.time-week {
+    margin-top:81px;
+    padding:0;
+}
+
+
+.time-lable {
+   
+    list-style-type: none;
+    margin: 0;
+    /* padding-bottom: 2rem; */
+    /* border-top: 2px solid black; */
+    width:  76px;
+    height: 82px;
+    background-color: blanchedalmond; 
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    
+   
+}
+
+.hour-lable {
+  border-top: 1px solid black; 
+  border-bottom: 1px dashed black;
+  padding-bottom:21px;
+  text-align: center;
+    font-family: "Joti One", serif;
+    z-index: 10;
+}
+
+
+/* creata per dare un bordo omogeneo e per gestire le distanze con position*/
+.midnight {
+    /* border-top: 2px solid black; */
+      margin-top:5rem; /*essenziale per position fixed  */
+      border-top: 1px solid black;
+}
+.midnight-box {
+        margin-top:5rem; /*essenziale per position fixed  */
+      border-top: 1px solid black;
+}
+
+/* caselle del giorno */
+.week-structure {
+    /* border: 2px solid black; */
+    background: var(--lighter);
+    margin-top: 3px;
+    z-index: 5;
+}
+.week-day-display {
+    position: fixed;
+    width: 10rem;
+    top: 9rem;
+    height: 82px;
+    list-style-type: none;
+    text-align: left;
+    border-bottom: 1px solid black;
+    border-right:  1px solid black;
+    border-left: 1px solid black;
+    background-color: blanchedalmond ;
+    opacity: 0.9;
+    z-index: 800; /* così lo posiziono tra il calendario e l'attività*/
+    /* font-family: "Joti One", serif; */
+    display: flex;
+}
+
+.day-name {
+margin:0;
+padding:0;
+}
+
+.day-label {
+ color: var(--navBar);
+ font-size: 30px;   
+  font-family: "Kaushan Script", cursive;
+  background-color: blanchedalmond ;
+  z-index: 20;
+ 
+}
+.day-label-text{
+  
+    margin-top: 50px;
+    font-size: 23px;
+    font-family: "Lacquer", system-ui;
+    /* font-weight: bold; */
+    background-color: blanchedalmond ;
+    
+}
+.week-box {
+    list-style-type: none;
+    height:41px;
+    /* background-color: var(--body); */
+    border-right: 1px solid black;
+   
+    border-bottom: 1px dashed black;
+    
+}
+
+.week-half-box {
+    list-style-type: none;
+    height: 39px;
+
+    border-right: 1px solid black;
+    /* border-left: 1px solid black; */
+    /* background-color: var(--body); */
+    border-bottom: 1px solid black;
+
+}
+/* per far ereditare alcune proprietà ai figli di una lista lista, bisogna usare inherit: */
+.is-today * {
+   background-color: var(--today);
+}
+.is-today li:first-child * {
+    /* box-shadow: inset 3px -2px 4px black ;  */
+    background-color: blanchedalmond !important; 
+    color: black;
+    
+}
+
+.is-today li:first-child  {
+    box-shadow:  10px 10px 30px black ; 
+    background-color: blanchedalmond  
+}
+.selected-week {
+    background-color: var(--navBar) !important;
+}
+.selected-week li:first-child {
+       box-shadow:  10px 10px 30px black ; 
+    background-color: blanchedalmond ;
+}
+.selected-time {
+    background-color: var(--lighter) !important;
+}
+.normal-week {
+    background-color: var(--body);
+}
+
+/* --------------day-view------------------------------------ */
+#day-body {
+    max-width: 1200px; 
+    background-color: var(--body);
+    height: 2099px;
+    margin: 4rem 0 0 0.1rem;
+    width: 100%;
+    box-sizing: border-box;
+
+    
+}
+.day-view { /*per aggiungere la classe per il cambio vista*/
+    display: none;
+}
+
+#full-day-view {   
+    display: grid;
+    grid-template-columns: 5rem 70rem;
+    grid-template-rows: repeat(24, 5rem);
+}
+.ul-day-time {
+    margin-top: 4rem;
+}
+.day-list{
+    list-style-type: none; 
+    padding: 0;
+}
+
+.time-lable-day{
+    margin: 0;
+    /* padding-bottom: 2rem; */
+    /* border-top: 2px solid black; */
+    width:  76px;
+    height: 84px;
+    background-color: azure; 
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.daily-name {
+    padding-left: 0;
+}
+.hour-lable-day {
+    border-top: 2px solid black;
+    padding-bottom: 21.5px;
+    text-align: center;
+}
+.half-lable-day {
+    border-top: 1px dashed black;
+}
+
+.day-box {
+    /* margin-top: 5rem; */
+    list-style-type: none;
+    border-bottom: 1px dashed black;  
+    border-right: 1px solid black;
+    height: 41px;
+    /* background-color: var(--today); */
+}
+.day-half-box {
+    list-style-type: none;
+    border-bottom: 1px solid black; 
+    border-right: 1px solid black; 
+    height: 41px;
+    /* background-color: var(--today); */
+}
+.first { /* la prima per il margine*/
+    margin-top: 5rem;
+    border-top: 1px solid black;
+}
+
+/*******************show-section*****************************/
+.show-section {
+    display:block;
+}
+
+/*-------------bottoni attività---------------------*/
+.activity {
+    position: absolute;
+    /* display: flex; */
+    width:9.5rem;
+    height: 5rem;
+    border: 1px solid black;
+    border-radius: 6px;
+    box-shadow: -2px 2px 1px black;
+    background-color: azure;
+    opacity: 0.8;
+    cursor: pointer;
+    /* posizione simulata del placeholder*/
+    top: calc(7* 5rem); /* distanza alto, 5 volte 5 rem*/
+    left: calc(4* 4.5rem) 
+}
+  
+.activity2 {
+    position: absolute;
+    /* display: flex; */
+    width:9.5rem;
+    height: 1.5rem;
+    border: 1px solid black;
+    border-radius: 6px;
+    box-shadow: -2px 2px 1px black;
+    background-color: azure;
+    opacity: 0.8;
+    cursor: pointer;
+    font-size: 20px;
+    overflow: hidden;
+    /* posizione simulata del placeholder*/
+    top: calc(7* 5rem); /* distanza alto, 5 volte 5 rem*/
+    left: calc(4* 3.25rem) 
+       
+}
+
+ .purple {
+    background-color: purple ;
+}
+
+.acqua {
+    background-color: aqua;
+}
+.green {
+    background-color: yellowgreen;
+}
+.red {
+    background-color: red;
+}
+/* .urgent {
+    
+} */
+
+.section-center {
+    position: fixed;
+    z-index: 400;
+    top: calc(30% + var(--offset-top, 0px));
+    right: calc(15% + var(--offset-right, 0px)); /*offset-right,calcolo al momento in js*/
+    border-radius: 20px;
+    background-color: wheat ;
+    background-size: 20rem;
+    opacity: 0.9;
+    border: 2px solid black;
+    box-shadow: 4px 4px 10px black;
+    box-sizing: border-box;
+    width: 20rem;
+    min-height: 30rem;
+    max-height: 50rem;
+    display: none;
+}
+.show-modal {
+    display: block;
+}
+
+.main-title {
+    margin-left: 2rem;
+}
+.title-main-todo {
+    /* provvisiorio, il font li sistemo più avanti */
+    font-family: "Lacquer", system-ui;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+.my-list-row {
+    display: flex;
+    justify-content: space-around;
+    font-family: "Lacquer", system-ui;
+   
+}
+/* lo rendo cliccabile per visualizzare le vecchie liste */
+.my-list-text {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+.my-list-buttons-container{
+    padding-top: 6px;
+}
+.new-list {
+    border: 2px solid black;
+    border-radius: 7px;
+    width: 3rem;
+    height: 2rem;
+}
+.create-new-list {
+    font-family: "Lacquer", system-ui;
+    font-weight: bold;
+}
+
+/* il contenitore dinamico*/
+/* .to-do-container {
+    /* display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto; 
+
+}  */
+
+.to-do-title {
+    display: flex;
+    font-family: "Kaushan Script", cursive;
+    font-size: 1.5rem;
+    
+}
+
+.date-to-do {
+  margin: 5px 40px 0px;
+    
+}
+.title-list {
+    width: 50%;
+    margin-top: 5px;
+    overflow: hidden;
+}
+.to-do-item {
+display: grid;
+grid-template-columns: 3rem 70% 1.5rem;
+
+    font-family: "Kaushan Script", cursive;
+    font-size: 1rem;
+    font-weight: bold;
+
+  /* position: relative; */
+}
+/*uso piskel per disegnare una checkbox personalizzata*/
+.check-btn {
+    background-image: url("./images/checkbox.png");
+    background-size: 40px;
+    border: none;
+    width: 30px ;
+    height: 30px;
+    padding:0
+    
+    /* border: none; */
+}
+.checked {
+ background-image: url("./images/checkboxgif.gif");
+}
+
+.title-item {
+    margin-left: 15px;
+    margin-bottom:10px;
+    border-bottom: 1px solid black;
+}
+.delete-btn {
+   background-image: url("./images/trash-can.png");
+   background-size: 30px;
+   border: none;
+   width: 30px;
+   height: 30px;
+   display: none;
+}
+.show-delete {
+    display: block;
+}
+
+/**********effetto blur da aggiungere sotto i modal***********************/
+.blur-active {
+  filter: blur(2px);
+  transition: filter 0.4s ease;
+}

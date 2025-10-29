@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body class="main ">
+    <!-- L'id della navBar verrà modificata come blocco unico -->
+  <nav id="navbar" class="blur ">
+    <!-- primo layer -->
+    <div id="first-layer">
+        <div class="mode-btns">
+            <div id="day-btn">Giorno</div>
+            <div id="week-btn">Settimana</div>
+            <div id="month-btn">Mese</div>
+        </div>
+
+        <!-- secondo layer -->
+        <div id="show-year">
+            <span class="big-numbers year"></span>
+        </div>
+    </div>
+
+    <!-- terzo layer mese + barra di ricerca -->
+    <div id="layer">
+        <!-- mensile -->
+        <div class="display-overlay month  ">
+            <div class="left-arrow"></div>
+            <span class="big-numbers text"></span>
+            <div class="right-arrow"></div>
+            
+        </div>
+        
+        <!-- settimanale -->
+        <div class="display-overlay week">
+            <div class="left-arrow"></div>
+            <span class="big-numbers text week-displayed"></span>
+            <div class="right-arrow"></div>
+        </div>
+        <!-- giornaliera -->
+       <div class="display-overlay day">
+            <div class="left-arrow"></div>
+            <span class="big-numbers text  day-displayed"></span>
+            <div class="right-arrow"></div>
+        </div>
+        <button type="button" class="reset"> today</button>
+        <!-- barra di ricerca -->
+        <div class="src-new">
+             <!-- qua ci metto una png -->
+            <div class="new-btn inside-nav"></div>
+            <form class="src-bar">
+                <input type="search" placeholder="Cerca tra le attività">
+            </form>
+           
+        </div>
+    </div>
+</nav>
+<!-- vado a creare una grid -->
+ <!-- qua aggiungo la classe hide per tra una vista e l'altra con toggle -->
+ <section id="month-carousel">
+    <div id="month-body" class="month-view ">
+      
+        
+    
+    <div class="month-structure">
+        <!-- <div class="day-grid">
+        <div class="day-grid-btn" data-day="mon">Lunedì</div>
+        </div> -->
+      
+        <!--i restanti 35  -->
+        
+        <!-- <div class="box-grid"> <div class="inside-box" data-day="data-day-id"><span class="number-box" >1</span></div></div> -->
+
+    
+</div>
+</section>
+<!-- vista settimanale -->
+ <!-- grid provisoria la versione statica sarà copia e incollata per intero, la versione finale verrà iniettata tramite manipolazione DOM -->
+<section class="week-carousel">
+ <div id="week-body" class="week-view">
+    <article id="list-week">
+        <div id="full-week-view">
+            <!-- <div class="ul-week-time"> 
+                 <ul class="time-week"> -->
+                    
+                    <!-- <li class="time-lable midnight">
+                        <div class="hour-lable "><span>00:00</span></div> 
+                        <div class="half-lable"><span></span></div>
+                    </li>
+                    <li class="time-lable">
+                        <div class="hour-lable "><span>00:00</span></div> 
+                        <div class="half-lable"><span></span></div>
+                    </li> -->
+                
+                    
+
+                <!-- </ul> 
+            </div> -->
+            <!-- struttura singola giornata * 24 -->
+
+            <!-- <div class="week-structure"> 
+                 <ul class="day-name" data-day="2025-10-01">
+                    <li class="week-day-display"> <span class="day-label">01 </span> <br><br><span class="day-label-text"> Mercoledì</span></li>
+                
+                    <li class="week-box midnight" data-time="00:00"></li>
+                    <li class="week-half-box" data-time="00:30"></li>
+                    
+                </ul>
+                 
+             </div> -->
+        </div>
+    </div>
+    </article>
+    
+</section>
+
+<section id="day-corousel" >
+    <div id="day-body" class="day-view ">
+        <article id="list-day">
+        <div id="full-day-view">
+            <!-- <div class="ul-day-time"> 
+                <ul class="day-list">
+                    <li class="time-lable-day">
+                        <div class="hour-lable-day"><span>00:00</span></div> 
+                        <div class="half-lable-day"><span></span></div>
+                    </li>
+            
+                </ul>
+            </div>
+            <div class="day-structure">
+                <ul class="daily-name" data-day="2025-10-01">
+                    <li class="day-box first" data-time="00:00">  
+                    </li>
+                    <li class="day-half-box" data-time="00:30">
+                    </li>
+                    
+                </ul> -->
+            </div>
+        </div>
+    </article>
+</div>
+</section>
+            <div id="event-container ">
+                <!-- evento di prova -->
+                 <div class="activity hide"> placeholder</div>
+                 <div class="activity2 hide"> placeholder</div>
+            </div>
+<!-- /////////////////////to do list//////////////////////////////////// -->
+<section class="section-center show-modal "> <!--qui show-modal-->
+<form class="to-do-form">
+    <div class="main-title"> <p class="title-main-todo "> To-do List</p></div>
+    <div class="my-list-row">
+         <p class="my-list-text"> My Lists</p>
+         <div class="my-list-buttons-container">
+           
+                <!-- il tag i, viene usato per elementi neutri, come ad esempio mettere al posto di un bottone un png -->
+
+            <button type="button" class="new-list">
+                <i class="create-new-list"> New</i>
+            </button>
+         </div>
+    </div>
+    <!-- mi serve solo per creare spessore -->
+    <div class="underline"></div>
+    <div data-id="list-id" class="to-do-container show-section">
+        <article class="to-do-title">
+            <p data-day="2025-10-11" class="date-to-do">10-11</p>
+            <p class="title-list"> Lista Spesa</p> <!--prende il nome dall'id del container-->
+        </article>
+        <!-- la modifica e l'aggiunta di elementi sarà configurato direttamente cliccando sulla casella del paragrafo -->
+        <article data-id="id-item" class="to-do-item">
+            <div class="check-box"><button type="button" class="check-btn checked"><i class=" fa-check"></i></button></div>
+            <p class="title-item">prendere banane</p>
+            <div class="delete-box"><button type="button" class="delete-btn show-delete"><i class=" fa-delete"></i></button></div>
+        </article>
+          <article data-id="id-item" class="to-do-item">
+            <div class="check-box"><button type="button" class="check-btn"><i class=" fa-check"></i></button></div>
+            <p class="title-item">comprare carne</p>
+            <div class="delete-box"><button type="button" class="delete-btn show-delete"><i class=" fa-delete"></i></button></div>
+        </article>
+        <article data-id="id-item" class="to-do-item">
+            <div class="check-box"><button type="button" class="check-btn"><i class=" fas-check" ></i></button></div>
+            <p class="title-item"></p>
+            <div class="delete-box"><button type="button" class="delete-btn"><i class=" fa-delete"></i></button></div>
+        </article>
+    </div>
+</form>
+</section>
+
+<section id="select-day" class="day-select">
+    <div class="date-input">
+        <input type="text" class="input-year" placeholder="YYYY" maxlength="4" min="1900" max="2100">
+            <span class="slash">/</span>
+        <input type="text" class="input-month" placeholder="MM" maxlength="2" min="1" max="12">
+            <span class="slash">/</span>
+        <input type="text" class="input-day" placeholder="DD" maxlength="2" min="1" max="31">
+    </div>
+</section>
+<script src="./dayjs/dayjs.min.js"></script>
+<script src="./dayjs/plugin/isoWeek.js"></script>
+<script src="./dayjs/plugin/weekday.js"></script>
+<script src="./dayjs/plugin/dayOfYear.js"></script>
+<script src="./dayjs/plugin/localeData.js"></script>
+<script src="./dayjs/locale/it-ch.js"></script>
+
+
+    <script type="module" src="./src/index.js"></script>
+</body>
+</html>
