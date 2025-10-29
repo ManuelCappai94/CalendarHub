@@ -1,4 +1,0 @@
-durante la crazione della grid, mi sono reso conto che sarebbe stato il caso configurare la logica di cambio display nella navBar, cosi da poterla impostare come condizione nella funzione di crazione dei tile della grid.
-
-
-Ho appreso che non è possibile modificare importare una variabile che è modificabile su un altro modulo dopo che ha subito tutte quante le modifiche ovvero nell'altro modulo verrà importata la variabile iniziale allo stato iniziale ecco perché il codice non mi funzionava per importare una variabile che appunto è un muttabile devo creare una funzione che mi ricrei e mi importi quella variabile nell'altro modulo Quindi con tutte le modifiche
