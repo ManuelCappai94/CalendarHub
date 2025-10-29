@@ -14,6 +14,16 @@ This is my first project, it's a personal calendar and to-do app, built from scr
 - Event synchronization with calendar views.
 - Mobile UI refactoring and optional theme switching.
 ---
+## 🕓 Old Versions
+
+- Previous versions of this project are available in the **Versions** branch.
+
+➡️ [Go to old versions](https://github.com/ManuelCappai94/CalendarHub/tree/versions)
+
+- Each folder corresponds to a different release (v0.1, v0.2, etc.), including its own mini-README and source files.
+
+---
+
 > The biggest challenge in this version was synchronizing the three views.  
 > To solve this, I refactored all the logic in `utils.js` using classes (`CalendarLogic`).  
 > Using classes was intuitive but helped me understand JavaScript logic much better.  
