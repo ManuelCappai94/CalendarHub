@@ -1,5 +1,5 @@
 # 🗓️ CalendarHub
-This is my first project, it's a personal calendar and to-do app, built from scratch with vanilla JavaScript to improve my skills and experiment with real-time interaction.
+This is my first project, it's a personal calendar and to-do app, built from scratch with vanilla JavaScript. I created it to improve my skills and to document each development phase step-by-step.
 ---
 ## ⚙️ Features
 - Month, Week, and Daily views fully synchronized.
@@ -14,6 +14,11 @@ This is my first project, it's a personal calendar and to-do app, built from scr
 - Event synchronization with calendar views.
 - Mobile UI refactoring and optional theme switching.
 ---
+
+📘 [Version 0.1 details](./README-this-version-0.1.md)
+
+---
+
 ## 🕓 Old Versions
 
 - Previous versions of this project are available in the **Versions** branch.
