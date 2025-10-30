@@ -29,16 +29,6 @@ This is my first project, it's a personal calendar and to-do app, built from scr
 
 ---
 
-> The biggest challenge in this version was synchronizing the three views.  
-> To solve this, I refactored all the logic in `utils.js` using classes (`CalendarLogic`).  
-> Using classes was intuitive but helped me understand JavaScript logic much better.  
-> I also faced issues with date formats: initially, I forced the Italian format using only the English format and some Day.js plugins, but this was inconsistent.  
-> I rewrote the month and week view logic, which also allowed me to implement the future feature of switching date formats.  
-> The offset calculation logic was also rewritten for consistency with Day.js, improving modularity and overall calendar adaptability.  
-> This was excellent problem-solving practice and helped catch some edge-case bugs.
-
----
-
 ## 🧩 Assets & Credits
 - Calendar logic built with [Day.js](https://day.js.org/)
 - Trash bin icon by [dDara](https://www.freepik.com/icon/bin_2602768), used under Freepik License (**Attribution Required**)
