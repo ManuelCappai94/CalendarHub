@@ -1,0 +1,87 @@
+
+.activity {
+    position: absolute;
+    /* display: flex; */
+    width:9.5rem;
+    height: 5rem;
+    border: 1px solid black;
+    border-radius: 6px;
+    box-shadow: -2px 2px 1px black;
+    background-color: azure;
+    opacity: 0.8;
+    cursor: pointer;
+    /* posizione simulata del placeholder*/
+    top: calc(7* 5rem); /* distanza alto, 5 volte 5 rem*/
+    left: calc(4* 4.5rem) 
+}
+  
+.activity2 {
+    position: absolute;
+    /* display: flex; */
+    width:9.5rem;
+    height: 1.5rem;
+    border: 1px solid black;
+    border-radius: 6px;
+    box-shadow: -2px 2px 1px black;
+    background-color: azure;
+    opacity: 0.8;
+    cursor: pointer;
+    font-size: 20px;
+    overflow: hidden;
+    /* posizione simulata del placeholder*/
+    top: calc(7* 5rem); /* distanza alto, 5 volte 5 rem*/
+    left: calc(4* 3.25rem) 
+       
+}
+
+ .purple {
+    background-color: purple ;
+}
+
+.acqua {
+    background-color: aqua;
+}
+.green {
+    background-color: yellowgreen;
+}
+.red {
+    background-color: red;
+}
+/* .urgent {
+    
+} */
+
+
+
+/******************* sezione creazione Evento*********************************/
+.event-container {
+    max-width: 700px;
+    border: 2px solid black;
+    display: grid;
+    grid-template-rows: repeat(3, 5rem);
+}
+/*****************PRIMA RIGA **************************** */
+.event-description {
+    display: flex;
+}
+.category-selector {
+    display: flex;
+}
+#urgent-container{
+    display: flex;
+}
+/*****************SECONDA RIGA **************************** */
+#row-date {
+    display: flex;
+}
+.input-time {
+    width: 3rem;
+}
+/*****************TERZA RIGA **************************** */
+#notification-row {
+    display: flex;
+}
+
+.hide {
+    display: none;
+}

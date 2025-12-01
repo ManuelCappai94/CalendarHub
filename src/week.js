@@ -46,6 +46,8 @@ export default function createWeekGrid (currentview) {
         let days = firstDayOfWeek.format("dddd"); 
         let dataDay = firstDayOfWeek.format("YYYY-MM-DD");
         weekNumber = firstDayOfWeek.format("DD");
+        let shrinkDays = days.substring(0,3);
+        console.log(shrinkDays)
        if (dataDay === globalDate.format("YYYY-MM-DD")){
         dayClass = "is-today"
        } else {
@@ -54,7 +56,7 @@ export default function createWeekGrid (currentview) {
       weekGrid.insertAdjacentHTML("beforeend", `
                     <div class="week-structure">
                     <ul class="day-name ${dayClass}" data-day=${dataDay}>
-                        <li class="week-day-display"> <span class="day-label">${weekNumber} </span> <br><br><span class="day-label-text"> ${days}</span></li>  
+                        <li class="week-day-display"> <span class="day-label">${weekNumber} </span> <br><br><span class="day-label-text" data-shrinkDays="${shrinkDays}"> ${days}</span></li>  
                     </ul>
                     </div>`)         
                 } 
@@ -74,8 +76,8 @@ export default function createWeekGrid (currentview) {
         midnight = null;
     };
     day.insertAdjacentHTML("beforeend", `
-        <li class="week-box ${midnight}" data-time="${hour}">${hour}</li>
-        <li class="week-half-box" data-time=${halfHour}>${halfHour}</li>
+        <li class="week-box ${midnight}" data-time="${hour}"></li>
+        <li class="week-half-box" data-time=${halfHour}></li>
         `)
 };
 }) 

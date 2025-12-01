@@ -268,6 +268,11 @@ function highightDayWeek (e){
     selectday.forEach( cell => cell.classList.remove("selected-week"));
     selecthour.forEach( cell => cell.classList.remove("selected-time"));
     selectHalfhour.forEach( cell => cell.classList.remove("selected-time"));
+    
+    const box = e.target.closest(".week-box, .week-half-box");
+
+        // SE non ho cliccato una box valida → esco subito
+        if (!box) return;
 
     if (!e.target.classList.contains("week-day-display")){
         e.target.classList.add("selected-time");

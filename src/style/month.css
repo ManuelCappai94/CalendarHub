@@ -1,0 +1,130 @@
+
+
+#month-body{
+    /* background: blueviolet; */
+    
+    width: 100%;
+    box-sizing: border-box; /*larghezza e altezza includono anche padding e bordo, il contenuto si restringe automaticamente, assicura che il layout resti allineato */  
+    /* border-left: 1px solid black;   */
+}
+.month-view {
+    display: none;
+}
+
+.show-section {
+    display:block;
+}
+
+.month-structure {
+
+    
+}
+.day-grid  {
+
+ display: grid;  
+ grid-template-columns: repeat(7, 1fr);
+}
+.day-grid-btn {
+      background-color: var(--lighter);
+    font-family: "Lacquer", system-ui;
+    font-size: 0;
+    font-weight: bold;  
+    text-align: center;
+     border: 2px solid black;
+    
+     z-index: 10; 
+}
+.day-grid-btn::first-letter{
+    font-size: 1.5rem;
+}
+
+
+.offset {
+    background-color: var(--offset);
+}
+.set{
+
+    background-color: var(--body);
+}
+.today{
+    background-color:  var(--today)!important;
+}
+.selected {
+    background-color: var(--navBar);
+}
+
+.hide {
+    display: none;
+}
+
+.boxes-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+
+div.box-grid  {
+    /* border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black; */
+    border: 1px solid black;
+    height: 5rem;
+    display:flex;
+    /* flex-direction: column; mi ha messo sopra lo span, e sotto il bottone */
+    align-items: flex-start;
+    padding: 2px; 
+    overflow: hidden; /*cosi il testo non sborda fuori */ 
+}
+.box-grid:hover{
+    transform:scale(1.1)
+}
+.box-grid:active{
+    animation: wiggle 1.5s ease-in-out;
+}
+@keyframes wiggle {
+ 0% {transform:  rotate(0deg) scale(1.2);}
+  25% { transform: rotate(-8deg) scale(1.2); }
+  50% { transform: rotate(8deg) scale(1.2); }
+  75% { transform: rotate(-4deg) scale(1.2); }
+  100% { transform: rotate(0deg) scale(1.2); }
+}
+.inside-box {
+    width: 1.3rem;
+    border: 1px solid black;
+    border-radius: 10px;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+}
+.number-box {
+    font-size: 1rem;
+    /* font-weight: normal; */
+    cursor: default; /*così il mouse sopra al numero rimane standard*/
+    font-family: "Kaushan Script", cursive;
+    font-weight: bold; 
+}
+
+
+@media screen and (min-width: 992px) {
+    .day-grid-btn {
+    font-size: 1.3rem;
+    font-weight: normal;  
+    border: 2px solid black;
+    height: 2.5rem;
+     z-index: 10; 
+}
+
+div.box-grid  {
+height: 8rem;
+}
+.inside-box {
+    width: 2rem;
+    border: 2px solid black;
+    border-radius: 17px;
+    padding-right: 5px;    
+}
+.number-box {
+    font-size: 1.2rem;
+}
+}

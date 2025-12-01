@@ -1,0 +1,104 @@
+#day-body {
+   
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: -20px; /*per conpensare la nav e spessore fantasma*/
+}
+.day-view { /*per aggiungere la classe per il cambio vista*/
+    display: none;
+}
+
+#full-day-view {   
+    display: grid;
+    grid-template-columns: 2.95rem 1fr;
+    grid-template-rows: repeat(24, 4rem);
+}
+.ul-day-time {
+    /* margin-top: 4rem; */
+}
+.day-list{
+    list-style-type: none; 
+    padding: 0;
+    
+}
+
+.time-lable-day{
+    margin: 0;
+    /* padding-bottom: 2rem; */
+    /* border-top: 2px solid black; */
+    width: 2.7rem;
+    height: 60px;
+    background-color: blanchedalmond;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.daily-name {
+    padding-left: 0;
+}
+.hour-lable-day {
+    border-top: 2px solid black;
+    text-align: center;
+    background-color: blanchedalmond;
+}
+
+
+.day-box {
+    list-style-type: none;
+    border-bottom: 1px dashed black;  
+    border-right: 1px solid black;
+    height:29px;
+     background-color: var(--body);
+   
+}
+.day-half-box {
+    list-style-type: none;
+    border-bottom: 1px solid black; 
+    border-right: 1px solid black; 
+    height: 29px;
+    background-color: var(--body);
+}
+
+.day-box:hover,.day-half-box:hover{
+   border: 3px solid black;
+   background-color: var(--Rosi);
+   box-shadow: var(--light-shadow);
+}
+
+.first { /* la prima per il margine*/
+    border-top: 1px solid black;
+}
+
+/*******************show-section*****************************/
+.show-section {
+    display:block;
+}
+
+@media screen and (min-width: 992px) {
+    #full-day-view {   
+    grid-template-columns: 5rem 70rem;
+    grid-template-rows: repeat(24, 5rem);
+}
+.time-lable-day{
+    margin: 0;
+  
+    width:  76px;
+    height: 84px;
+}
+
+.hour-lable-day {
+    padding-bottom: 21.5px;
+}
+.half-lable-day {
+    border-top: 1px dashed black;
+}
+
+.day-box {
+    height: 41px;
+    
+
+}
+.day-half-box {
+    height: 41px;
+}
+}

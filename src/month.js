@@ -1,3 +1,4 @@
+
 import dayjs from "./day.js"
 
 import globalDate from "./state.js";
@@ -6,11 +7,12 @@ import globalDate from "./state.js";
 //prendo gli elementi della navBar
 
 const grid = document.querySelector(".month-structure");
+// const firstRow = document.querySelector(".day-grid")
 
  let vistaCorrente = globalDate;
 
  const test = dayjs().startOf("month").weekday()
- console.log(test)
+
 
 
 //appunti, avere usato j, al posto dell'indice, vuol dire che ad ogni ciclo, siccomme aumenta il numero da 0 a 6, incrementa sia la casella, che l'indice dell'array; poi ho modificato entrambi in beforeend, che se no sarebbe stato invertito; 
@@ -26,14 +28,20 @@ const grid = document.querySelector(".month-structure");
         
         grid.innerHTML = "";
 
-        console.log(firstDayIndex)
+        const firstRow = document.createElement("div")
+        firstRow.classList.add("day-grid")
+        grid.appendChild(firstRow)
+        
     for (let j=0; j<7; j++){
         let days = vistaCorrente.weekday(j).format("dddd");
         
-         grid.insertAdjacentHTML("beforeend", `<div class="day-grid">
+         firstRow.insertAdjacentHTML("beforeend", `
         <div class="day-grid-btn">${days}</div>
-        </div>` )
+        ` )
     }
+    const secondRow = document.createElement("article")
+        secondRow.classList.add("boxes-container")
+        grid.appendChild(secondRow)
     for ( let i=0; i<42; i++) {
         let dataDayID, dayNumber, dayClass, today;
             if (i < firstDayIndex) {
@@ -51,7 +59,7 @@ const grid = document.querySelector(".month-structure");
                     {dayClass ="today set"
                     }else{dayClass="set"
                     }};
-       grid.insertAdjacentHTML("beforeend", `<div class="box-grid ${dayClass}" > <div class="inside-box" data-day="${dataDayID}"><span class="number-box" >${dayNumber}</span></div></div>`); 
+       secondRow.insertAdjacentHTML("beforeend", `<div class="box-grid ${dayClass}" > <div class="inside-box" data-day="${dataDayID}"><span class="number-box" >${dayNumber}</span></div></div>`); 
     }
 }
 

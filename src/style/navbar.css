@@ -1,0 +1,325 @@
+
+#navbar {
+    position: sticky;
+    background-color: var(--navBar);
+    border: 5px solid black;
+    display: flex;
+    flex-direction: column;/* direziona gli elementi come una colonna*/
+    width:100%;
+    box-sizing: border-box;  
+    height: 8rem; /*altezza fissa, per cordinarla con il resto del body*/
+    z-index: 50; /* forza un elemento a stare sopra, crea degli starti*/
+    top: 0; /* essenziale assieme a position per tenere ferma la nav*/
+     left: 0.1rem;
+     padding: 0 0.5rem;
+}
+/* primo layer */
+#first-layer {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+   
+}
+.mode-btns {
+    display: flex;
+    gap: 0.2rem;  
+}
+
+.btns-nav{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+   
+    width: 4rem;
+    height: 1.2rem;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: var(--light-shadow);
+    cursor: pointer;
+    background-color: var(--offset);
+    font-family: "Kaushan Script", cursive; 
+    font-weight: bold; 
+    font-size: 0.8rem;
+}
+
+
+/* 2 layer */
+#show-year {
+   margin: 1% 5%
+
+}
+.left-arrow {
+    cursor: pointer;  
+}
+.right-arrow {
+    cursor: pointer;  
+}
+.icons-arrow{
+    width: 1.5rem;
+}
+.left{
+    transform: rotate(180deg);
+}
+
+.big-numbers {
+    display: flex;
+    justify-content: center; 
+    /* align-items: center; */
+    background-color: transparent;
+    font-family: "Kaushan Script", cursive;
+    font-weight: bold;
+    width: 7rem;
+}
+
+/* questo decide solo l'anno */
+.year{
+    padding-top: 0;
+    font-size:3rem;
+}
+
+/* 3° layer */
+#layer {
+    display: flex;
+    position: sticky; /* sticky mi risolve il problema del movimento dello schermo*/
+    top: 4.5rem;
+    justify-content: space-between; /*gestisce distribuzione orizzontale, primo a sx ultimo a dx (sb), in questo caso mi mette il mese a dx e la barra a sx, perchè sono 2 div separati*/
+   gap:0.5rem;
+    /* align-items: center; */
+}
+
+.display-overlay {
+    position: relative;
+    /* transform: translate(0.5rem, 0.5rem); */
+    display: flex;
+    align-items: center;
+   
+    display: none;
+}
+
+.display-overlay.month{
+    transform: translateX(0.5rem);
+}
+
+
+.text {
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize; /*solo prima lettera maiusocla*/
+}
+/* .text::first-letter{
+    text-transform: uppercase  ;
+} */
+
+
+.big-numbers.text.week-displayed {
+    font-size: 0.9rem ;
+    width: 11rem;
+}
+
+.big-numbers.text.day-displayed {
+     font-size: 1rem ;
+    width: 11rem;
+    margin: 0;
+}
+
+/* classe da aggiungere in base alla vista */
+.show-display{
+    display:block;
+    display: flex;
+}
+
+.src-new {
+    position: sticky;
+    display:flex;
+    gap: 2rem; /*gestisco le distanze tra il bottone e la barra*/
+    /* transform: translate(19rem, -0.8rem); */
+}
+.src-bar {
+    display: none;
+    
+}
+
+
+
+/* bottone a dx della srcbar */
+.new-btn {
+    margin: 0.2rem 0 0 0.5rem;
+    cursor: pointer;
+    
+}
+/*********modal-date-input*********************************************/
+
+#select-day{
+    position: fixed;
+    z-index: 500;
+    top: 5rem;
+    left: 12rem;
+    width: 170px ;
+    height: 40px;
+    background-color: var(--body);
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: var(--strong-shadow);
+    /* backdrop-filter: blur(5px);  */
+
+}
+
+.day-select {
+    display: none;
+}
+.show-modal {
+    display: block;
+}
+.input-year {
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 50px;
+    padding-top: 10px;
+    padding-left: 5px;
+    
+    
+}
+.input-month {
+        border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 30px;
+    padding-top: 10px;
+    
+   
+}
+.input-day {
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 30px;
+    padding-top: 10px;
+}
+
+.slash {
+    /* font-size: 5px; */
+    font-weight: bold;
+    font-size: 25px;
+    
+}
+
+.reset {
+    position:relative;
+    transform: translateY(0.5rem);
+    width: 3rem;
+    height: 1.5rem;
+    border: 3px solid black;
+    border-radius: 6px;
+    font-family: "Lacquer", system-ui;
+    font-weight: bold;
+    font-size: 0.8rem;
+    box-shadow: var(--light-shadow);
+    cursor: pointer;
+}
+
+@media screen and ( min-width: 992px){
+#navbar{
+    height: 9rem;
+    padding: 0.5rem;
+}
+#first-layer{
+    align-items: unset;
+}
+.btns-nav{
+    width: 6rem;
+    height: 1.7rem;
+    font-size: 1rem;
+}
+.btns-nav:hover{
+    transform: scale(1.1);
+}
+
+.mode-btns {
+    gap: 0.5rem; 
+}
+#show-year {
+   margin: 0 5%
+
+}
+.year{
+    padding-top: 0.5rem;
+    font-size:60px;
+}
+
+.display-overlay{
+    transform: translate(0.5rem, -2rem);
+}
+.display-overlay.month{
+    transform: translate(0.5rem, -2.4rem);
+}
+.icons-arrow{
+    width: 2rem;
+}
+
+.icons-arrow:hover{
+    transform: scale(1.2) ;
+}
+.left:hover{
+    transform: rotate(180deg) scale(1.2);
+}
+.text{
+    font-size: 2rem;
+    margin: 0 1rem;
+  ;
+}
+.text:hover{
+    transform: scale(1.1);
+}
+.big-numbers.text.week-displayed {
+    font-size: 1.4rem ;
+    width: 17rem;
+   
+}
+.big-numbers.text.day-displayed {
+     font-size: 1.4rem ;
+    width: 16rem;
+    margin: 0;
+}
+
+.src-bar {
+    display: flex;
+   
+}
+.src-new {
+   align-items: center;
+   transform: translate(-13rem, -1.8rem);
+}
+.new-btn{
+    margin: 0;
+}
+
+.src-bar input[type="search"] {
+    width:300px;
+    border: 4px solid #333;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    flex:1;
+    padding: 0 10px;
+}
+
+
+.reset {
+  
+    width: 4rem;
+    height: 30px;
+    transform: translate(-7rem, -1.5rem);
+    font-size: 1.2rem;
+}
+.reset:hover{
+    transform: scale(1.2) translate(-7rem, -1.5rem);
+}
+}

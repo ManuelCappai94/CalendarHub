@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
-    <link rel="stylesheet" href="./style.css">
+    
+    <link rel="stylesheet" href="./src/style/global.css">
+    <link rel="stylesheet" href="./src/style/navbar.css">
+    <link rel="stylesheet" href="./src/style/month.css">
+    <link rel="stylesheet" href="./src/style/week.css">
+    <link rel="stylesheet" href="./src/style/daily.css">
+    <link rel="stylesheet" href="./src/style/to-do.css">
+    <link rel="stylesheet" href="./src/style/modalEvent.css">
 </head>
-<body class="main ">
+<body >
     <!-- L'id della navBar verrà modificata come blocco unico -->
   <nav id="navbar" class="blur ">
     <!-- primo layer -->
     <div id="first-layer">
         <div class="mode-btns">
-            <div id="day-btn">Giorno</div>
-            <div id="week-btn">Settimana</div>
-            <div id="month-btn">Mese</div>
+            <div id="day-btn" class="btns-nav">Giorno</div>
+            <div id="week-btn" class="btns-nav">Settimana</div>
+            <div id="month-btn" class="btns-nav">Mese</div>
         </div>
 
         <!-- secondo layer -->
@@ -27,29 +34,43 @@
     <div id="layer">
         <!-- mensile -->
         <div class="display-overlay month  ">
-            <div class="left-arrow"></div>
+            <div class="left-arrow">
+                <img src="./images/streamline-plump-color--arrow-right-circle-1-flat.svg" class="icons-arrow left" alt="arrow">
+            </div>
             <span class="big-numbers text"></span>
-            <div class="right-arrow"></div>
+            <div class="right-arrow">
+                  <img src="./images/streamline-plump-color--arrow-right-circle-1-flat.svg" class="icons-arrow right" alt="arrow">
+            </div>
             
         </div>
         
         <!-- settimanale -->
         <div class="display-overlay week">
-            <div class="left-arrow"></div>
+            <div class="left-arrow">
+                <img src="./images/streamline-plump-color--arrow-right-circle-1-flat.svg" class="icons-arrow left" alt="arrow">
+            </div>
             <span class="big-numbers text week-displayed"></span>
-            <div class="right-arrow"></div>
+            <div class="right-arrow">
+                 <img src="./images/streamline-plump-color--arrow-right-circle-1-flat.svg" class="icons-arrow right" alt="arrow">
+            </div>
         </div>
         <!-- giornaliera -->
        <div class="display-overlay day">
-            <div class="left-arrow"></div>
+            <div class="left-arrow">
+                <img src="./images/streamline-plump-color--arrow-right-circle-1-flat.svg" class="icons-arrow left" alt="arrow">
+            </div>
             <span class="big-numbers text  day-displayed"></span>
-            <div class="right-arrow"></div>
+            <div class="right-arrow">
+                 <img src="./images/streamline-plump-color--arrow-right-circle-1-flat.svg" class="icons-arrow right" alt="arrow">
+            </div>
         </div>
         <button type="button" class="reset"> today</button>
         <!-- barra di ricerca -->
         <div class="src-new">
-             <!-- qua ci metto una png -->
-            <div class="new-btn inside-nav"></div>
+             
+            <div class="new-btn inside-nav">
+                <img src="images/fluent-color--add-circle-32.svg">
+            </div>
             <form class="src-bar">
                 <input type="search" placeholder="Cerca tra le attività">
             </form>
@@ -57,86 +78,24 @@
         </div>
     </div>
 </nav>
-<!-- vado a creare una grid -->
- <!-- qua aggiungo la classe hide per tra una vista e l'altra con toggle -->
+
  <section id="month-carousel">
     <div id="month-body" class="month-view ">
-      
-        
-    
     <div class="month-structure">
-        <!-- <div class="day-grid">
-        <div class="day-grid-btn" data-day="mon">Lunedì</div>
-        </div> -->
-      
-        <!--i restanti 35  -->
-        
-        <!-- <div class="box-grid"> <div class="inside-box" data-day="data-day-id"><span class="number-box" >1</span></div></div> -->
-
-    
 </div>
 </section>
-<!-- vista settimanale -->
- <!-- grid provisoria la versione statica sarà copia e incollata per intero, la versione finale verrà iniettata tramite manipolazione DOM -->
 <section class="week-carousel">
  <div id="week-body" class="week-view">
     <article id="list-week">
         <div id="full-week-view">
-            <!-- <div class="ul-week-time"> 
-                 <ul class="time-week"> -->
-                    
-                    <!-- <li class="time-lable midnight">
-                        <div class="hour-lable "><span>00:00</span></div> 
-                        <div class="half-lable"><span></span></div>
-                    </li>
-                    <li class="time-lable">
-                        <div class="hour-lable "><span>00:00</span></div> 
-                        <div class="half-lable"><span></span></div>
-                    </li> -->
-                
-                    
-
-                <!-- </ul> 
-            </div> -->
-            <!-- struttura singola giornata * 24 -->
-
-            <!-- <div class="week-structure"> 
-                 <ul class="day-name" data-day="2025-10-01">
-                    <li class="week-day-display"> <span class="day-label">01 </span> <br><br><span class="day-label-text"> Mercoledì</span></li>
-                
-                    <li class="week-box midnight" data-time="00:00"></li>
-                    <li class="week-half-box" data-time="00:30"></li>
-                    
-                </ul>
-                 
-             </div> -->
         </div>
     </div>
     </article>
-    
 </section>
-
 <section id="day-corousel" >
     <div id="day-body" class="day-view ">
         <article id="list-day">
         <div id="full-day-view">
-            <!-- <div class="ul-day-time"> 
-                <ul class="day-list">
-                    <li class="time-lable-day">
-                        <div class="hour-lable-day"><span>00:00</span></div> 
-                        <div class="half-lable-day"><span></span></div>
-                    </li>
-            
-                </ul>
-            </div>
-            <div class="day-structure">
-                <ul class="daily-name" data-day="2025-10-01">
-                    <li class="day-box first" data-time="00:00">  
-                    </li>
-                    <li class="day-half-box" data-time="00:30">
-                    </li>
-                    
-                </ul> -->
             </div>
         </div>
     </article>
@@ -148,7 +107,7 @@
                  <div class="activity2 hide"> placeholder</div>
             </div>
 <!-- /////////////////////to do list//////////////////////////////////// -->
-<section class="section-center show-modal "> <!--qui show-modal-->
+<section class="section-center  "> <!--qui show-modal-->
 <form class="to-do-form">
     <div class="main-title"> <p class="title-main-todo "> To-do List</p></div>
     <div class="my-list-row">
@@ -198,6 +157,94 @@
         <input type="text" class="input-day" placeholder="DD" maxlength="2" min="1" max="31">
     </div>
 </section>
+<!-- modale per gli eventi -->
+<section id="select-day" class="day-select">
+    <div class="date-input">
+        <input type="text" class="input-year" placeholder="YYYY" maxlength="4" min="1900" max="2100">
+            <span class="slash">/</span>
+        <input type="text" class="input-month" placeholder="MM" maxlength="2" min="1" max="12">
+            <span class="slash">/</span>
+        <input type="text" class="input-day" placeholder="DD" maxlength="2" min="1" max="31">
+    </div>
+</section>
+<!-- -------------------event container-------------------------------------- -->
+<section class="event-container hide">
+    <form class="event-form">
+        <div class="event-description">
+            <div id="icons">
+                <button id="icons-btn" type="button"></button>
+                    <div id="icons-list" class="hide">
+                    </div>
+            </div>
+            <div id="title-container">
+                <input type="text" class="input-name" placeholder="Titolo">
+            </div>
+            <div id="description-container">
+                <button type="button" class="event-description"> add description</button> <!-- questo apre un modale con un text container-->
+                    <section class="description-area hide " ><textarea class="description-area-text"></textarea> </section>
+            </div>
+            <div class="category-selector">
+                <button id="color-btn" type="button">Categoria 🎨</button>
+                    <div id="color-list" class="hide">
+                        <div class="color" data-color="blue" >color : blue</div>
+                        <div class="color" data-color="green">color: green</div>
+                        <div class="color" data-color="purple">color : purple</div>
+                        <div class="color" data-color="red">color : red</div>
+                </div>
+                    <div id="urgent-container">
+                        <p class="urgent-text">urgent :</p>
+                        <button id="urgent-btn" type="button"></button>
+                    </div>
+            </div>
+        </div>
+        <div id="row-date">
+            <div class="event-date">
+                <div class="date-selection"> <!-- logica da modificare per fargli selezionare la data da immettere nel mini calndario-->
+                    <input type="text" class="input-year" placeholder="YYYY" maxlength="4" >
+                        <span class="slash">/</span>
+                    <input type="text" class="input-month" placeholder="MM" maxlength="2">
+                        <span class="slash">/</span>
+                    <input type="text" class="input-day" placeholder="DD" maxlength="2">
+                </div>
+                <div class="date-icon">c</div>  <!-- qui verrà ancorato l'event per aprire il mini calendario-->
+            </div>
+            <div id="all-day">
+                <p class="all-day-text"> All-day: </p>
+                <button id="all-day-btn" type="button"> </button> <!-- se questo è premuto renderà invisibili gli input per la data, farà da toogle-->
+            </div>
+            <div class="time-selection ">
+                <div id="da-time">
+                    <input type="text" class="input-time da" placeholder="13:00"> <!-- il placeholder sarà l'orario della cella cliccata-->
+                    <button type="button" class="listed-time"> i </button>
+                </div>
+                <div id="a-time">
+                    <input type="text" class="input-time from" placeholder="14:30"> <!-- il placeholder sarà l'orario della cella cliccata-->
+                    <button type="button" class="listed-time to"> i </button>
+                </div>
+            </div>
+            <div id="event-repeat">
+                <button type="button" class="event-repeat-btn"> Repeat event</button> <!-- questo aprira un ulteriore modal che conterra le info per ripetere gli eventi-->
+            </div>
+        </div>
+        <div id="notification-row">
+            <div class="options-selector">
+                <div class="notification-icon"> i </div>
+                <button type="button" class="notification-button">5 minuti prima</button> <!-- questo mi aprirà un Popover come lista per le notifiche-->
+                <section class="notification-section hide">
+                    <ul class="notification-list"></ul>
+                    <li> 5 minuti prima</li>
+                    <li> 10 minuti prima</li>
+                    <li> 1 ora prima</li>
+                </section>
+            </div>
+            <div id="save-event">
+                <button type="button" class="save-btn"> save </button> <!-- questo salva i dati nel local storage-->
+            </div>
+        </div>
+
+    </form>
+</section>
+
 <script src="./dayjs/dayjs.min.js"></script>
 <script src="./dayjs/plugin/isoWeek.js"></script>
 <script src="./dayjs/plugin/weekday.js"></script>

@@ -1,0 +1,233 @@
+#week-body{
+    background-color: var(--body);
+    width: 100%;
+    box-sizing: border-box;    
+    margin: 0;
+}
+
+
+/* nelle colonne, il primo valore è una grandezza fissa che immposto, nella seconda ne faccio ripetere 7 volte con nuna misura da 10 rem */
+#full-week-view {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */ 
+  /* background-color: var(--body); */
+}
+  
+.week-view {
+    display: none;
+}
+.show-section {
+    display:block;
+}
+
+/* caselle contenente orario */
+.time-week {
+   
+    padding:0;
+  
+}
+
+
+
+.time-lable {
+
+    list-style-type: none;
+    margin: 0;
+    width:  2.7rem;
+    height: 60px;
+    background-color: blanchedalmond; 
+    border-left: 2px solid black;
+    border-right: 2px solid black; 
+}
+
+.hour-lable {
+  
+  border-top: 1px solid black; 
+  text-align: center;
+    font-family: "Joti One", serif;
+    font-size: 0.8rem;
+    z-index: 10;
+}
+
+
+.midnight {
+      margin-top:4rem; 
+      border-top: 1px solid black;
+}
+.midnight-box {
+        
+}
+
+/* caselle del giorno */
+.week-structure {
+    min-width: calc((100% - 2rem ) / 4); /* 3 giorni visibili + colonna ore */
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    /* background: var(--lighter); */
+    z-index: 5;
+   
+}
+ 
+.week-day-display {
+    position: relative;
+    width: 100%;
+    top: 0;
+    height: 4rem;
+    list-style-type: none;
+    text-align: left;
+    border-bottom: 1px solid black;
+    border-right:  1px solid black;
+    border-left: 1px solid black;
+    background-color: blanchedalmond ;
+    opacity: 0.9;
+    z-index: 800; /* così lo posiziono tra il calendario e l'attività*/
+    /* font-family: "Joti One", serif; */
+    display: flex;
+}
+.week-day-display:hover{
+    transform: scale(1.1);
+}
+
+.day-name {
+margin:0;
+padding:0;
+}
+
+
+.day-label {
+ color: var(--navBar);
+ font-size: 1.4rem;   
+  font-family: "Kaushan Script", cursive;
+  background-color: blanchedalmond ;
+  z-index: 20;
+ 
+}
+.day-label-text{
+    margin-top: 2rem;
+    font-size: 0;
+    font-family: "Lacquer", system-ui;
+    background-color: blanchedalmond ;  
+}
+.day-label-text::before{
+    content:attr(data-shrinkDays);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.week-box {
+    list-style-type: none;
+    height:29px;
+    border-right: 1px solid black;
+   
+    border-bottom: 1px dashed black;
+}
+
+.week-half-box {
+    list-style-type: none;
+    height: 29px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+/* per far ereditare alcune proprietà ai figli di una lista lista, bisogna usare inherit: */
+.is-today * {
+   background-color: var(--today) ;
+}
+.is-today li:first-child * {
+    /* box-shadow: inset 3px -2px 4px black ;  */
+    background-color: blanchedalmond !important; 
+    color: black;
+    
+}
+
+.is-today li:first-child  {
+    box-shadow:  10px 10px 30px black ; 
+    background-color: blanchedalmond  
+}
+.selected-week {
+    background-color: var(--navBar) !important;
+    
+}
+.selected-week li:first-child {
+       box-shadow:  10px 10px 30px black ; 
+    background-color: blanchedalmond ;
+}
+.selected-time {
+    background-color: var(--Rosi) !important;
+}
+.normal-week {
+    background-color: var(--body);
+}
+
+@media  screen and (min-width: 992px) {
+#full-week-view {
+     display: grid;
+    grid-template-columns: 5rem repeat(7, 1fr);
+    grid-template-rows: repeat(24, 5rem);  
+}
+ .time-lable {
+    width:  76px;
+    height: 82px;
+
+    border-left: 2px solid black;
+    border-right: 2px solid black; 
+}
+
+.hour-lable {
+ font-size: 1.2rem;
+  padding-bottom:21px;
+    border-bottom: 1px dashed black;
+
+
+}
+.midnight-box {
+        margin-top:5rem;   
+}
+.midnight {
+        margin-top:5.02rem;   
+}
+.week-structure{
+    margin-top: 3px;
+}
+.week-box:hover, .week-half-box:hover{
+   
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: var(--Rosi);
+    box-shadow: var(--light-shadow);
+}
+.week-day-display {
+  position:fixed;
+    width: 10rem;
+    top: 9rem;
+    height: 82px;
+
+    text-align: left;
+    z-index: 800; /* così lo posiziono tra il calendario e l'attività*/
+ 
+    display: flex;
+}
+
+.day-label {
+
+ font-size: 30px;   
+  z-index: 20;
+ 
+}
+.day-label-text{
+    margin-top: 50px;
+    font-size: 23px;
+}
+.day-label-text::before{
+   
+    font-size: 0;
+   
+}
+.week-box {
+    height:41px;
+}
+
+.week-half-box {
+    height: 39px;
+}
+}
