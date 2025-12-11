@@ -14,11 +14,10 @@ export function isNow(){
             hour.classList.add("today");
             hour.nextElementSibling.classList.add("today");
             targetHour = hour
-            console.log(targetHour)
         } 
     })
     if (targetHour) {
-        targetHour.scrollIntoView({ block: "center", behavior: "smooth" }); //by Chatgpt     
+        targetHour.scrollIntoView({ block: "center", behavior: "smooth" });     
 }}
 
 isNow()

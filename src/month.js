@@ -4,15 +4,12 @@ import dayjs from "./day.js"
 import globalDate from "./state.js";
 
 
-//prendo gli elementi della navBar
+
 
 const grid = document.querySelector(".month-structure");
-// const firstRow = document.querySelector(".day-grid")
+
 
  let vistaCorrente = globalDate;
-
- const test = dayjs().startOf("month").weekday()
-
 
 
 //appunti, avere usato j, al posto dell'indice, vuol dire che ad ogni ciclo, siccomme aumenta il numero da 0 a 6, incrementa sia la casella, che l'indice dell'array; poi ho modificato entrambi in beforeend, che se no sarebbe stato invertito; 
@@ -55,7 +52,7 @@ const grid = document.querySelector(".month-structure");
             } else {
                 dayNumber = i - firstDayIndex + 1 ;
                 dataDayID = primoGiorno.date(dayNumber).format("YYYY-MM-DD"); //funziona perchè primo giorno partendo da 1 reitera ogni volta
-                 if(dataDayID === globalDate.format("YYYY-MM-DD"))
+                 if(dataDayID === vistaCorrente.format("YYYY-MM-DD"))
                     {dayClass ="today set"
                     }else{dayClass="set"
                     }};
@@ -66,7 +63,7 @@ const grid = document.querySelector(".month-structure");
 
 
 
-//primo rimuovo la classe anche se non esiste ancora, cosi sono sicuro che ad ogni click la classe venga rimossa, poi aggiungo la classe al click
+
 
 
 createMonthGrid(vistaCorrente)

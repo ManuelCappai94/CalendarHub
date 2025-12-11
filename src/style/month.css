@@ -81,6 +81,10 @@ div.box-grid  {
 .box-grid:active{
     animation: wiggle 1.5s ease-in-out;
 }
+
+/* .grid{
+    user-select: none;
+} */
 @keyframes wiggle {
  0% {transform:  rotate(0deg) scale(1.2);}
   25% { transform: rotate(-8deg) scale(1.2); }

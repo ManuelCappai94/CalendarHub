@@ -47,7 +47,7 @@ export default function createWeekGrid (currentview) {
         let dataDay = firstDayOfWeek.format("YYYY-MM-DD");
         weekNumber = firstDayOfWeek.format("DD");
         let shrinkDays = days.substring(0,3);
-        console.log(shrinkDays)
+       
        if (dataDay === globalDate.format("YYYY-MM-DD")){
         dayClass = "is-today"
        } else {

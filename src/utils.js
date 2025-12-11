@@ -63,7 +63,6 @@ class CalendarLogic {
         // this.currentMonth = this.date.month() +1;
         this.showedMonth++;
         this.date = this.date.add(1, "month");
-        console.log(this.currentMonth)
         if(this.showedMonth > 12){
             this.showedMonth= 1;
             this.year++;
@@ -241,19 +240,24 @@ rightArrowDay.addEventListener("click", () =>{
 ///click sul mese
 function highightDayMonth(e) {
     
+    // prendo SEMPRE la cella vera, non il target interno
+    const cell = e.target.closest(".set, .offset");
+    if (!cell) return;
+
+    // tolgo la selezione precedente
     const celleSelezionate = grid.querySelectorAll(".selected");
     celleSelezionate.forEach(cell => cell.classList.remove("selected"));
 
-    if(e.target.classList.contains("set") || e.target.classList.contains("offset")){
-        e.target.classList.add("selected")
-    }
-    // e.target.dataset.day
-    let test = e.target.firstElementChild.dataset.day;
-    overlay.date = dayjs(`${test}`)
+    // seleziono la cella
+    cell.classList.add("selected");
+
+    // prendo la data corretta
+    const test = cell.firstElementChild.dataset.day;
+    overlay.date = dayjs(test)
     
     overlay.selectedBoxMonth()
     overlay.updateOverlayDisplay()
-    console.log(e.target)
+   
     
 }
 
@@ -289,8 +293,6 @@ function highightDayWeek (e){
     overlay.selectedBoxWeek()
     overlay.updateOverlayDisplay();
    
-
-    console.log(e.target)
 }
 
   
@@ -309,10 +311,6 @@ const selectHour = document.querySelectorAll(".day-box");
         e.target.previousElementSibling.classList.add("selected-time")
     }
  e.target.classList.add("selected-time");
-    
-
-    console.log(e.target)
-    console.log(e.target.parentElement)
 };
 
 

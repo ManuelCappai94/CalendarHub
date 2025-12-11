@@ -36,6 +36,10 @@ body {
  margin:0;
 }
 
+.set, .offset, .week-box, .week-half-box, .day-box, .day-half-box {
+    user-select: none;
+}
+
 
 @media screen and (min-width: 992px) {
 body {
