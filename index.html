@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="./src/style/daily.css">
     <link rel="stylesheet" href="./src/style/to-do.css">
     <link rel="stylesheet" href="./src/style/modalEvent.css">
+    <link rel="stylesheet" href="./src/style/mini-calendar.css">
+    
 </head>
 <body >
     <!-- L'id della navBar verrà modificata come blocco unico -->
@@ -148,87 +150,216 @@
 </form>
 </section>
 
-<section id="select-day" class="day-select">
+<section id="mini-calendar" class="day-select">
     <div class="date-input">
-        <input type="text" class="input-year" placeholder="YYYY" maxlength="4" min="1900" max="2100">
-            <span class="slash">/</span>
-        <input type="text" class="input-month" placeholder="MM" maxlength="2" min="1" max="12">
-            <span class="slash">/</span>
-        <input type="text" class="input-day" placeholder="DD" maxlength="2" min="1" max="31">
+        <input type="text" class="input-day" placeholder="DD" maxlength="2">
+         <span class="slash">/</span>
+         <input type="text" class="input-month" placeholder="MM" maxlength="2">
+         <span class="slash">/</span>
+        <input type="text" class="input-year" placeholder="YYYY" maxlength="4">
+    <article class="mini-calendar-container">
+        <!-- logica mini calendar iniettata tramite JS -->
+    </article> 
     </div>
 </section>
 <!-- modale per gli eventi -->
-<section id="select-day" class="day-select">
-    <div class="date-input">
-        <input type="text" class="input-year" placeholder="YYYY" maxlength="4" min="1900" max="2100">
-            <span class="slash">/</span>
-        <input type="text" class="input-month" placeholder="MM" maxlength="2" min="1" max="12">
-            <span class="slash">/</span>
-        <input type="text" class="input-day" placeholder="DD" maxlength="2" min="1" max="31">
-    </div>
-</section>
+
 <!-- -------------------event container-------------------------------------- -->
-<section class="event-container hide">
+<!-- userrò getBoundingClient + position fixed per ancorarlo nel punto preciso al toggle della classe-->
+<section class="event-container">
     <form class="event-form">
-        <div class="event-description">
+        <article class="event-description">
             <div id="icons">
-                <button id="icons-btn" type="button"></button>
-                    <div id="icons-list" class="hide">
+                <button id="icons-btn" type="button">
+                    ✏️
+                </button>
+                <!-- per visualizzare i menù: show-menù -->
+                    <div class="icons-list ">
                     </div>
             </div>
             <div id="title-container">
                 <input type="text" class="input-name" placeholder="Titolo">
             </div>
             <div id="description-container">
-                <button type="button" class="event-description"> add description</button> <!-- questo apre un modale con un text container-->
-                    <section class="description-area hide " ><textarea class="description-area-text"></textarea> </section>
+                <p class="desc-text"> Descrivi :</p>
+                <button type="button" class="btn-description">📃</button> <!-- questo apre un modale con un text container-->
+                    <section class="description-area " ><textarea class="description-area-text" maxlength="200" placeholder="Max 200 caratteri"></textarea> </section>
+                    <div class="tutorial desc "> aggiungi una descrizione!</div>
             </div>
-            <div class="category-selector">
-                <button id="color-btn" type="button">Categoria 🎨</button>
-                    <div id="color-list" class="hide">
-                        <div class="color" data-color="blue" >color : blue</div>
-                        <div class="color" data-color="green">color: green</div>
-                        <div class="color" data-color="purple">color : purple</div>
-                        <div class="color" data-color="red">color : red</div>
-                </div>
+        </article>
+            
+            <article class="category-selector">
+                <!-- al momento la lista la hardcodo su html, ma sarà iniettata nel dom tramite js, perchè voglio che l'utente prenda colori personalizzati -->
+                 <p class="desc-text"> Categoria :</p>
+                <button id="color-btn" type="button">🎨</button>
+                
+                <div class="tutorial category "> Personalizza l'evento!</div>
+                    <ul class="color-list " >
+                          <li class="color" data-color="blue">Blue <span>🟦</span></li>
+                            <li class="color" data-color="green">Green <span>🟩</span></li>
+                            <li class="color" data-color="purple">Purple <span>🟪</span></li>
+                            <li class="color" data-color="red">Red <span>🟥</span></li>
+                </ul>
                     <div id="urgent-container">
-                        <p class="urgent-text">urgent :</p>
-                        <button id="urgent-btn" type="button"></button>
+                        <p class="desc-text">Urgente :</p>
+                        <button id="urgent-btn" type="button" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
+                                <!-- da aggiungere checked per spuntare -->
+                                <path class="checkBox checked" fill="none" stroke="currentColor" stroke-linecap="round"  stroke-linejoin="round" stroke-width="32" d="M352 176L217.6 336L160 272"/>
+                                <rect class="square-checkbox" width="384" height="384" x="64" y="64" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" rx="48" ry="48"/>
+                            </svg>
+                        </button>
                     </div>
-            </div>
-        </div>
-        <div id="row-date">
+            </article>
+        
+        <article id="row-date">
             <div class="event-date">
-                <div class="date-selection"> <!-- logica da modificare per fargli selezionare la data da immettere nel mini calndario-->
-                    <input type="text" class="input-year" placeholder="YYYY" maxlength="4" >
-                        <span class="slash">/</span>
-                    <input type="text" class="input-month" placeholder="MM" maxlength="2">
-                        <span class="slash">/</span>
-                    <input type="text" class="input-day" placeholder="DD" maxlength="2">
-                </div>
-                <div class="date-icon">c</div>  <!-- qui verrà ancorato l'event per aprire il mini calendario-->
+               <div class="tutorial mini-calendar-tut"> Seleziona una data</div>
+                <!-- qui verrà ancorato l'event per aprire il mini calendario-->
+                 <p class="desc-text">Data :</p>
+                <div class="date-icon">
+                    <!--apre mini-calndario  -->
+                    <button type="button" class="mini-calendar-btn">📆</button>
+                </div>  
             </div>
             <div id="all-day">
-                <p class="all-day-text"> All-day: </p>
-                <button id="all-day-btn" type="button"> </button> <!-- se questo è premuto renderà invisibili gli input per la data, farà da toogle-->
+                 <p class="desc-text">Giornata Intera :</p>
+                <button id="all-day-btn" type="button">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
+                                <!-- da aggiungere checked per spuntare -->
+                                <path class="checkBox" fill="none" stroke="currentColor" stroke-linecap="round"  stroke-linejoin="round" stroke-width="32" d="M352 176L217.6 336L160 272"/>
+                                <rect class="square-checkbox" width="384" height="384" x="64" y="64" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" rx="48" ry="48"/>
+                            </svg> 
+                </button> <!-- se questo è premuto renderà invisibili gli input per la data, farà da toogle-->
             </div>
+        </article>
+        <article id="row-time">
             <div class="time-selection ">
                 <div id="da-time">
+                    <button type="button" class="listed-time"> ⌛ </button>
                     <input type="text" class="input-time da" placeholder="13:00"> <!-- il placeholder sarà l'orario della cella cliccata-->
-                    <button type="button" class="listed-time"> i </button>
+                    <!-- anche qui show-menù -->
+                    <ul class="interactive-time-list">
+                        <!-- placeholder -->
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                    </ul>
+                    
                 </div>
                 <div id="a-time">
+                    <button type="button" class="listed-time to"> ⏳ </button>
                     <input type="text" class="input-time from" placeholder="14:30"> <!-- il placeholder sarà l'orario della cella cliccata-->
-                    <button type="button" class="listed-time to"> i </button>
+                    <ul class="interactive-time-list">
+                        <!-- placeholder -->
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                         <li class="list-item">00:00</li>
+                    </ul>
+                    
                 </div>
             </div>
             <div id="event-repeat">
-                <button type="button" class="event-repeat-btn"> Repeat event</button> <!-- questo aprira un ulteriore modal che conterra le info per ripetere gli eventi-->
+                <p class="desc-text">Ripeti :</p>
+                <button type="button" class="event-repeat-btn"> 
+                    &#10227;
+                </button> 
+                <!-- questo si apre con show-repeat-modal-->
+                <article class="modal-repeat show-repeat-modal">
+                    <section class="repeat-intervall">
+                        <div class="intervall-options">
+                            <p class="desc-text">Ripeti ogni : <input placeholder="2" class="skipped-list"> <span>giorni <!--questa variabile sarà decisa dalla selezione di intervall list--></span></p>
+                            <!-- placeholder -->
+                             <div class="intervall-list-container">
+                                <button class="intervall-btn" type="button">quotidiano</button>
+                                <!-- vuole show-menù -->
+                                <ul class="intervall-list">
+                                    <li>quotidiano</li>
+                                    <li>settimanale</li>
+                                    <li>mensile</li> 
+                                    <li>annuale</li> 
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="repeat-since">
+                           <p class="desc-text">Fino a :</p>
+                           <button class="open-minicalendar" type="button">📆</button>
+                           <span class="date-empty">
+                            <!-- data decisa nel mini-calendario -->
+                             27/01/1994
+                           </span>
+                        </div>
+                    </section>
+                    <ul class="repeat-btns">
+                        <!-- 7 bttoni itterati con for -->
+                        <li>
+                            <button type="button">L</button>
+                        </li>
+                        <li>
+                            <button type="button">m</button>
+                        </li>
+                        <li>
+                            <button type="button">M</button>
+                        </li>
+                        <li>
+                            <button type="button">G</button>
+                        </li>
+                        <li>
+                            <button type="button">V</button>
+                        </li>
+                        <li>
+                            <button type="button">S</button>
+                        </li>
+                        <li>
+                            <button type="button">D</button>
+                        </li>
+                    </ul>
+                    <div class="close-repeat">
+                        <button class="btn save-repeat">salva</button>
+                        <button class="btn cls-repeat">chiudi</button>
+                    </div>
+                </article>
             </div>
-        </div>
-        <div id="notification-row">
+        </article>
+        <article id="notification-row">
             <div class="options-selector">
-                <div class="notification-icon"> i </div>
+                <div class="notification-icon"> ⏰ </div>
                 <button type="button" class="notification-button">5 minuti prima</button> <!-- questo mi aprirà un Popover come lista per le notifiche-->
                 <section class="notification-section hide">
                     <ul class="notification-list"></ul>
@@ -238,9 +369,12 @@
                 </section>
             </div>
             <div id="save-event">
-                <button type="button" class="save-btn"> save </button> <!-- questo salva i dati nel local storage-->
+                <button type="button" class="btn save-btn"> save </button> <!-- questo salva i dati nel local storage-->
             </div>
-        </div>
+            <div id="close-event">
+                <button type="button" class="btn close-btn"> chiudi </button> <!-- questo salva i dati nel local storage-->
+            </div>
+        </article>
 
     </form>
 </section>

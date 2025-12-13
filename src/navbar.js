@@ -18,7 +18,7 @@ const dayView = document.querySelector(".day-view");
   const currentMonthDisplay = document.querySelector(".big-numbers.text") ;
 
 // modal per selezionare la data
-const modal = document.getElementById("select-day");
+
 const showModal = document.querySelector(".day-select");
 const reset = document.querySelector(".reset");
  let yearInput = document.querySelector(".input-year");
@@ -80,75 +80,48 @@ function dateModal(){
 // dateSelected(yearInput, monthInput)
 
 
-//////le seguenti funzioni vanno fattorizzate per renderle riuttilizzabili
-//creo lo state
+
+//creo lo state, il numero corrisponderà al targhet index negli array
 let currentState = 0;
 monthView.classList.add("show-section");
 OverlayMonth.classList.add("show-display");
  ////reset
 
 reset.addEventListener("click", function(){
-       
           localStorage.removeItem("userDate");
           location.reload();  
         })
-   
-// document.addEventListener("DOMContentLoaded", func )
 
-    monthBtn.addEventListener("click", function(){
-         if (currentState !== 0 && !monthView.classList.contains("show-section")) {
-            monthView.classList.add("show-section");
-            weekView.classList.remove("show-section");
-            dayView.classList.remove("show-section");
-            OverlayWeek.classList.remove("show-display");
-            OverlayMonth.classList.add("show-display");
-            OverlayDay.classList.remove("show-display");
-            currentState = 0;
-    } else if ( currentState === 0 ){
-            return
+   ///decido la schermata da visualizzare in base all'index che passo alla funzione, nel forEach mi serve anche il secono parametro che accetta cosi che posso settare l'index corretto. questo secondo parametro poi lo passo al toggle, perchè? perchè toggle accetta due parametri, il primo è il token dove, che è la stringa della classe, il secondo è il paramentro force. è un booleano, che lo trasforma in un one-way-only operator, cioe  che la classe sarà solo tolta e non aggiunta e viceversa. quindi si puo utilizzare per indicare quale classe deve essere toccata
+function switchView(index){
+        const gridView = [monthView, weekView, dayView]
+        const overlay = [OverlayMonth, OverlayWeek, OverlayDay]
+        if (currentState !== index){
+                gridView.forEach((view, i)=> view.classList.toggle("show-section", i === index ))
+                overlay.forEach((ov, i)=> ov.classList.toggle("show-display", i === index ))
+                currentState = index
+        }
+}
+
+    monthBtn.addEventListener("click", () => {
+         switchView(0)
     }
-    })
+       
+     )
 
-   weekBtn.addEventListener("click", function(){
-    if (currentState !== 1 && !weekView.classList.contains("show-section")) {
-            monthView.classList.remove("show-section");
-            weekView.classList.add("show-section");
-            dayView.classList.remove("show-section");
-            OverlayWeek.classList.add("show-display");
-            OverlayMonth.classList.remove("show-display");
-            OverlayDay.classList.remove("show-display");
-            currentState = 1;
-    } else if ( currentState === 1 ){
-            return
-    }
-    })
+   weekBtn.addEventListener("click", () => {
+         switchView(1)
+   }
+       
+    )
 
-       dayBtn.addEventListener("click", function(){
-    if (currentState !== 2 && !dayView.classList.contains("show-section")) {
-            monthView.classList.remove("show-section");
-            weekView.classList.remove("show-section");
-            dayView.classList.add("show-section");
-            OverlayWeek.classList.remove("show-display");
-            OverlayMonth.classList.remove("show-display");
-            OverlayDay.classList.add("show-display");
-            currentState = 2;
+       dayBtn.addEventListener("click", () =>{
+         switchView(2)
             isNow()
-    } else if ( currentState === 2 ){
-            return
-    }
-    })
+       }
+       
+   )
    
-//funzione modulare....
-// function switchView(targetIndex) {
-//   const views = [monthView, weekView, dayView];
-//   const overlays = [OverlayMonth, OverlayWeek, OverlayDay];
-
-//   if (currentState !== targetIndex) {
-//     views.forEach((v, i) => v.classList.toggle("show-section", i === targetIndex));
-//     overlays.forEach((o, i) => o.classList.toggle("show-display", i === targetIndex));
-//     currentState = targetIndex;
-//   }
-// }
 
 
 

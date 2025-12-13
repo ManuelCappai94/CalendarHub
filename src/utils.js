@@ -58,19 +58,26 @@ class CalendarLogic {
         currentDailyDisplay.innerHTML=`${showDailyDate}`
         currentYearDisplay.innerHTML= `${year}`;
     }
+//questo metodo wrappa tutte le funzioni
+    syncAll(){
+      createMonthGrid(this.date, grid);
+        createWeekGrid(this.date);
+        createDailyGrid(this.date);
+        this.updateOverlayDisplay();
+        this.highLightDayinMonth()
+        this.highLightDay()
+        isNow()  
+    }
+///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.
     nextMonth(){
         
-        // this.currentMonth = this.date.month() +1;
         this.showedMonth++;
         this.date = this.date.add(1, "month");
         if(this.showedMonth > 12){
             this.showedMonth= 1;
             this.year++;
         }
-        createMonthGrid(this.date);
-        createWeekGrid(this.date);
-        createDailyGrid(this.date)
-        isNow()
+        
     }
     prevMonth(){
         this.showedMonth--;
@@ -79,10 +86,7 @@ class CalendarLogic {
             this.showedMonth = 12;
             this.year--;
        }
-        createMonthGrid(this.date);
-        createWeekGrid(this.date);
-        createDailyGrid(this.date)
-        isNow()
+       
     }
     prevWeek(){
         this.date = this.date.subtract(1, "week");
@@ -90,10 +94,7 @@ class CalendarLogic {
         if(this.currentWeek < 1){
             this.year--;
         }
-        createMonthGrid(this.date);
-        createWeekGrid(this.date);
-        createDailyGrid(this.date)
-        isNow()
+      
     }
     nextWeek(){
         this.date = this.date.add(1, "week");
@@ -101,10 +102,7 @@ class CalendarLogic {
         if(this.currentWeek > 52){
             this.year++;
         }
-        createMonthGrid(this.date);
-        createWeekGrid(this.date); 
-        createDailyGrid(this.date)
-        isNow()
+     
     }
     prevDay(){
         this.date = this.date.subtract(1, "day");
@@ -114,10 +112,7 @@ class CalendarLogic {
             this.dayOfYear = 365;
             this.year--;
         }
-        createMonthGrid(this.date)
-        createWeekGrid(this.date)
-        createDailyGrid(this.date)
-        isNow()
+    
     }
     nextDay(){
         this.date = this.date.add(1, "day");
@@ -127,67 +122,36 @@ class CalendarLogic {
             this.dayOfYear = 1;
             this.year++;
         }
-        createMonthGrid(this.date)
-        createWeekGrid(this.date)
-        createDailyGrid(this.date)  
-        isNow()
     }
-    selectedBoxMonth(){
-        createWeekGrid(this.date)
-       const highLight = document.querySelectorAll(".day-name");
-       highLight.forEach((day)=> {
-            const box = day.querySelectorAll(".week-box"); 
-            const halfbox = day.querySelectorAll(".week-half-box");
-        if (day.dataset.day === this.date.format("YYYY-MM-DD") ){
-            box.forEach(child => child.classList.add("selected-week"));
-            halfbox.forEach(child => child.classList.add("selected-week"));
-        } 
-       }) 
-       
-        createDailyGrid(this.date)
-    }
-    selectedBoxWeek(){
-        createMonthGrid(this.date)
-         const allBoxes = document.querySelectorAll(".week-box, .week-half-box");
-            allBoxes.forEach(box => {
-                box.classList.remove("selected-week");
-  });
+
+
+    highLightDayinMonth(){
         const highLight = document.querySelectorAll(".box-grid")
         highLight.forEach((box)=> {
             if(box.firstElementChild.dataset.day === this.date.format("YYYY-MM-DD")){
                 box.classList.add("selected")
             }
         })
-        createDailyGrid(this.date) 
     }
-    setectedBoxDaily(){
-        createMonthGrid(this.date)
-        createWeekGrid(this.date)
-        
-        const highLight = document.querySelectorAll(".box-grid")
-        highLight.forEach((box)=> {
-            if(box.firstElementChild.dataset.day === this.date.format("YYYY-MM-DD")){
-                box.classList.add("selected")
-            }
-        });
-        const highLightWeek = document.querySelectorAll(".day-name");
-            highLightWeek.forEach((day)=> {
+
+    highLightDay(){
+        const highLight = document.querySelectorAll(".day-name");
+        highLight.forEach((day)=> {
             const box = day.querySelectorAll(".week-box"); 
             const halfbox = day.querySelectorAll(".week-half-box");
-        if (day.dataset.day === this.date.format("YYYY-MM-DD") ){
-            box.forEach(child => child.classList.add("selected-week"));
-            halfbox.forEach(child => child.classList.add("selected-week"));
-        } 
+                if (day.dataset.day === this.date.format("YYYY-MM-DD") ){
+                    box.forEach(child => child.classList.add("selected-week"));
+                    halfbox.forEach(child => child.classList.add("selected-week"));
+                } 
        }) 
-
     }
+
   
 }
 
 
 const overlay = new CalendarLogic
 
-//devo usare overlay, per evocare il this a cui fa riferimento, perchè ho storato la classe nella costante overlay;
 const displayMonth = overlay.date.month(overlay.showedMonth).format("MMMM");
 const currentMonday = overlay.date.weekday(0).format("DD MMMM");
 const currentSunday = overlay.date.weekday(6).format("DD MMMM");
@@ -200,39 +164,38 @@ currentDailyDisplay.innerHTML=`${showDailyDate}`
 currentYearDisplay.innerHTML= `${year}`;
 
 
-console.log(overlay)
-
 rightArrowMonth.addEventListener("click", () => {
     overlay.nextMonth();
-    overlay.updateOverlayDisplay();
+    overlay.syncAll()
+ 
 })
 
 leftArrowMonth.addEventListener("click", () =>{
     overlay.prevMonth();
-    overlay.updateOverlayDisplay()
+    overlay.syncAll()
+
 })
 
 leftArrowWeek.addEventListener("click", () => {
     overlay.prevWeek();
-    overlay.updateOverlayDisplay();
+    overlay.syncAll()
+ 
 })
 
 rightArrowWeek.addEventListener("click", () => {
     overlay.nextWeek();
-    overlay.updateOverlayDisplay();
+    overlay.syncAll()
+   
 })
 
 leftArrowDay.addEventListener("click", () => {
     overlay.prevDay();
-    overlay.updateOverlayDisplay();
-    overlay.setectedBoxDaily();
-
+    overlay.syncAll()
 })
     
 rightArrowDay.addEventListener("click", () =>{
     overlay.nextDay();
-    overlay.updateOverlayDisplay();
-    overlay.setectedBoxDaily()
+    overlay.syncAll()
 })
 
 
@@ -255,9 +218,7 @@ function highightDayMonth(e) {
     const test = cell.firstElementChild.dataset.day;
     overlay.date = dayjs(test)
     
-    overlay.selectedBoxMonth()
-    overlay.updateOverlayDisplay()
-   
+   overlay.syncAll()
     
 }
 
@@ -274,8 +235,6 @@ function highightDayWeek (e){
     selectHalfhour.forEach( cell => cell.classList.remove("selected-time"));
     
     const box = e.target.closest(".week-box, .week-half-box");
-
-        // SE non ho cliccato una box valida → esco subito
         if (!box) return;
 
     if (!e.target.classList.contains("week-day-display")){
@@ -289,10 +248,9 @@ function highightDayWeek (e){
     }
     e.target.parentElement.classList.add("selected-week");
     let highLight = e.target.parentElement.dataset.day
-    overlay.date = dayjs(`${highLight}`)
-    overlay.selectedBoxWeek()
-    overlay.updateOverlayDisplay();
-   
+    overlay.date = dayjs(highLight)
+
+   overlay.syncAll()
 }
 
   

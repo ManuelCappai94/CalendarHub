@@ -18,7 +18,7 @@
     display: flex;
     justify-content: space-between; 
     align-items: center;
-   
+   height: 80px;
 }
 .mode-btns {
     display: flex;
@@ -81,14 +81,14 @@
 #layer {
     display: flex;
     position: sticky; /* sticky mi risolve il problema del movimento dello schermo*/
-    top: 4.5rem;
+   
     justify-content: space-between; /*gestisce distribuzione orizzontale, primo a sx ultimo a dx (sb), in questo caso mi mette il mese a dx e la barra a sx, perchè sono 2 div separati*/
    gap:0.5rem;
     /* align-items: center; */
 }
 
 .display-overlay {
-    position: relative;
+ 
     /* transform: translate(0.5rem, 0.5rem); */
     display: flex;
     align-items: center;
@@ -149,68 +149,9 @@
     cursor: pointer;
     
 }
-/*********modal-date-input*********************************************/
 
-#select-day{
-    position: fixed;
-    z-index: 500;
-    top: 5rem;
-    left: 12rem;
-    width: 170px ;
-    height: 40px;
-    background-color: var(--body);
-    border: 2px solid black;
-    border-radius: 5px;
-    box-shadow: var(--strong-shadow);
-    /* backdrop-filter: blur(5px);  */
 
-}
 
-.day-select {
-    display: none;
-}
-.show-modal {
-    display: block;
-}
-.input-year {
-    border-top:none;
-    border-left:none;
-    border-right:none;
-    border-bottom: 1px dashed black;
-    background: none;
-    width: 50px;
-    padding-top: 10px;
-    padding-left: 5px;
-    
-    
-}
-.input-month {
-        border-top:none;
-    border-left:none;
-    border-right:none;
-    border-bottom: 1px dashed black;
-    background: none;
-    width: 30px;
-    padding-top: 10px;
-    
-   
-}
-.input-day {
-    border-top:none;
-    border-left:none;
-    border-right:none;
-    border-bottom: 1px dashed black;
-    background: none;
-    width: 30px;
-    padding-top: 10px;
-}
-
-.slash {
-    /* font-size: 5px; */
-    font-weight: bold;
-    font-size: 25px;
-    
-}
 
 .reset {
     position:relative;
@@ -233,6 +174,7 @@
 }
 #first-layer{
     align-items: unset;
+    height: unset;
 }
 .btns-nav{
     width: 6rem;

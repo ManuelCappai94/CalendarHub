@@ -14,7 +14,7 @@ const grid = document.querySelector(".month-structure");
 
 //appunti, avere usato j, al posto dell'indice, vuol dire che ad ogni ciclo, siccomme aumenta il numero da 0 a 6, incrementa sia la casella, che l'indice dell'array; poi ho modificato entrambi in beforeend, che se no sarebbe stato invertito; 
 
- function createMonthGrid (vistaCorrente) { 
+ function createMonthGrid (vistaCorrente, gridType) { 
     //creiamo tutte le variabili che ci servono dalla libreria
         const giorniMese = vistaCorrente.daysInMonth(); //giorni del mese totale
         const primoGiorno = vistaCorrente.date(1);
@@ -23,11 +23,11 @@ const grid = document.querySelector(".month-structure");
         const lastDayPrevMonth = primoGiorno.subtract(1, "day"); //questo metodo, sottrae il tempo
         const firstDayNextMonth = ultimoGiorno.add(1, "day") ;
         
-        grid.innerHTML = "";
+        gridType.innerHTML = "";
 
         const firstRow = document.createElement("div")
         firstRow.classList.add("day-grid")
-        grid.appendChild(firstRow)
+        gridType.appendChild(firstRow)
         
     for (let j=0; j<7; j++){
         let days = vistaCorrente.weekday(j).format("dddd");
@@ -38,7 +38,7 @@ const grid = document.querySelector(".month-structure");
     }
     const secondRow = document.createElement("article")
         secondRow.classList.add("boxes-container")
-        grid.appendChild(secondRow)
+        gridType.appendChild(secondRow)
     for ( let i=0; i<42; i++) {
         let dataDayID, dayNumber, dayClass, today;
             if (i < firstDayIndex) {
@@ -66,6 +66,6 @@ const grid = document.querySelector(".month-structure");
 
 
 
-createMonthGrid(vistaCorrente)
+createMonthGrid(vistaCorrente, grid)
 
 export default createMonthGrid

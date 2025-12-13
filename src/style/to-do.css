@@ -100,7 +100,7 @@ grid-template-columns: 3rem 70% 1.5rem;
     /* border: none; */
 }
 .checked {
- background-image: url("./images/checkboxgif.gif");
+ /* background-image: url("./images/checkboxgif.gif"); */
 }
 
 .title-item {

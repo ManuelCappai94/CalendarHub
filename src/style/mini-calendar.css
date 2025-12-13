@@ -1,0 +1,64 @@
+
+#mini-calendar{
+    position: fixed;
+    z-index: 500;
+    top: 5rem;
+    left: 12rem;
+    width: 10rem ;
+    height: 40px;
+    background: blanchedalmond;
+    border: 3px solid black;
+    border-radius: 10px;
+    box-shadow: var(--strong-shadow);
+    /* backdrop-filter: blur(5px);  */
+
+}
+.date-input{
+    display: flex;
+    justify-content: center;
+}
+.day-select {
+    display: none;
+}
+.show-modal {
+    display: block;
+}
+.input-year {
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 50px;
+    padding-top: 10px;
+    padding-left: 5px;
+    
+    
+}
+.input-month {
+        border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 30px;
+    padding-top: 10px;
+    
+   
+}
+.input-day {
+    border-top:none;
+    border-left:none;
+    border-right:none;
+    border-bottom: 1px dashed black;
+    background: none;
+    width: 30px;
+    padding-top: 10px;
+}
+
+.slash {
+    /* font-size: 5px; */
+    font-weight: bold;
+    font-size: 25px;
+    
+}
