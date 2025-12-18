@@ -1,15 +1,16 @@
-
+/* la posizione per ora è hardcodata, ma verrà poi gestita tramite getboundingclientRect, per farlo apparire in 2 punti diversi */
 #mini-calendar{
     position: fixed;
     z-index: 500;
     top: 5rem;
     left: 12rem;
     width: 10rem ;
-    height: 40px;
-    background: blanchedalmond;
+    /* height: 40px; */
+    background: var(--background);
     border: 3px solid black;
     border-radius: 10px;
     box-shadow: var(--strong-shadow);
+    color: var(--textModal);
     /* backdrop-filter: blur(5px);  */
 
 }
@@ -20,45 +21,89 @@
 .day-select {
     display: none;
 }
-.show-modal {
-    display: block;
+.show-mini-calendar {
+    display: flex;
+    flex-direction: column;
 }
-.input-year {
+.input-year, .input-month, .input-day {
     border-top:none;
     border-left:none;
     border-right:none;
-    border-bottom: 1px dashed black;
-    background: none;
+    border-bottom: 1px dashed var(--textModal);
+    background: none;    
+    text-align: center;
+    font-family: "Kaushan Script", cursive;
+    color: var(--textModal);
+}
+
+.input-year{
     width: 50px;
     padding-top: 10px;
     padding-left: 5px;
-    
-    
 }
-.input-month {
-        border-top:none;
-    border-left:none;
-    border-right:none;
-    border-bottom: 1px dashed black;
-    background: none;
+.input-month, .input-day {
     width: 30px;
-    padding-top: 10px;
-    
-   
+    padding-top: 10px;  
 }
-.input-day {
-    border-top:none;
-    border-left:none;
-    border-right:none;
-    border-bottom: 1px dashed black;
-    background: none;
-    width: 30px;
-    padding-top: 10px;
-}
+
 
 .slash {
     /* font-size: 5px; */
     font-weight: bold;
     font-size: 25px;
     
+}
+.mini-container{
+    border: 2px solid black;
+    margin-top: 0.5rem
+}
+.mini-btns-cont{
+    display: flex;
+    justify-content: space-between;
+   
+}
+.mini-month-btn, .mini-year-btn{
+    border: none;
+    background: transparent;
+    font-family: "Lacquer", system-ui;
+    font-size: 1rem;
+    color:var(--textModal)
+}
+
+.mini-year-btn{
+   font-family: "Kaushan Script", cursive;
+    font-size: 1.2rem;
+    
+}
+
+.mini-day-grid-btn{
+    font-size: 0;
+    text-align: center;
+    border-bottom: 1px solid var(--darker);
+    margin-bottom: 0.5rem;
+}
+.mini-day-grid-btn::first-letter{
+    font-size: 1rem;
+    font-family: "Lacquer", system-ui;
+}
+
+.mini-box-grid{
+    
+}
+
+.mini-inside-box{
+    text-align: center;
+    font-weight: bold;
+    color: var(--textModal);
+}
+
+.mini-set{
+ background-color: var(--background);
+}
+.mini-offset{
+ background-color: var(--offsetMini);
+}
+
+.mini-today{
+    background-color: var(--darker);
 }

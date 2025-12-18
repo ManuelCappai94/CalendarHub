@@ -21,49 +21,10 @@ const dayView = document.querySelector(".day-view");
 
 const showModal = document.querySelector(".day-select");
 const reset = document.querySelector(".reset");
- let yearInput = document.querySelector(".input-year");
- let monthInput = document.querySelector(".input-month");
-let dayInput = document.querySelector(".input-day");
-
-yearInput.placeholder = dayjs().format("YYYY"); 
-monthInput.placeholder = dayjs().format("MM"); 
-dayInput.placeholder = dayjs().format("DD"); 
 
 
-
-currentMonthDisplay.addEventListener("click",dateModal)
-
-export let selectedDate = null; //definisco uno scope per la funzione, per non far ritornare il valore undefined
-      //e avevi messo i const year = yearInput.value; fuori dal listener, allora JS li valutava solo al caricamento dello script, e restavano sempre vuoti ("").        
-
-export default function setuserDate(){
-                const year = yearInput.value.trim(); //evito spazi vuoti
-                const month = monthInput.value.trim();
-                const day = dayInput.value.trim();
-               
-                if (year && month && day){
-                 let date = dayjs()
-                .set("year", parseInt(year))
-                .set("month", parseInt(month) - 1)
-                .set("date", parseInt(day)).format("YYYY-MM-DD");
-                localStorage.setItem("userDate", JSON.stringify(date))
-                showModal.classList.remove("show-modal")
-                // document.dispatchEvent(new CustomEvent("userDateChanged", { detail: date }));
-                location.reload();            
-          }else {
-                showModal.classList.remove("show-modal")
-          }
-       };
-
-
-     document.addEventListener("keyup", (e) => {
-                if (e.key === "Enter"){  
-                        setuserDate()
-                        
-                  }});
-
-
-
+currentMonthDisplay.addEventListener("click",dateModal);
+ 
 
 document.addEventListener("keyup", (e) => {
         if (e.key === "p"){
@@ -72,15 +33,11 @@ document.addEventListener("keyup", (e) => {
 })
 
 function dateModal(){       
-        showModal.classList.toggle("show-modal"); 
+        showModal.classList.toggle("show-mini-calendar"); 
         };
 
  
     
-// dateSelected(yearInput, monthInput)
-
-
-
 //creo lo state, il numero corrisponderà al targhet index negli array
 let currentState = 0;
 monthView.classList.add("show-section");

@@ -157,10 +157,11 @@
          <input type="text" class="input-month" placeholder="MM" maxlength="2">
          <span class="slash">/</span>
         <input type="text" class="input-year" placeholder="YYYY" maxlength="4">
+    </div>
     <article class="mini-calendar-container">
         <!-- logica mini calendar iniettata tramite JS -->
     </article> 
-    </div>
+    
 </section>
 <!-- modale per gli eventi -->
 
@@ -301,7 +302,7 @@
                     &#10227;
                 </button> 
                 <!-- questo si apre con show-repeat-modal-->
-                <article class="modal-repeat show-repeat-modal">
+                <article class="modal-repeat show-repeat-modal ">
                     <section class="repeat-intervall">
                         <div class="intervall-options">
                             <p class="desc-text">Ripeti ogni : <input placeholder="2" class="skipped-list"> <span>giorni <!--questa variabile sarà decisa dalla selezione di intervall list--></span></p>
@@ -360,12 +361,17 @@
         <article id="notification-row">
             <div class="options-selector">
                 <div class="notification-icon"> ⏰ </div>
-                <button type="button" class="notification-button">5 minuti prima</button> <!-- questo mi aprirà un Popover come lista per le notifiche-->
+                <!-- il testo del bottone sarà l'output della selezione della lista -->
+                <button type="button" class="notification-button">5 minuti prima</button> 
                 <section class="notification-section hide">
                     <ul class="notification-list"></ul>
                     <li> 5 minuti prima</li>
                     <li> 10 minuti prima</li>
                     <li> 1 ora prima</li>
+                    <li> 2 ora prima</li>
+                    <li> 4 ora prima</li>
+                    <li> 24 ora prima</li>
+                    
                 </section>
             </div>
             <div id="save-event">

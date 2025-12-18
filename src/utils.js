@@ -4,6 +4,8 @@ import createDailyGrid from "./daily.js";
 import globalDate from "./state.js";
 import { isNow } from "./isNow.js";
 import dayjs from "./day.js";
+import { updateMIniStates, createMiniCalendar } from "./utils/miniCalendar.js";
+import { config } from "./utils/config/config.js";
 
 const grid = document.querySelector(".month-structure");
 const weekGrid = document.getElementById("full-week-view");
@@ -36,7 +38,7 @@ const rightArrowDay = currentDailyDisplay.nextElementSibling;
 
 
 
-class CalendarLogic {
+ class CalendarLogic {
     constructor () {
         
         this.date = globalDate;
@@ -45,7 +47,7 @@ class CalendarLogic {
         this.firstOfWeek = this.date.weekday(1);
         this.year = this.date.year();
         this.showedMonth = this.currentMonth - 1;  
-        this.dayOfYear = this.date.dayOfYear() ;     
+        this.dayOfYear = this.date.dayOfYear() ;    
     }
     updateOverlayDisplay(){
         const displayMonth = this.date.month(this.date.month()).format("MMMM");
@@ -60,13 +62,15 @@ class CalendarLogic {
     }
 //questo metodo wrappa tutte le funzioni
     syncAll(){
-      createMonthGrid(this.date, grid);
+        createMonthGrid(this.date, grid, config.main);
         createWeekGrid(this.date);
         createDailyGrid(this.date);
         this.updateOverlayDisplay();
         this.highLightDayinMonth()
         this.highLightDay()
         isNow()  
+        updateMIniStates()
+        createMiniCalendar(this.date)
     }
 ///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.
     nextMonth(){
@@ -94,7 +98,7 @@ class CalendarLogic {
         if(this.currentWeek < 1){
             this.year--;
         }
-      
+      console.log(this.date)
     }
     nextWeek(){
         this.date = this.date.add(1, "week");
@@ -106,7 +110,6 @@ class CalendarLogic {
     }
     prevDay(){
         this.date = this.date.subtract(1, "day");
-        
         this.dayOfYear--;
         if(this.dayOfYear < 1){
             this.dayOfYear = 365;
@@ -116,7 +119,6 @@ class CalendarLogic {
     }
     nextDay(){
         this.date = this.date.add(1, "day");
-        // this.firstOfWeek = this.date.weekday(1);
         this.dayOfYear++;
         if(this.dayOfYear > 365){
             this.dayOfYear = 1;
@@ -148,15 +150,13 @@ class CalendarLogic {
 
   
 }
-
-
-const overlay = new CalendarLogic
+export const overlay = new CalendarLogic
 
 const displayMonth = overlay.date.month(overlay.showedMonth).format("MMMM");
 const currentMonday = overlay.date.weekday(0).format("DD MMMM");
 const currentSunday = overlay.date.weekday(6).format("DD MMMM");
 const showDailyDate = overlay.date.format("dddd, DD MMMM");
-const year = overlay.year;
+ const year = overlay.year;
 
 currentMonthDisplay.innerHTML=`${displayMonth}`;
 currentWeekDisplay.innerText =`${currentMonday} - ${currentSunday}`
@@ -201,6 +201,7 @@ rightArrowDay.addEventListener("click", () =>{
 
 
 ///click sul mese
+///config è da passare pure qui per cambiare il colore di selected
 function highightDayMonth(e) {
     
     // prendo SEMPRE la cella vera, non il target interno

@@ -2,6 +2,7 @@
 import dayjs from "./day.js"
 
 import globalDate from "./state.js";
+import { config } from "./utils/config/config.js";
 
 
 
@@ -14,7 +15,7 @@ const grid = document.querySelector(".month-structure");
 
 //appunti, avere usato j, al posto dell'indice, vuol dire che ad ogni ciclo, siccomme aumenta il numero da 0 a 6, incrementa sia la casella, che l'indice dell'array; poi ho modificato entrambi in beforeend, che se no sarebbe stato invertito; 
 
- function createMonthGrid (vistaCorrente, gridType) { 
+ function createMonthGrid (vistaCorrente, gridType, gridConfig) { 
     //creiamo tutte le variabili che ci servono dalla libreria
         const giorniMese = vistaCorrente.daysInMonth(); //giorni del mese totale
         const primoGiorno = vistaCorrente.date(1);
@@ -33,7 +34,7 @@ const grid = document.querySelector(".month-structure");
         let days = vistaCorrente.weekday(j).format("dddd");
         
          firstRow.insertAdjacentHTML("beforeend", `
-        <div class="day-grid-btn">${days}</div>
+        <div class="${gridConfig.dailybox}">${days}</div>
         ` )
     }
     const secondRow = document.createElement("article")
@@ -44,19 +45,19 @@ const grid = document.querySelector(".month-structure");
             if (i < firstDayIndex) {
                 dayNumber = lastDayPrevMonth.date() - (firstDayIndex -1 - i);
                 dataDayID = lastDayPrevMonth.date(dayNumber).format("YYYY-MM-DD") ;
-                dayClass = "offset";
+                dayClass = `${gridConfig.colorOffset}`;
             } else if (i >= giorniMese + firstDayIndex) {
                 dayNumber =  i - (firstDayIndex + giorniMese - 1);
                 dataDayID = firstDayNextMonth.date(dayNumber).format("YYYY-MM-DD");
-                dayClass = "offset";
+                dayClass = `${gridConfig.colorOffset}`;
             } else {
                 dayNumber = i - firstDayIndex + 1 ;
                 dataDayID = primoGiorno.date(dayNumber).format("YYYY-MM-DD"); //funziona perchè primo giorno partendo da 1 reitera ogni volta
                  if(dataDayID === vistaCorrente.format("YYYY-MM-DD"))
-                    {dayClass ="today set"
-                    }else{dayClass="set"
+                    {dayClass =`${gridConfig.today} ${gridConfig.colorBox}`
+                    }else{dayClass=`${gridConfig.colorBox}`
                     }};
-       secondRow.insertAdjacentHTML("beforeend", `<div class="box-grid ${dayClass}" > <div class="inside-box" data-day="${dataDayID}"><span class="number-box" >${dayNumber}</span></div></div>`); 
+       secondRow.insertAdjacentHTML("beforeend", `<div class="${gridConfig.boxGrid} ${dayClass}"> <div class="${gridConfig.insideBoxGrid}" data-day="${dataDayID}"><span class="${gridConfig.numberBox}" >${dayNumber}</span></div></div>`); 
     }
 }
 
@@ -66,6 +67,6 @@ const grid = document.querySelector(".month-structure");
 
 
 
-createMonthGrid(vistaCorrente, grid)
+createMonthGrid(vistaCorrente, grid, config.main)
 
 export default createMonthGrid

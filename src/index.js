@@ -2,9 +2,11 @@
 
 import"./navbar.js";
 import"./month.js";
+import "./utils/miniCalendar.js"
 import"./utils.js";
 import"./week.js";
 import"./daily.js";
+
 
 ///blocca tutti i comportamenti di selezione del testo della padina di defualt con il doppio click e la selezione
 document.addEventListener('selectstart', (e) => {
