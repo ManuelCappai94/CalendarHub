@@ -1,11 +1,11 @@
 
 import globalDate from "./state.js";
-
+const state = globalDate.date
 
 export function isNow(){
     const selectHour = document.querySelectorAll(".day-box");
-    let now = globalDate.minute(0).format("HH:mm")
-    let today = globalDate.format("YYYY-MM-DD")
+    let now = state.minute(0).format("HH:mm")
+    let today = state.format("YYYY-MM-DD")
     let targetHour = null;
 
     selectHour.forEach((hour) => {

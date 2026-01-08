@@ -41,7 +41,8 @@ const rightArrowDay = currentDailyDisplay.nextElementSibling;
  class CalendarLogic {
     constructor () {
         
-        this.date = globalDate;
+        this.state = globalDate
+        this.date = globalDate.date;
         this.currentMonth = this.date.month() +1;
         this.currentWeek = this.date.isoWeek();
         this.firstOfWeek = this.date.weekday(1);
@@ -49,6 +50,12 @@ const rightArrowDay = currentDailyDisplay.nextElementSibling;
         this.showedMonth = this.currentMonth - 1;  
         this.dayOfYear = this.date.dayOfYear() ;    
     }
+    //qui accedo all'oggetto usiamo lo stesso argomento da passare al metodo setDate di questa classe, e al metodo globaldate, la nuova data sarà decisa dal valore che passeremo come argomento che modifica entrambi, questa ora la passo a miniCalendar
+    setDate(newDate){
+        this.state.setDate(newDate)
+        this.date = this.state.date
+        this.syncAll()
+    };
     updateOverlayDisplay(){
         const displayMonth = this.date.month(this.date.month()).format("MMMM");
         const monday = this.date.weekday(0).format("DD MMMM");
@@ -218,6 +225,7 @@ function highightDayMonth(e) {
     // prendo la data corretta
     const test = cell.firstElementChild.dataset.day;
     overlay.date = dayjs(test)
+    console.log(e.target)
     
    overlay.syncAll()
     

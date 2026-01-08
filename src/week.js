@@ -7,7 +7,7 @@ const weekGrid = document.getElementById("full-week-view");
 
 
 
-let currentview = globalDate;
+let currentview = globalDate.date;
 
 export default function createWeekGrid (currentview) {
     weekGrid.innerHTML= "";
@@ -48,7 +48,7 @@ export default function createWeekGrid (currentview) {
         weekNumber = firstDayOfWeek.format("DD");
         let shrinkDays = days.substring(0,3);
        
-       if (dataDay === globalDate.format("YYYY-MM-DD")){
+       if (dataDay === globalDate.date.format("YYYY-MM-DD")){
         dayClass = "is-today"
        } else {
         dayClass = "normal-week"

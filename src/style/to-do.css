@@ -1,10 +1,11 @@
 .section-center {
     position: fixed;
     z-index: 400;
-    top: calc(30% + var(--offset-top, 0px));
-    right: calc(15% + var(--offset-right, 0px)); /*offset-right,calcolo al momento in js*/
+    top: 20%;
+    left:10%; /*offset-right,calcolo al momento in js*/
     border-radius: 20px;
-    background-color: wheat ;
+    /* background-color: wheat ; */
+    background-image: url("../../images/righe.png");
     background-size: 20rem;
     opacity: 0.9;
     border: 2px solid black;
@@ -90,7 +91,8 @@ grid-template-columns: 3rem 70% 1.5rem;
 }
 /*uso piskel per disegnare una checkbox personalizzata*/
 .check-btn {
-    background-image: url("./images/checkbox.png");
+    background: transparent;
+    background-image: url("../../images/checkbox.png");
     background-size: 40px;
     border: none;
     width: 30px ;
@@ -109,7 +111,8 @@ grid-template-columns: 3rem 70% 1.5rem;
     border-bottom: 1px solid black;
 }
 .delete-btn {
-   background-image: url("./images/trash-can.png");
+    background: transparent;
+   background-image: url("../../images/trash-can.png");
    background-size: 30px;
    border: none;
    width: 30px;

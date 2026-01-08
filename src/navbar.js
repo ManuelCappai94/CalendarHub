@@ -15,7 +15,13 @@ const dayView = document.querySelector(".day-view");
   const OverlayMonth = document.querySelector(".display-overlay.month");
   const OverlayWeek = document.querySelector(".display-overlay.week");
   const OverlayDay = document.querySelector(".display-overlay.day");
-  const currentMonthDisplay = document.querySelector(".big-numbers.text") ;
+//   const currentMonthDisplay = document.querySelector(".big-numbers.text") ;
+  const allOverlays = document.querySelectorAll(".big-numbers.text")
+  
+
+  allOverlays.forEach(overlay => {
+        overlay.addEventListener("click", dateModal)
+  })
 
 // modal per selezionare la data
 
@@ -23,7 +29,7 @@ const showModal = document.querySelector(".day-select");
 const reset = document.querySelector(".reset");
 
 
-currentMonthDisplay.addEventListener("click",dateModal);
+// currentMonthDisplay.addEventListener("click",dateModal);
  
 
 document.addEventListener("keyup", (e) => {
@@ -82,4 +88,4 @@ function switchView(index){
 
 
 
-export {showModal}
+// export {showModal}

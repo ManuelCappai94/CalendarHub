@@ -3,7 +3,7 @@ import globalDate from "./state.js";
 
 const dayGrid = document.getElementById("full-day-view");
 
-let currentview = globalDate;
+let currentview = globalDate.date;
 
 function createDailyGrid(currentview){
     dayGrid.innerHTML = "";

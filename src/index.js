@@ -6,6 +6,7 @@ import "./utils/miniCalendar.js"
 import"./utils.js";
 import"./week.js";
 import"./daily.js";
+import "./to-do-list/toDo.js"
 
 
 ///blocca tutti i comportamenti di selezione del testo della padina di defualt con il doppio click e la selezione
