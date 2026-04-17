@@ -45,7 +45,7 @@ const globalDate = {
 
 globalDate.init()
 
-console.log(globalDate)
+
 
 export default globalDate
 

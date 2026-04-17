@@ -54,17 +54,41 @@
 
 
 /******************* sezione creazione Evento*********************************/
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 998;
+    display: none;
+}
 .event-container {
-    max-width: 95dvi;
+    position: fixed;
+    max-width: 95dvw;
     border: 2px solid black;
     background: rgb(39, 38, 38);
     border-radius: 15px;
     box-shadow: var(--light-shadow);
+    z-index: 999;
+    display: none;
 }
 .event-form{
-        display: grid;
-    grid-template-rows: repeat(5, 1fr);
+    display: grid;
+    grid-template-rows: repeat(6, 1fr);
     gap: 1rem
+}
+.show-date{
+    display: flex;
+    color: var(--textModal);
+    justify-content: flex-start;
+    margin-left: 2rem;
+    gap: 2rem;
+}
+.show-date *{
+    display: flex;
+    font-size: 2rem;
+    align-items: center;
 }
 /*****************PRIMA RIGA **************************** */
 .event-description {
@@ -443,17 +467,18 @@ margin-left: 0.5rem;
 }
 
 
-.hide {
-    display: none;
+.show-container, .show-menù, .show-overlay {
+    display: block ;
 }
 
-.show-menù {
+/* .show-menù {
     display: block;
-}
+} */
 
 
 @media screen and (min-width:992px){
    .event-container {
+    /* width: 400px; */
     max-width: 700px;
 }
 #icons-btn{

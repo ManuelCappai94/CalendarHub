@@ -92,9 +92,17 @@
 }
 
 .mini-inside-box{
-    text-align: center;
-    font-weight: bold;
+   border: none;
+    width: 1rem;
+    padding: 0;
+}
+.mini-number-box{
+    border: none;
+    background:none;
     color: var(--textModal);
+    width: 100%;
+    padding: 0;
+   
 }
 
 .mini-set{

@@ -6,6 +6,8 @@ import { isNow } from "./isNow.js";
 import dayjs from "./day.js";
 import { updateMIniStates, createMiniCalendar } from "./utils/miniCalendar.js";
 import { config } from "./utils/config/config.js";
+import openModal from "./eventCreation/eventModal.js";
+import { theme } from "./utils/theme.js";
 
 const grid = document.querySelector(".month-structure");
 const weekGrid = document.getElementById("full-week-view");
@@ -32,6 +34,8 @@ const rightArrowWeek = currentWeekDisplay.nextElementSibling;
 const currentDailyDisplay = displayOverlayDay.firstElementChild.nextElementSibling;
 const leftArrowDay = displayOverlayDay.firstElementChild;
 const rightArrowDay = currentDailyDisplay.nextElementSibling;
+const modalEvents = document.querySelector(".event-container")
+
 
 
 
@@ -78,6 +82,8 @@ const rightArrowDay = currentDailyDisplay.nextElementSibling;
         isNow()  
         updateMIniStates()
         createMiniCalendar(this.date)
+        theme(this.date)
+        console.log(this)
     }
 ///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.
     nextMonth(){
@@ -145,14 +151,27 @@ const rightArrowDay = currentDailyDisplay.nextElementSibling;
 
     highLightDay(){
         const highLight = document.querySelectorAll(".day-name");
-        highLight.forEach((day)=> {
-            const box = day.querySelectorAll(".week-box"); 
-            const halfbox = day.querySelectorAll(".week-half-box");
-                if (day.dataset.day === this.date.format("YYYY-MM-DD") ){
-                    box.forEach(child => child.classList.add("selected-week"));
-                    halfbox.forEach(child => child.classList.add("selected-week"));
-                } 
-       }) 
+       
+       //highLight ritorna una nodeList non dimenticare
+       highLight.forEach((day)=>{
+        day.classList.remove("is-today")
+        if(day.dataset.day === this.date.format("YYYY-MM-DD")){
+            day.classList.remove("normal-week")
+            day.classList.add("is-today")
+        }else{
+            day.classList.remove("is-today")
+            day.classList.add("normal-week")
+        }
+        
+       })
+    //     highLight.forEach((day)=> {
+    //         const box = day.querySelectorAll(".week-box"); 
+    //         const halfbox = day.querySelectorAll(".week-half-box");
+    //             if (day.dataset.day === this.date.format("YYYY-MM-DD") ){
+    //                 box.forEach(child => child.classList.add("is-today"));
+    //                 halfbox.forEach(child => child.classList.add("is-today"));
+    //             } 
+    //    }) 
     }
 
   
@@ -165,6 +184,7 @@ const currentSunday = overlay.date.weekday(6).format("DD MMMM");
 const showDailyDate = overlay.date.format("dddd, DD MMMM");
  const year = overlay.year;
 
+//  console.log(overlay)
 currentMonthDisplay.innerHTML=`${displayMonth}`;
 currentWeekDisplay.innerText =`${currentMonday} - ${currentSunday}`
 currentDailyDisplay.innerHTML=`${showDailyDate}`
@@ -206,71 +226,92 @@ rightArrowDay.addEventListener("click", () =>{
 })
 
 
+//click sulla casella numero mensile
+function handleMonthGridClick(e){
+    const selectedBtn = e.target.closest('[data-action="select-date"]')
+    const cell = e.target.closest('[data-action="create-event"]')
+    if(selectedBtn){
+        e.stopPropagation()
+        highlightDayMonth(selectedBtn)
+        return
+    }
+    if(cell){
+        e.stopPropagation()
+        openModal(e)
+        return
+    }
 
-///click sul mese
-///config è da passare pure qui per cambiare il colore di selected
-function highightDayMonth(e) {
-    
-    // prendo SEMPRE la cella vera, non il target interno
-    const cell = e.target.closest(".set, .offset");
-    if (!cell) return;
-
-    // tolgo la selezione precedente
-    const celleSelezionate = grid.querySelectorAll(".selected");
-    celleSelezionate.forEach(cell => cell.classList.remove("selected"));
-
-    // seleziono la cella
-    cell.classList.add("selected");
-
-    // prendo la data corretta
-    const test = cell.firstElementChild.dataset.day;
-    overlay.date = dayjs(test)
-    console.log(e.target)
-    
-   overlay.syncAll()
-    
 }
 
 
 
+///click sul mese
+///config è da passare pure qui per cambiare il colore di selected
+function highlightDayMonth(button) {
+    
+const selectedDate = button.dataset.day;
+  if (!selectedDate) return;
+
+  overlay.setDate(dayjs(selectedDate));
+  console.log(button.dataset)
+//non serve syncAll anche qua perchè viene chiamato da setdate
+
+}
+
+function highLightWeek(e){
+ let highLight = e.target.parentElement.parentElement.dataset.day
+    console.log(highLight)
+    overlay.date = dayjs(highLight)
+    overlay.syncAll()
+}
+
+
 //click sulla settimana
-function highightDayWeek (e){
-    const selectday = document.querySelectorAll(".day-name");
+function OpenModalWeek (e){
+    // const selectday = document.querySelectorAll(".day-name");
     const selecthour = document.querySelectorAll(".week-box");
     const selectHalfhour = document.querySelectorAll(".week-half-box")
 
-    selectday.forEach( cell => cell.classList.remove("selected-week"));
-    selecthour.forEach( cell => cell.classList.remove("selected-time"));
-    selectHalfhour.forEach( cell => cell.classList.remove("selected-time"));
+    // selectday.forEach( cell => cell.classList.remove("selected-week"));
+    selecthour.forEach( cell => cell.classList.remove("selected-week"));
+    selectHalfhour.forEach( cell => cell.classList.remove("selected-week"));
     
     const box = e.target.closest(".week-box, .week-half-box");
         if (!box) return;
 
     if (!e.target.classList.contains("week-day-display")){
-        e.target.classList.add("selected-time");
+        e.target.classList.add("selected-week");
     }
     
     if( e.target.classList.contains("week-box")) {
-    e.target.nextElementSibling.classList.add("selected-time")   
+    e.target.nextElementSibling.classList.add("selected-week")   
     } else if (e.target.classList.contains("week-half-box")){
-        e.target.previousElementSibling.classList.add("selected-time")
+        e.target.previousElementSibling.classList.add("selected-week")
     }
-    e.target.parentElement.classList.add("selected-week");
-    let highLight = e.target.parentElement.dataset.day
-    overlay.date = dayjs(highLight)
-
-   overlay.syncAll()
+   openModal(e)
+  
 }
 
+function handleClickWeek(e){
+    if(e.target.classList.contains("week-box") || e.target.classList.contains("week-half-box" )){
+        OpenModalWeek(e)
+    } 
+    if(e.target.classList.contains("header-btn")){
+        highLightWeek(e)
+    }
+}
   
 //click sul giorno
-
-function highightDayDaily (e){
+//refactor futuro, impostare l'intera logica sul closest per l'highlight, e se decido di tenere il singolo click; altrimenti in caso di drag per scelta multipla di orari il sistema di closest non funzionorebbe più, perchè dovrei fare riferimento al data-time storato all'interno di ogni elemento "li"
+function handleDailyClick (e){
 const selectHour = document.querySelectorAll(".day-box");
     const selectHalfhour = document.querySelectorAll(".day-half-box");
 
     selectHour.forEach( cell => cell.classList.remove("selected-time"))
     selectHalfhour.forEach( cell => cell.classList.remove("selected-time"))
+
+    const box = e.target.closest(".day-box, .day-half-box");
+        if (!box) return;
 
     if( e.target.classList.contains("day-box")) {
     e.target.nextElementSibling.classList.add("selected-time")   
@@ -278,9 +319,14 @@ const selectHour = document.querySelectorAll(".day-box");
         e.target.previousElementSibling.classList.add("selected-time")
     }
  e.target.classList.add("selected-time");
+    if( e.target.closest(".day-box, .day-half-box")){
+        openModal(e)
+    }
+ 
 };
 
 
-grid.addEventListener("click", highightDayMonth)
-weekGrid.addEventListener("click", highightDayWeek)
-dayGrid.addEventListener("click", highightDayDaily)
+// grid.addEventListener("click", highlightDayMonth)
+grid.addEventListener("click", handleMonthGridClick)
+weekGrid.addEventListener("click", handleClickWeek )
+dayGrid.addEventListener("click", handleDailyClick)

@@ -57,9 +57,29 @@ const grid = document.querySelector(".month-structure");
                     {dayClass =`${gridConfig.today} ${gridConfig.colorBox}`
                     }else{dayClass=`${gridConfig.colorBox}`
                     }};
-       secondRow.insertAdjacentHTML("beforeend", `<div class="${gridConfig.boxGrid} ${dayClass}"> <div class="${gridConfig.insideBoxGrid}" data-day="${dataDayID}"><span class="${gridConfig.numberBox}" >${dayNumber}</span></div></div>`); 
-    }
-}
+       secondRow.insertAdjacentHTML("beforeend", `
+        <div 
+            class="${gridConfig.boxGrid} ${dayClass}"
+            data-action="create-event"
+            >
+         <div
+          class="${gridConfig.insideBoxGrid}"
+           data-day="${dataDayID}"
+           >
+            <button
+                type="button"
+                class="${gridConfig.numberBox}"
+                data-day="${dataDayID}"
+                data-action="select-date"
+                >
+                 ${dayNumber}
+            </button>
+         </div>
+        </div>
+        `);
+            
+            }
+        }
 
 
 

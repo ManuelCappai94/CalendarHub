@@ -56,10 +56,21 @@ export default function createWeekGrid (currentview) {
       weekGrid.insertAdjacentHTML("beforeend", `
                     <div class="week-structure">
                     <ul class="day-name ${dayClass}" data-day=${dataDay}>
-                        <li class="week-day-display"> <span class="day-label">${weekNumber} </span> <br><br><span class="day-label-text" data-shrinkDays="${shrinkDays}"> ${days}</span></li>  
+                        <li class="week-day-display">
+                        <button type="button" class="header-btn">
+                         <span class="day-label">${weekNumber} </span> 
+                         <br><br>
+                         <span 
+                            class="day-label-text"
+                             data-shrinkDays="${shrinkDays}"
+                             >
+                              ${days}
+                         </span>
+                         </button>
+                        </li>  
                     </ul>
                     </div>`)         
-                } 
+                        } 
                 ;
    const dayName = document.querySelectorAll(".day-name") // per usare il forEach, ho dovuto creare una nodeList, selezionado per la classe degli elementi creati dal ciclo for qua sopra;
 

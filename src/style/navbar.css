@@ -262,6 +262,7 @@
     font-size: 1.2rem;
 }
 .reset:hover{
-    transform: scale(1.2) translate(-7rem, -1.5rem);
+    transform: scale(1.1) translate(-7rem, -1.5rem);
+    
 }
 }

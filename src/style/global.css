@@ -3,15 +3,16 @@
 /* CSS HEX */
 :root {
 --darker: #880d1eff;
---navBar: #dd2d4aff;
---body: #f26a8dff;
---today: #F1436E;
---offset: #f49cbbff;
+--navBar: rgba(221, 45, 74, 0.801);
+--body: rgba(242, 106, 140, 0.758);
+--today: #f1436ed0;
+--offset: rgba(244, 156, 187, 0.753);
 --lighter: #cbeef3ff;
---Rosi: rgba(243, 95, 119, 0.781);
+--Rosi: rgba(243, 95, 120, 0.767);
 --background:  #232323;
 --offsetMini: #3d3a3a;
 --textModal: rgb(247, 236, 218) ;
+--timeCell: rgba(255, 235, 205, 0.836);
 /* shadows */
 --light-shadow:-1px 2px 3px 1px black;
 --strong-shadow:-2px 4px 10px 3px black;
@@ -34,9 +35,12 @@
 }
 
 body {
- background-color: black;
- width: 100%;
- margin:0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100%;
+  margin:0;
 }
 
 /* .set, .offset, .week-box, .week-half-box, .day-box, .day-half-box {

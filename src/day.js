@@ -1,4 +1,4 @@
-
+dayjs.extend(window.dayjs_plugin_customParseFormat);
 dayjs.extend(window.dayjs_plugin_isoWeek)
 dayjs.extend(window.dayjs_plugin_weekday)
 dayjs.extend(window.dayjs_plugin_dayOfYear)

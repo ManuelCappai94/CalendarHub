@@ -167,8 +167,12 @@
 
 <!-- -------------------event container-------------------------------------- -->
 <!-- userrò getBoundingClient + position fixed per ancorarlo nel punto preciso al toggle della classe-->
-<section class="event-container hide">
+<div class="modal-overlay"></div>
+<section class="event-container ">
     <form class="event-form">
+        <article class="show-date">
+            <span></span><span></span>
+        </article>
         <article class="event-description">
             <div id="icons">
                 <button id="icons-btn" type="button">
@@ -238,7 +242,7 @@
             <div class="time-selection ">
                 <div id="da-time">
                     <button type="button" class="listed-time"> ⌛ </button>
-                    <input type="text" class="input-time da" placeholder="13:00"> <!-- il placeholder sarà l'orario della cella cliccata-->
+                    <input type="text" class="input-time from" placeholder="13:00"> <!-- il placeholder sarà l'orario della cella cliccata-->
                     <!-- anche qui show-menù -->
                     <ul class="interactive-time-list">
                         <!-- placeholder -->
@@ -268,7 +272,7 @@
                 </div>
                 <div id="a-time">
                     <button type="button" class="listed-time to"> ⏳ </button>
-                    <input type="text" class="input-time from" placeholder="14:30"> <!-- il placeholder sarà l'orario della cella cliccata-->
+                    <input type="text" class="input-time to" placeholder="14:30"> <!-- il placeholder sarà l'orario della cella cliccata-->
                     <ul class="interactive-time-list">
                         <!-- placeholder -->
                          <li class="list-item">00:00</li>
@@ -302,7 +306,7 @@
                     &#10227;
                 </button> 
                 <!-- questo si apre con show-repeat-modal-->
-                <article class="modal-repeat show-repeat-modal ">
+                <article class="modal-repeat ">
                     <section class="repeat-intervall">
                         <div class="intervall-options">
                             <p class="desc-text">Ripeti ogni : <input placeholder="2" class="skipped-list"> <span>giorni <!--questa variabile sarà decisa dalla selezione di intervall list--></span></p>
@@ -390,6 +394,7 @@
 <script src="./dayjs/plugin/weekday.js"></script>
 <script src="./dayjs/plugin/dayOfYear.js"></script>
 <script src="./dayjs/plugin/localeData.js"></script>
+<script src="./dayjs/plugin/customParseFormat.js"></script>
 <script src="./dayjs/locale/it-ch.js"></script>
 
 

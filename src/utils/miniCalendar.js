@@ -1,5 +1,5 @@
 import dayjs from "../day.js";
-import {  overlay } from "../utils.js";
+import {  overlay } from "../calendarSync.js";
 import createMonthGrid from "../month.js";
 import { config } from "./config/config.js";
 
@@ -85,9 +85,10 @@ dayInput.addEventListener("input", ()=> updateDateinput("day", dayInput.value))
 function closeMiniCalendar(e){
     if(!showModal.classList.contains("show-mini-calendar"))return;
     if(showModal.classList.contains("show-mini-calendar")){
+        //closest contiene anche la classe del carouesello per la scelta del mese
         if(!showModal.contains(e.target) && !e.target.closest(".big-numbers, .mini-month-item")){
             setuserDate()
-            console.log("ciao")
+           
         }
     }
 }
@@ -153,7 +154,6 @@ function monthcorousel(){
     const carousel = document.querySelector(".mini-month-btn");
     const monthCaroseul = document.querySelector(".month-lists")
     const months = Array.from({length: 12}, (_, i) => dayjs().month(i).format("MMMM"))
-    console.log(months)
     carousel.addEventListener("click",()=>{
      monthCaroseul.classList.toggle("show-carousel")
     } )

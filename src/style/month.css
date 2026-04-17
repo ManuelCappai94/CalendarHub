@@ -60,6 +60,7 @@
 .boxes-container {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+   height: calc(100vh - 8rem);
 }
 
 
@@ -68,12 +69,12 @@ div.box-grid  {
     border-left: 1px solid black;
     border-right: 1px solid black; */
     border: 1px solid black;
-    height: 5rem;
+    /* height: 5rem; */
     display:flex;
     /* flex-direction: column; mi ha messo sopra lo span, e sotto il bottone */
     align-items: flex-start;
     padding: 2px; 
-    overflow: hidden; /*cosi il testo non sborda fuori */ 
+    overflow: hidden; /*cosi il testo non sborda fuori */  
 }
 .box-grid:hover{
     transform:scale(1.1)
@@ -93,24 +94,34 @@ div.box-grid  {
   100% { transform: rotate(0deg) scale(1.2); }
 }
 .inside-box {
-    width: 1.3rem;
+    width: 1.4rem;
     border: 1px solid black;
     border-radius: 10px;
     background: white;
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;    
+    align-items: center;     */
+    padding: 0;
+    
 }
 .number-box {
     font-size: 1rem;
     /* font-weight: normal; */
-    cursor: default; /*così il mouse sopra al numero rimane standard*/
+    /* cursor: default; così il mouse sopra al numero rimane standard */
     font-family: "Kaushan Script", cursive;
     font-weight: bold; 
+    border: none;
+    background: none;
+    padding: 0;
+    width: 100%;
 }
 
 
 @media screen and (min-width: 992px) {
+.boxes-container {
+
+   height: 0;
+}
     .day-grid-btn {
     font-size: 1.3rem;
     font-weight: normal;  
@@ -125,10 +136,14 @@ height: 8rem;
 .inside-box {
     width: 2rem;
     border: 2px solid black;
-    border-radius: 17px;
-    padding-right: 5px;    
+    border-radius: 100px;
+
+       
 }
 .number-box {
     font-size: 1.2rem;
+        /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
 }
