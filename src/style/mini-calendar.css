@@ -86,7 +86,11 @@
     font-size: 1rem;
     font-family: "Lacquer", system-ui;
 }
-
+.mini-boxes-container{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+   
+}
 .mini-box-grid{
     
 }
@@ -140,4 +144,18 @@
 
 .mini-month-item:hover {
     background-color: #f0f0f0;
+}
+.mini-actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 0.5rem;
+}
+.mini-cancel-btn, .mini-save-btn{
+    border: none;
+    font-family: "Lacquer", system-ui ;
+    font-weight: bold;
+    background-color: var(--textModal);
+    color: var(--background);
+    border-radius: 10px;
 }

@@ -1,5 +1,6 @@
 export const config = {
     main : {
+        boxesContainer: "boxes-container",
         dailybox: "day-grid-btn",
         boxGrid: "box-grid",
         insideBoxGrid: "inside-box",
@@ -9,6 +10,7 @@ export const config = {
         today: "today",
     },
     mini: {
+        boxesContainer: "mini-boxes-container",
         dailybox: "mini-day-grid-btn",
         boxGrid: "mini-box-grid",
         insideBoxGrid: "mini-inside-box",

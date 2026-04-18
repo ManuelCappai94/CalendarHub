@@ -1,35 +1,81 @@
 # 🗓️ CalendarHub
-This is my first project, it's a personal calendar and to-do app, built from scratch with vanilla JavaScript. I created it to improve my skills and to document each development phase step-by-step.
+
+A modular calendar application built from scratch using vanilla JavaScript.
+
+The project focuses on **state synchronization**, **interactive UI design**, and a scalable architecture supporting multiple views (month, week, day) and event creation.
+
 ---
+
 ## ⚙️ Features
-- Month, Week, and Daily views fully synchronized.
-- Clickable daily boxes in month view, week columns in week view.
-- Current day/time highlighted in daily view.
--  Flexible date format switching (Italian ↔ English).
--  Event module planned for next version.
+
+- Fully synchronized **Month, Week, and Daily views**
+- Centralized state management (single source of truth)
+- Interactive grid system:
+  - Click-based navigation
+  - Time-slot interaction
+- Event creation modal:
+  - Opens from all views
+  - Pre-filled date and time
+- Mini calendar for quick date navigation
+- Dynamic seasonal background system
+- Responsive layout
+- Modular architecture (separated logic and UI)
 
 ---
-## 📅 Next Version (v0.2)
-- Add event creation and editing module.
-- Event synchronization with calendar views.
-- Mobile UI refactoring and optional theme switching.
+
+## 🚀 Current Version
+
+- [v0.5 – Major refactor and event system](./README-this-version-0.5.md)
+
 ---
 
-📘 [Version 0.1 details](./README-this-version-0.1.md)
+## 🔮 Next Updates
+
+- Complete **event system logic** (creation, rendering, persistence)
+- Add **event visualization inside calendar grid**
+- Implement **date & time format switch (EU ↔ US)**
+- Complete **To-Do list functionality**
+- Improve UI consistency and interactions
+
+---
+
+## 🖼️ Preview
+
+### 📅 Month View
+![Month View](./images/screenshots/month.jpeg)
+
+### 📆 Week View
+![Week View](./images/screenshots/week.jpeg)
+
+### 📆 Daily View
+![Daily view](./images/screenshots/modal+daily.jpeg)
+
+### 📆 Mobile View
+![Mobile view](./images/screenshots/mobile.png)
+
 
 ---
 
 ## 🕓 Old Versions
 
-- Previous versions of this project are available in the **Versions** branch.
+Previous versions are available in the **Versions branch**:
 
 ➡️ [Go to old versions](https://github.com/ManuelCappai94/CalendarHub/tree/versions)
 
-- Each folder corresponds to a different release (v0.1, v0.2, etc.), including its own mini-README and source files.
+Each folder contains a specific release with its own README and source code.
+
+---
+
+## 🧩 Tech Stack
+
+- JavaScript (ES6+)
+- HTML5
+- CSS3 (Grid, Flexbox)
+- [Day.js](https://day.js.org/)
 
 ---
 
 ## 🧩 Assets & Credits
-- Calendar logic built with [Day.js](https://day.js.org/)
-- Trash bin icon by [dDara](https://www.freepik.com/icon/bin_2602768), used under Freepik License (**Attribution Required**)
+
+- Trash bin icon by [dDara](https://www.freepik.com/icon/bin_2602768) (Freepik License)
 - Custom icons and textures created with **Piskel**

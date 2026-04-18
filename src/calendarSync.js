@@ -4,7 +4,7 @@ import createDailyGrid from "./daily.js";
 import globalDate from "./state.js";
 import { isNow } from "./isNow.js";
 import dayjs from "./day.js";
-import { updateMIniStates, createMiniCalendar } from "./utils/miniCalendar.js";
+// import { commitMiniDate } from "./utils/miniCalendar.js";
 import { config } from "./utils/config/config.js";
 import openModal from "./eventCreation/eventModal.js";
 import { theme } from "./utils/theme.js";
@@ -72,7 +72,7 @@ const modalEvents = document.querySelector(".event-container")
         currentYearDisplay.innerHTML= `${year}`;
     }
 //questo metodo wrappa tutte le funzioni
-    syncAll(){
+    syncAll(e){
         createMonthGrid(this.date, grid, config.main);
         createWeekGrid(this.date);
         createDailyGrid(this.date);
@@ -80,10 +80,9 @@ const modalEvents = document.querySelector(".event-container")
         this.highLightDayinMonth()
         this.highLightDay()
         isNow()  
-        updateMIniStates()
-        createMiniCalendar(this.date)
+        // syncMiniInputs()
+        // createMiniCalendar(this.date)
         theme(this.date)
-        console.log(this)
     }
 ///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.
     nextMonth(){

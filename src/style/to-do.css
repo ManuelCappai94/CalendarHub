@@ -2,7 +2,7 @@
     position: fixed;
     z-index: 400;
     top: 20%;
-    left:10%; /*offset-right,calcolo al momento in js*/
+    /* left:10%; */
     border-radius: 20px;
     /* background-color: wheat ; */
     background-image: url("../../images/righe.png");

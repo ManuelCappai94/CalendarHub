@@ -8,106 +8,142 @@ import { config } from "./config/config.js";
 const miniCalendar = document.querySelector(".mini-calendar-container")
 const showModal = document.querySelector(".day-select");
 
+
 let yearInput = document.querySelector(".input-year");
 let monthInput = document.querySelector(".input-month");
 let dayInput = document.querySelector(".input-day");
 
+let miniLocalDate = null;
 
-export function updateMIniStates(){
-    yearInput.placeholder = overlay.date.format("YYYY"); 
-    monthInput.placeholder = overlay.date.format("MM"); 
-    dayInput.placeholder = overlay.date.format("DD"); 
+ function syncMiniInputs(){
+    if (!miniLocalDate) return;
+    yearInput.value = miniLocalDate.format("YYYY");
+    monthInput.value = miniLocalDate.format("MM");
+    dayInput.value = miniLocalDate.format("DD");
 }
 
+export function openMiniCalendar() {
+    miniLocalDate = dayjs(overlay.date);
+    syncMiniInputs();
+    createMiniCalendar(miniLocalDate);
+    showModal.classList.add("show-mini-calendar");
+}
 
- export function setuserDate(e){
-    
-        const year = yearInput.value.trim(); //evito spazi vuoti
-        const month = monthInput.value.trim();
-        const day = dayInput.value.trim();
+export function closeMiniCalendar() {
+    showModal.classList.remove("show-mini-calendar");
+}
+export function cancelMiniCalendar() {
+    miniLocalDate = dayjs(overlay.date);
+    syncMiniInputs();
+    createMiniCalendar(miniLocalDate);
+    closeMiniCalendar();
+}
 
-        if (year && month && day){
-            let date = dayjs()
-                .set("year", parseInt(year))
-                .set("month", parseInt(month) - 1)
-                .set("date", parseInt(day)).format("YYYY-MM-DD");
-                
-                // localStorage.setItem("userDate", JSON.stringify(date))
-                overlay.setDate(dayjs(date))
-                showModal.classList.remove("show-mini-calendar")
-                        
-          }else {
-                showModal.classList.remove("show-mini-calendar")
-          }
-       };
+export function commitMiniDate(){
+    if(!miniLocalDate) return;
+    overlay.setDate(dayjs(miniLocalDate));
+    closeMiniCalendar();
+}
 
-// function updateYear(){
-    
-//      yearInput.addEventListener("input", () => {
-//         console.log(yearInput.value)
-//          overlay.date = dayjs().year(yearInput.value)
-//         const year = parseInt(yearInput.value)
-//          if(year >= 1900 && year <= 2200){
-//             overlay.syncAll()
-//          }
-         
-// });
+// function applyManualDateToMini() {
+//     const year = yearInput.value.trim();
+//     const month = monthInput.value.trim();
+//     const day = dayInput.value.trim();
+
+//     if (!year || !month || !day) return false;
+
+//     const nextDate = dayjs()
+//         .set("year", parseInt(year, 10))
+//         .set("month", parseInt(month, 10) - 1)
+//         .set("date", parseInt(day, 10));
+
+//     if (!nextDate.isValid()) return false;
+
+//     miniLocalDate = nextDate;
+//     createMiniCalendar(miniLocalDate);
+//     return true;
 // }
 
-// updateYear()
 
-function updateDateinput(part, value){
-    const num = parseInt(value)
-    if(isNaN(num))return
+function updateMiniDatePart(part, value) {
+    const num = parseInt(value);
+    if (isNaN(num) || !miniLocalDate) return;
 
-    switch(part) {
+    switch (part) {
         case "year":
             if (num < 1900 || num > 2200) return;
-            overlay.date = overlay.date.year(num);
+            miniLocalDate = miniLocalDate.year(num);
             break;
         case "month":
             if (num < 1 || num > 12) return;
-            overlay.date = overlay.date.month(num - 1); // month da 0
+            miniLocalDate = miniLocalDate.month(num - 1);
             break;
         case "day":
-            if (num < 1 || num > 31) return; // puoi aggiungere check mese/anno
-            overlay.date = overlay.date.date(num);
+            if (num < 1 || num > 31) return;
+            miniLocalDate = miniLocalDate.date(num);
             break;
     }
-    overlay.syncAll();
+
+    syncMiniInputs();
+    createMiniCalendar(miniLocalDate);
 }
 
-yearInput.addEventListener("input", ()=> updateDateinput("year", yearInput.value))
-monthInput.addEventListener("input", ()=> updateDateinput("month", monthInput.value))
-dayInput.addEventListener("input", ()=> updateDateinput("day", dayInput.value))
+yearInput.addEventListener("change", () => updateMiniDatePart("year", yearInput.value));
+monthInput.addEventListener("change", () => updateMiniDatePart("month", monthInput.value));
+dayInput.addEventListener("change", () => updateMiniDatePart("day", dayInput.value));
 
+//devo ricordarmi che gli event listener accetano callBackl/reference, non posso chimare direttamente la funzione, perchè essa verrebbe eseguita senza aspettare al click
 
-function closeMiniCalendar(e){
-    if(!showModal.classList.contains("show-mini-calendar"))return;
-    if(showModal.classList.contains("show-mini-calendar")){
-        //closest contiene anche la classe del carouesello per la scelta del mese
-        if(!showModal.contains(e.target) && !e.target.closest(".big-numbers, .mini-month-item")){
-            setuserDate()
+function monthcorousel(){
+    const carousel = document.querySelector(".mini-month-btn");
+    const monthCaroseul = document.querySelector(".month-lists")
+    const months = Array.from({length: 12}, (_, i) => dayjs().month(i).format("MMMM"))
+    carousel.addEventListener("click",()=>{
+     monthCaroseul.classList.toggle("show-carousel")
+    } )
+  months.forEach((month, index) =>{
+    const el = createElement(monthCaroseul, "mini-month-item", month)
+        el.addEventListener("click", () => {
+            miniLocalDate = miniLocalDate.month(index);
+            syncMiniInputs();
+            createMiniCalendar(miniLocalDate);
+            monthCaroseul.classList.remove("show-carousel");
+        });
+    });
+}
+// function closeMiniCalendar(e){
+//     if(!showModal.classList.contains("show-mini-calendar"))return;
+//     if(showModal.classList.contains("show-mini-calendar")){
+//         //closest contiene anche la classe del carouesello per la scelta del mese
+//         if(!showModal.contains(e.target) && !e.target.closest(".big-numbers, .mini-month-item")){
+//             setuserDate()
            
-        }
-    }
+//         }
+//     }
+// }
+
+
+// document.addEventListener("click", closeMiniCalendar)
+
+function selectDays(e){
+    const miniGrid = document.querySelector(".mini-boxes-container")
+    if (!miniGrid) return;
+
+    miniGrid.addEventListener("click",(e) => {
+        const selectedDay = e.target.dataset.day
+        if (!selectedDay) return;
+        miniLocalDate = dayjs(selectedDay);
+        syncMiniInputs();
+        createMiniCalendar(miniLocalDate);
+    })
 }
-
-    //  document.addEventListener("keyup", (e) => {
-    //             if (e.key === "Enter"){  
-    //                     setuserDate()
-                        
-    //               }})
-
-document.addEventListener("click", closeMiniCalendar)
-
 
 export function createMiniCalendar(newDate){
-    // const miniMonth = globalDate.format("MMMM")
-
     miniCalendar.innerHTML = "";
+
     const miniMonth = newDate.month(newDate.month()).format("MMMM");
     const miniYear = newDate.year()
+    
     const div = document.createElement("div")
     div.classList.add("mini-container")
 
@@ -139,6 +175,26 @@ export function createMiniCalendar(newDate){
 
      createMonthGrid(newDate, gridCalendar, config.mini)
      monthcorousel()
+     selectDays()
+     // actions
+    const actionsCont = document.createElement("div");
+    actionsCont.classList.add("mini-actions");
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.classList.add("mini-cancel-btn");
+    cancelBtn.setAttribute("type", "button");
+    cancelBtn.innerText = "Annulla";
+    cancelBtn.addEventListener("click", cancelMiniCalendar);
+
+    const saveBtn = document.createElement("button");
+    saveBtn.classList.add("mini-save-btn");
+    saveBtn.setAttribute("type", "button");
+    saveBtn.innerText = "Salva";
+    saveBtn.addEventListener("click", commitMiniDate);
+
+    actionsCont.appendChild(cancelBtn);
+    actionsCont.appendChild(saveBtn);
+    div.appendChild(actionsCont);
 }
 //il return del div mi serve perchè così el viene associato a quel elemento del DOm ovvero il div appunto
 function createElement(father, elClass, el){
@@ -148,27 +204,10 @@ function createElement(father, elClass, el){
     div.innerText = el
     return div
 }
-//devo ricordarmi che gli event listener accetano callBackl/reference, non posso chimare direttamente la funzione, perchè essa verrebbe eseguita senza aspettare al click
-
-function monthcorousel(){
-    const carousel = document.querySelector(".mini-month-btn");
-    const monthCaroseul = document.querySelector(".month-lists")
-    const months = Array.from({length: 12}, (_, i) => dayjs().month(i).format("MMMM"))
-    carousel.addEventListener("click",()=>{
-     monthCaroseul.classList.toggle("show-carousel")
-    } )
-  months.forEach((month, index) =>{
-    const el = createElement(monthCaroseul, "mini-month-item", month)
-        el.addEventListener("click", () => {
-        overlay.date = overlay.date.month(index)
-        overlay.syncAll()
-        monthCaroseul.classList.remove("show-carousel")
-  })
-
-  } )
-}
 
 
-updateMIniStates()
-createMiniCalendar(overlay.date)
-setuserDate()
+
+
+// syncMiniInputs()
+// createMiniCalendar(overlay.date)
+// setuserDate()

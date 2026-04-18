@@ -38,7 +38,7 @@ const grid = document.querySelector(".month-structure");
         ` )
     }
     const secondRow = document.createElement("article")
-        secondRow.classList.add("boxes-container")
+        secondRow.classList.add(`${gridConfig.boxesContainer}`)
         gridType.appendChild(secondRow)
     for ( let i=0; i<42; i++) {
         let dataDayID, dayNumber, dayClass, today;

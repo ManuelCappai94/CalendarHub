@@ -1,5 +1,6 @@
 import dayjs from "./day.js";
 import { isNow } from "./isNow.js";
+import { openMiniCalendar } from "./utils/miniCalendar.js";
 
 //elementi bottone
 const monthBtn = document.getElementById("month-btn");
@@ -20,7 +21,7 @@ const dayView = document.querySelector(".day-view");
   
 
   allOverlays.forEach(overlay => {
-        overlay.addEventListener("click", dateModal)
+        overlay.addEventListener("click", openMiniCalendar)
   })
 
 // modal per selezionare la data
@@ -38,9 +39,9 @@ document.addEventListener("keyup", (e) => {
         }
 })
 
-function dateModal(){       
-        showModal.classList.toggle("show-mini-calendar"); 
-        };
+// function dateModal(){       
+//         showModal.classList.toggle("show-mini-calendar"); 
+//         };
 
  
     
