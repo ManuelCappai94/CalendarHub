@@ -3,27 +3,7 @@
 
 import dayjs from "./day.js";
 
-// function getData(){
-//         let stored = localStorage.getItem("userDate");
-//          return stored 
-// }
 
-// getData()
-// let savedDate = getData();
-// let globalDate ;
-
-
-
-// function displayGrid(){
-// if (savedDate){
-//      globalDate = dayjs(savedDate) ;
-// } else {
-//     globalDate = dayjs()
-// }
-// // console.log(globalDate)
-// // return globalDate
-// }
-// displayGrid()
 
 //la soluzione è fare gestire sia inizializzazione data e salvataggio data a globalDate, per poi chiamare il metodo all'interno del miniCalendario
 const globalDate = {

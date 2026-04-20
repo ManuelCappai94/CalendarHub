@@ -82,11 +82,4 @@ const grid = document.querySelector(".month-structure");
         }
 
 
-
-
-
-
-
-createMonthGrid(vistaCorrente, grid, config.main)
-
 export default createMonthGrid

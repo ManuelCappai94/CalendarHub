@@ -95,7 +95,7 @@ export default function createWeekGrid (currentview) {
 };
 
 
-createWeekGrid(currentview)
+
 
 
 

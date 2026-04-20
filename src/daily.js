@@ -58,6 +58,6 @@ function createDailyGrid(currentview){
    }
 }
 
-createDailyGrid(currentview)
+
 
 export default createDailyGrid ;

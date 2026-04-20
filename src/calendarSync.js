@@ -2,9 +2,8 @@ import createMonthGrid from "./month.js";
 import createWeekGrid from "./week.js";
 import createDailyGrid from "./daily.js";
 import globalDate from "./state.js";
-import { isNow } from "./isNow.js";
+import { isNow } from "./utils/isNow.js";
 import dayjs from "./day.js";
-// import { commitMiniDate } from "./utils/miniCalendar.js";
 import { config } from "./utils/config/config.js";
 import openModal from "./eventCreation/eventModal.js";
 import { theme } from "./utils/theme.js";
@@ -12,13 +11,6 @@ import { theme } from "./utils/theme.js";
 const grid = document.querySelector(".month-structure");
 const weekGrid = document.getElementById("full-week-view");
 const dayGrid = document.getElementById("full-day-view");
-
-
-        
-
-// console.log(highLightMonth)
-
-
 const currentMonthDisplay = document.querySelector(".big-numbers.text") ;
 const currentYearDisplay = document.querySelector(".big-numbers.year");
 const displayOverlayWeek = document.querySelector(".display-overlay.week") ;
@@ -37,14 +29,8 @@ const rightArrowDay = currentDailyDisplay.nextElementSibling;
 const modalEvents = document.querySelector(".event-container")
 
 
-
-
-
-
-
  class CalendarLogic {
     constructor () {
-        
         this.state = globalDate
         this.date = globalDate.date;
         this.currentMonth = this.date.month() +1;
@@ -79,21 +65,17 @@ const modalEvents = document.querySelector(".event-container")
         this.updateOverlayDisplay();
         this.highLightDayinMonth()
         this.highLightDay()
-        isNow()  
-        // syncMiniInputs()
-        // createMiniCalendar(this.date)
+        // isNow()  
         theme(this.date)
     }
 ///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.
     nextMonth(){
-        
         this.showedMonth++;
         this.date = this.date.add(1, "month");
         if(this.showedMonth > 12){
             this.showedMonth= 1;
             this.year++;
         }
-        
     }
     prevMonth(){
         this.showedMonth--;
@@ -102,7 +84,6 @@ const modalEvents = document.querySelector(".event-container")
             this.showedMonth = 12;
             this.year--;
        }
-       
     }
     prevWeek(){
         this.date = this.date.subtract(1, "week");
@@ -118,7 +99,6 @@ const modalEvents = document.querySelector(".event-container")
         if(this.currentWeek > 52){
             this.year++;
         }
-     
     }
     prevDay(){
         this.date = this.date.subtract(1, "day");
@@ -127,7 +107,6 @@ const modalEvents = document.querySelector(".event-container")
             this.dayOfYear = 365;
             this.year--;
         }
-    
     }
     nextDay(){
         this.date = this.date.add(1, "day");
@@ -163,69 +142,31 @@ const modalEvents = document.querySelector(".event-container")
         }
         
        })
-    //     highLight.forEach((day)=> {
-    //         const box = day.querySelectorAll(".week-box"); 
-    //         const halfbox = day.querySelectorAll(".week-half-box");
-    //             if (day.dataset.day === this.date.format("YYYY-MM-DD") ){
-    //                 box.forEach(child => child.classList.add("is-today"));
-    //                 halfbox.forEach(child => child.classList.add("is-today"));
-    //             } 
-    //    }) 
     }
-
-  
 }
 export const overlay = new CalendarLogic
 
-const displayMonth = overlay.date.month(overlay.showedMonth).format("MMMM");
-const currentMonday = overlay.date.weekday(0).format("DD MMMM");
-const currentSunday = overlay.date.weekday(6).format("DD MMMM");
-const showDailyDate = overlay.date.format("dddd, DD MMMM");
- const year = overlay.year;
+function initNavInfo(){
+    const displayMonth = overlay.date.month(overlay.showedMonth).format("MMMM");
+    const currentMonday = overlay.date.weekday(0).format("DD MMMM");
+    const currentSunday = overlay.date.weekday(6).format("DD MMMM");
+    const showDailyDate = overlay.date.format("dddd, DD MMMM");
+    const year = overlay.year;
 
-//  console.log(overlay)
-currentMonthDisplay.innerHTML=`${displayMonth}`;
-currentWeekDisplay.innerText =`${currentMonday} - ${currentSunday}`
-currentDailyDisplay.innerHTML=`${showDailyDate}`
-currentYearDisplay.innerHTML= `${year}`;
+    currentMonthDisplay.innerHTML=`${displayMonth}`;
+    currentWeekDisplay.innerText =`${currentMonday} - ${currentSunday}`
+    currentDailyDisplay.innerHTML=`${showDailyDate}`
+    currentYearDisplay.innerHTML= `${year}`;
+}
 
-
-rightArrowMonth.addEventListener("click", () => {
-    overlay.nextMonth();
-    overlay.syncAll()
- 
-})
-
-leftArrowMonth.addEventListener("click", () =>{
-    overlay.prevMonth();
-    overlay.syncAll()
-
-})
-
-leftArrowWeek.addEventListener("click", () => {
-    overlay.prevWeek();
-    overlay.syncAll()
- 
-})
-
-rightArrowWeek.addEventListener("click", () => {
-    overlay.nextWeek();
-    overlay.syncAll()
-   
-})
-
-leftArrowDay.addEventListener("click", () => {
-    overlay.prevDay();
-    overlay.syncAll()
-})
-    
-rightArrowDay.addEventListener("click", () =>{
-    overlay.nextDay();
-    overlay.syncAll()
-})
+function highlightDayMonth(button) {
+    const selectedDate = button.dataset.day;
+    if (!selectedDate) return;
+    overlay.setDate(dayjs(selectedDate));
+//non serve syncAll anche qua perchè viene chiamato da setdate
+}
 
 
-//click sulla casella numero mensile
 function handleMonthGridClick(e){
     const selectedBtn = e.target.closest('[data-action="select-date"]')
     const cell = e.target.closest('[data-action="create-event"]')
@@ -239,41 +180,19 @@ function handleMonthGridClick(e){
         openModal(e)
         return
     }
-
-}
-
-
-
-///click sul mese
-///config è da passare pure qui per cambiare il colore di selected
-function highlightDayMonth(button) {
-    
-const selectedDate = button.dataset.day;
-  if (!selectedDate) return;
-
-  overlay.setDate(dayjs(selectedDate));
-  console.log(button.dataset)
-//non serve syncAll anche qua perchè viene chiamato da setdate
-
 }
 
 function highLightWeek(e){
  let highLight = e.target.parentElement.parentElement.dataset.day
-    console.log(highLight)
-    overlay.date = dayjs(highLight)
-    overlay.syncAll()
+    // anche qua non serve syncAll, basta passargli setDate che chiama poi syncAll
+    overlay.setDate(dayjs(highLight))
 }
-
-
-//click sulla settimana
 function OpenModalWeek (e){
-    // const selectday = document.querySelectorAll(".day-name");
     const selecthour = document.querySelectorAll(".week-box");
     const selectHalfhour = document.querySelectorAll(".week-half-box")
 
-    // selectday.forEach( cell => cell.classList.remove("selected-week"));
-    selecthour.forEach( cell => cell.classList.remove("selected-week"));
-    selectHalfhour.forEach( cell => cell.classList.remove("selected-week"));
+        selecthour.forEach( cell => cell.classList.remove("selected-week"));
+        selectHalfhour.forEach( cell => cell.classList.remove("selected-week"));
     
     const box = e.target.closest(".week-box, .week-half-box");
         if (!box) return;
@@ -288,7 +207,6 @@ function OpenModalWeek (e){
         e.target.previousElementSibling.classList.add("selected-week")
     }
    openModal(e)
-  
 }
 
 function handleClickWeek(e){
@@ -313,19 +231,51 @@ const selectHour = document.querySelectorAll(".day-box");
         if (!box) return;
 
     if( e.target.classList.contains("day-box")) {
-    e.target.nextElementSibling.classList.add("selected-time")   
+        e.target.nextElementSibling.classList.add("selected-time")   
     } else if (e.target.classList.contains("day-half-box")){
         e.target.previousElementSibling.classList.add("selected-time")
     }
- e.target.classList.add("selected-time");
+        e.target.classList.add("selected-time");
     if( e.target.closest(".day-box, .day-half-box")){
         openModal(e)
     }
- 
 };
 
 
-// grid.addEventListener("click", highlightDayMonth)
-grid.addEventListener("click", handleMonthGridClick)
-weekGrid.addEventListener("click", handleClickWeek )
-dayGrid.addEventListener("click", handleDailyClick)
+
+function bindCalendarEvents(){
+    rightArrowMonth.addEventListener("click", () => {
+        overlay.nextMonth();
+        overlay.syncAll()
+    })
+    leftArrowMonth.addEventListener("click", () =>{
+        overlay.prevMonth();
+        overlay.syncAll()
+    })
+    leftArrowWeek.addEventListener("click", () => {
+        overlay.prevWeek();
+        overlay.syncAll()
+    })
+    rightArrowWeek.addEventListener("click", () => {
+        overlay.nextWeek();
+        overlay.syncAll()
+    })
+    leftArrowDay.addEventListener("click", () => {
+        overlay.prevDay();
+        overlay.syncAll()
+    })  
+    rightArrowDay.addEventListener("click", () =>{
+        overlay.nextDay();
+        overlay.syncAll()
+    })
+    grid.addEventListener("click", handleMonthGridClick)
+    weekGrid.addEventListener("click", handleClickWeek )
+    dayGrid.addEventListener("click", handleDailyClick)
+}
+
+export default function initCalendar(){
+    initNavInfo()
+    bindCalendarEvents()
+    //in questo modo faccio partire la costruzione della griglia del mese senza dover chiamare la stessa funzione a parte, nell'init principale in index 
+    overlay.syncAll()
+}

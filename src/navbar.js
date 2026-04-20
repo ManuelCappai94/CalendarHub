@@ -1,6 +1,8 @@
 import dayjs from "./day.js";
-import { isNow } from "./isNow.js";
+import { isNow } from "./utils/isNow.js";
 import { openMiniCalendar } from "./utils/miniCalendar.js";
+import { overlay } from "./calendarSync.js";
+import { initTodo } from "./to-do-list/toDo.js";
 
 //elementi bottone
 const monthBtn = document.getElementById("month-btn");
@@ -12,51 +14,17 @@ const monthView = document.querySelector(".month-view");
 const weekView = document.querySelector(".week-view");
 const dayView = document.querySelector(".day-view");
 
-// //overlay che cambia con la vista, bisogna selezionarli 1 ad uno;
-  const OverlayMonth = document.querySelector(".display-overlay.month");
-  const OverlayWeek = document.querySelector(".display-overlay.week");
-  const OverlayDay = document.querySelector(".display-overlay.day");
-//   const currentMonthDisplay = document.querySelector(".big-numbers.text") ;
-  const allOverlays = document.querySelectorAll(".big-numbers.text")
-  
+const OverlayMonth = document.querySelector(".display-overlay.month");
+const OverlayWeek = document.querySelector(".display-overlay.week");
+const OverlayDay = document.querySelector(".display-overlay.day");
 
-  allOverlays.forEach(overlay => {
-        overlay.addEventListener("click", openMiniCalendar)
-  })
-
-// modal per selezionare la data
-
-const showModal = document.querySelector(".day-select");
+const allOverlays = document.querySelectorAll(".big-numbers.text")
 const reset = document.querySelector(".reset");
+const newTodo = document.querySelector(".new-btn")
 
-
-// currentMonthDisplay.addEventListener("click",dateModal);
- 
-
-document.addEventListener("keyup", (e) => {
-        if (e.key === "p"){
-                localStorage.clear()
-        }
-})
-
-// function dateModal(){       
-//         showModal.classList.toggle("show-mini-calendar"); 
-//         };
-
- 
-    
-//creo lo state, il numero corrisponderà al targhet index negli array
 let currentState = 0;
-monthView.classList.add("show-section");
-OverlayMonth.classList.add("show-display");
- ////reset
 
-reset.addEventListener("click", function(){
-          localStorage.removeItem("userDate");
-          location.reload();  
-        })
-
-   ///decido la schermata da visualizzare in base all'index che passo alla funzione, nel forEach mi serve anche il secono parametro che accetta cosi che posso settare l'index corretto. questo secondo parametro poi lo passo al toggle, perchè? perchè toggle accetta due parametri, il primo è il token dove, che è la stringa della classe, il secondo è il paramentro force. è un booleano, che lo trasforma in un one-way-only operator, cioe  che la classe sarà solo tolta e non aggiunta e viceversa. quindi si puo utilizzare per indicare quale classe deve essere toccata
+///decido la schermata da visualizzare in base all'index che passo alla funzione, nel forEach mi serve anche il secono parametro che accetta cosi che posso settare l'index corretto. questo secondo parametro poi lo passo al toggle, perchè? perchè toggle accetta due parametri, il primo è il token dove, che è la stringa della classe, il secondo è il paramentro force. è un booleano, che lo trasforma in un one-way-only operator, cioe  che la classe sarà solo tolta e non aggiunta e viceversa. quindi si puo utilizzare per indicare quale classe deve essere toccata
 function switchView(index){
         const gridView = [monthView, weekView, dayView]
         const overlay = [OverlayMonth, OverlayWeek, OverlayDay]
@@ -67,26 +35,48 @@ function switchView(index){
         }
 }
 
-    monthBtn.addEventListener("click", () => {
-         switchView(0)
-    }
-       
-     )
+function initDefaultView(){
+        currentState = 0;
+        monthView.classList.add("show-section");
+        OverlayMonth.classList.add("show-display");
 
-   weekBtn.addEventListener("click", () => {
+}
+function bindNavEvents(){
+        allOverlays.forEach(overlay => {
+                overlay.addEventListener("click", openMiniCalendar)
+        })
+        monthBtn.addEventListener("click", () => {
+         switchView(0)
+        })
+
+        weekBtn.addEventListener("click", () => {
          switchView(1)
-   }
-       
-    )
+         isNow()
+        })
 
        dayBtn.addEventListener("click", () =>{
          switchView(2)
-            isNow()
-       }
-       
-   )
+         isNow()
+        })
+        reset.addEventListener("click", function(){
+          localStorage.removeItem("userDate");
+          overlay.setDate(dayjs())
+        })
+        newTodo.addEventListener("click", initTodo)
+}
+
+export function initNavbar() {
+    initDefaultView();
+    bindNavEvents();
+}
+
+
+
+
+
+
+    
    
 
 
 
-// export {showModal}

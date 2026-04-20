@@ -20,4 +20,4 @@ export const theme = (date) => {
     
 }
 
-theme(dayjs())
+//non serve importare theme nell'index, perchè lo chiama syncAll, che viene già passato nell'index
