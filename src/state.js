@@ -1,8 +1,5 @@
-//problema da risolvere, globaldate viene deciso una volta sola, quindi mi porta ad un caricamneto della pagina, devo syncarlo con syncall, senza creare una dipendenza circolare
-
 
 import dayjs from "./day.js";
-
 
 
 //la soluzione è fare gestire sia inizializzazione data e salvataggio data a globalDate, per poi chiamare il metodo all'interno del miniCalendario

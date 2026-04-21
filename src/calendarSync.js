@@ -65,7 +65,6 @@ const modalEvents = document.querySelector(".event-container")
         this.updateOverlayDisplay();
         this.highLightDayinMonth()
         this.highLightDay()
-        // isNow()  
         theme(this.date)
     }
 ///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.

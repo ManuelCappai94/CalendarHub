@@ -3,6 +3,7 @@ import { isNow } from "./utils/isNow.js";
 import { openMiniCalendar } from "./utils/miniCalendar.js";
 import { overlay } from "./calendarSync.js";
 import { initTodo } from "./to-do-list/toDo.js";
+import { resetTutorial } from "./tutorial.js";
 
 //elementi bottone
 const monthBtn = document.getElementById("month-btn");
@@ -21,6 +22,7 @@ const OverlayDay = document.querySelector(".display-overlay.day");
 const allOverlays = document.querySelectorAll(".big-numbers.text")
 const reset = document.querySelector(".reset");
 const newTodo = document.querySelector(".new-btn")
+const tutorialBtn = document.querySelector(".tutorial-btn")
 
 let currentState = 0;
 
@@ -63,6 +65,7 @@ function bindNavEvents(){
           overlay.setDate(dayjs())
         })
         newTodo.addEventListener("click", initTodo)
+        tutorialBtn.addEventListener("click", resetTutorial )
 }
 
 export function initNavbar() {

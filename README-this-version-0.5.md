@@ -1,3 +1,14 @@
+# 🧩 Version 0.5.5
+
+### ✨ New features
+- Added onboarding tutorial system with guided slides
+- Integrated tutorial trigger button in the navbar
+
+### 🛠 Improvements
+- refactored calendar initialization logic
+- Improved UX for first-time users
+- Minor layout refinements
+---
 # 🧩 Version 0.5 – Calendar Hub
 
 ## 📝 Description

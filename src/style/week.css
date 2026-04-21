@@ -10,7 +10,7 @@
 #full-week-view {
   display: flex;
   overflow-x: auto;
-  scrollbar-width: none; /* Firefox */ 
+  /* scrollbar-width: none; 
   /* background-color: var(--body); */
 }
   
@@ -21,14 +21,16 @@
     display:block;
 }
 
+.ul-week-time{
+    position: absolute;
+    z-index: 40;   
+}
 /* caselle contenente orario */
 .time-week {
-   
     padding:0;
-  
+    
+
 }
-
-
 
 .time-lable {
 
@@ -39,6 +41,7 @@
     background-color: var(--timeCell); 
     border-left: 2px solid black;
     border-right: 2px solid black; 
+    
 }
 
 .hour-lable {
@@ -55,9 +58,7 @@
       margin-top:4rem; 
       border-top: 1px solid black;
 }
-.midnight-box {
-        
-}
+
 
 /* caselle del giorno */
 .week-structure {
@@ -66,9 +67,13 @@
     scroll-snap-align: start;
     /* background: var(--lighter); */
     z-index: 5;
+
    
 }
- 
+ .first-coloumn{
+    margin-left: 2.8rem;
+ }
+
 .week-day-display {
     position: relative;
     width: 100%;
@@ -166,11 +171,21 @@ padding:0;
 }
 
 @media  screen and (min-width: 992px) {
+
 #full-week-view {
      display: grid;
     grid-template-columns: 5rem repeat(7, 1fr);
     grid-template-rows: repeat(24, 5rem);  
+     scrollbar-width: none; 
+   
 }
+.ul-week-time{
+    position: static;
+    
+}
+.first-coloumn{
+    margin-left: 0;
+ }
  .time-lable {
     width:  76px;
     height: 82px;

@@ -39,7 +39,7 @@ export default function createWeekGrid (currentview) {
     }; 
 
     for(let j = 0 ; j < 7; j++){
-        let weekNumber, dayClass;
+        let weekNumber, dayClass, firstColoumn;
         
         //  weekNumber = parseInt(monday) + j ;
         let firstDayOfWeek = currentview.weekday(j );
@@ -53,8 +53,13 @@ export default function createWeekGrid (currentview) {
        } else {
         dayClass = "normal-week"
        }
+       if(j === 0){
+        firstColoumn = "first-coloumn"
+       } else {
+        firstColoumn = ""
+       }
       weekGrid.insertAdjacentHTML("beforeend", `
-                    <div class="week-structure">
+                    <div class="week-structure ${firstColoumn}">
                     <ul class="day-name ${dayClass}" data-day=${dataDay}>
                         <li class="week-day-display">
                         <button type="button" class="header-btn">

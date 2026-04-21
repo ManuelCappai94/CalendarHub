@@ -20,6 +20,7 @@ The project focuses on **state synchronization**, **interactive UI design**, and
 - Dynamic seasonal background system
 - Responsive layout
 - Modular architecture (separated logic and UI)
+- Dedicated tutorial system 
 
 ---
 

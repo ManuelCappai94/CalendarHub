@@ -1,0 +1,88 @@
+.tutorial-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.tutorial-overlay.show{
+  display: flex;
+}
+.tutorial-close{
+  position: sticky;
+  left: 90%;
+  margin-bottom: 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.tutorial-modal{
+  width: min(900px, 90vw);
+  background: var(--textModal);
+  border-radius: 16px;
+  padding: 20px;
+  position: relative;
+  
+}
+
+.tutorial-content{
+  
+  gap: 20px;
+}
+
+.tutorial-image-wrapper{
+  display: flex;
+  
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.tutorial-image{
+  width: 100%;
+  /* display: block; */
+  border-radius: 12px;
+  height: auto;
+  object-fit: contain;
+}
+
+.tutorial-text{
+  flex: 1;
+}
+
+.tutorial-text h2, .tutorial-text p {
+
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+.tutorial-actions{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+@media screen and (min-width: 992px) {
+.tutorial-modal{
+    min-height: 400px;
+}
+.tutorial-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+}
+.tutorial-text{
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.tutorial-text h2{
+    font-size: 2rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+}
