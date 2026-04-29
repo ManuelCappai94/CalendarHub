@@ -2,11 +2,18 @@ import dayjs from "../day.js";
 import {  overlay } from "../calendarSync.js";
 import createMonthGrid from "../month.js";
 import { config } from "./config/config.js";
+import createElement from "./helpers/createElement.js";
+import { updateEventDraft } from "./events/eventDraft.js";
+import { updateEventDateUI } from "./events/eventsUI.js";
 
 
-
+const calendarContainer = document.getElementById("mini-calendar")
+const displayOverlay = document.querySelectorAll(".display-overlay")
 const miniCalendar = document.querySelector(".mini-calendar-container")
 const showModal = document.querySelector(".day-select");
+const eventDateDiv = document.querySelector(".event-date")
+const miniCalendarLayer = document.querySelector(".mini-calendar-layer")
+
 
 
 let yearInput = document.querySelector(".input-year");
@@ -14,6 +21,7 @@ let monthInput = document.querySelector(".input-month");
 let dayInput = document.querySelector(".input-day");
 
 let miniLocalDate = null;
+let isEvent = false;
 
  function syncMiniInputs(){
     if (!miniLocalDate) return;
@@ -22,15 +30,43 @@ let miniLocalDate = null;
     dayInput.value = miniLocalDate.format("DD");
 }
 
-export function openMiniCalendar() {
+export function openMiniCalendar(type) {
+    let display, top, left;
+
     miniLocalDate = dayjs(overlay.date);
     syncMiniInputs();
     createMiniCalendar(miniLocalDate);
-    showModal.classList.add("show-mini-calendar");
+    miniCalendarLayer.classList.add("show-mini-calendar-layer")
+    if(type === "normal"){
+        isEvent = false;
+        showModal.classList.add("show-mini-calendar");
+        displayOverlay.forEach(item => {
+           display = item.closest(".show-display")
+           if(!display)return
+            const displayRect = display.getBoundingClientRect()
+           top = displayRect.top
+           left = displayRect.left + 150
+        })
+        
+    }
+    if(type === "event"){
+        isEvent = true;
+        showModal.classList.add("show-mini-calendar");
+        const eventDateDivRect =  eventDateDiv.getBoundingClientRect()
+        top = eventDateDivRect.top - miniCalendar.clientHeight/2
+        left = eventDateDivRect.left 
+    }
+
+     calendarContainer.style.top = `${top}px`
+     calendarContainer.style.left = `${left}px`
 }
 
 export function closeMiniCalendar() {
+    miniCalendarLayer.classList.remove("show-mini-calendar-layer")
     showModal.classList.remove("show-mini-calendar");
+    calendarContainer.style.top = ""
+    calendarContainer.style.left = ""
+    isEvent = false
 }
 export function cancelMiniCalendar() {
     miniLocalDate = dayjs(overlay.date);
@@ -41,7 +77,13 @@ export function cancelMiniCalendar() {
 
 export function commitMiniDate(){
     if(!miniLocalDate) return;
-    overlay.setDate(dayjs(miniLocalDate));
+    if(!isEvent){
+        overlay.setDate(dayjs(miniLocalDate));
+    } else {
+        updateEventDraft("date", miniLocalDate.format("YYYY-MM-DD"))
+        updateEventDateUI(miniLocalDate.format("YYYY-MM-DD"))
+    }
+   
     closeMiniCalendar();
 }
 
@@ -102,7 +144,7 @@ function monthcorousel(){
      monthCaroseul.classList.toggle("show-carousel")
     } )
   months.forEach((month, index) =>{
-    const el = createElement(monthCaroseul, "mini-month-item", month)
+    const el = createElement(monthCaroseul, "mini-month-item", month, "div")
         el.addEventListener("click", () => {
             miniLocalDate = miniLocalDate.month(index);
             syncMiniInputs();
@@ -197,13 +239,7 @@ export function createMiniCalendar(newDate){
     div.appendChild(actionsCont);
 }
 //il return del div mi serve perchè così el viene associato a quel elemento del DOm ovvero il div appunto
-function createElement(father, elClass, el){
-    const div = document.createElement("div")
-    div.classList.add(elClass)
-    father.appendChild(div)
-    div.innerText = el
-    return div
-}
+
 
 
 

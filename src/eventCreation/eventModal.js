@@ -1,4 +1,6 @@
 import { getData, preCompiler } from "./eventLogic.js";
+import { eventFiller } from "./eventLogic.js";
+import { cleanEventDraft } from "./eventLogic.js";
 
 const modalEvents = document.querySelector(".event-container")
 const modalOverlay = document.querySelector(".modal-overlay");
@@ -30,7 +32,7 @@ function openModal(e) {
         if(hasSpaceBelow || !hasSpaceAbove){
         top = rect.top 
         } else{
-            top = rect.bottom - modalEvents.clientHeight 
+            top = rect.bottom - modalEvents.clientHeight - 30
         }
 
         if (hasSpaceRight || !hasSpaceLeft) {
@@ -54,16 +56,20 @@ function openModal(e) {
   modalEvents.style.left = `${left}px`;
     getData(e)
     preCompiler(e)
+    
 }
 
  function closeModal(){
     closeBtn.addEventListener("click", function(){
         modalOverlay.classList.remove("show-overlay");
         modalEvents.classList.remove("show-container")
-    })
+    
     modalEvents.style.top = "";
     modalEvents.style.left = "";
+    cleanEventDraft()
+    })
 } 
 closeModal()
+eventFiller()
 
 export default openModal

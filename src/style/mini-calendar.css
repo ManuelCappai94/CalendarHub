@@ -1,9 +1,9 @@
 /* la posizione per ora è hardcodata, ma verrà poi gestita tramite getboundingclientRect, per farlo apparire in 2 punti diversi */
 #mini-calendar{
     position: fixed;
-    z-index: 500;
-    top: 5rem;
-    left: 12rem;
+    z-index: 1001;
+    top: "";
+    left: "";
     width: 10rem ;
     /* height: 40px; */
     background: var(--background);
@@ -13,6 +13,17 @@
     color: var(--textModal);
     /* backdrop-filter: blur(5px);  */
 
+}
+.mini-calendar-layer{
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+.show-mini-calendar-layer{
+  display: block;
 }
 .date-input{
     display: flex;

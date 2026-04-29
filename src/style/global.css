@@ -3,6 +3,7 @@
 /* CSS HEX */
 :root {
 --darker: #880d1eff;
+--darkerBtns: rgb(70, 7, 15);
 --navBar: rgba(221, 45, 74, 0.801);
 --body: rgba(242, 106, 140, 0.758);
 --today: #f1436ed0;

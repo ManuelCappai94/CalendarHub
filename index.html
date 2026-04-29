@@ -152,6 +152,7 @@
 </form>
 </section>
 
+<div class="mini-calendar-layer"></div>
 <section id="mini-calendar" class="day-select">
     <div class="date-input">
         <input type="text" class="input-day" placeholder="DD" maxlength="2">
@@ -190,29 +191,23 @@
             <div id="description-container">
                 <p class="desc-text"> Descrivi :</p>
                 <button type="button" class="btn-description">📃</button> <!-- questo apre un modale con un text container-->
-                    <section class="description-area " ><textarea class="description-area-text" maxlength="200" placeholder="Max 200 caratteri"></textarea> </section>
+                    <section class="description-area" ><textarea class="description-area-text" maxlength="200" placeholder="Max 200 caratteri"></textarea> </section>
                     <div class="tutorial desc "> aggiungi una descrizione!</div>
             </div>
         </article>
             
             <article class="category-selector">
-                <!-- al momento la lista la hardcodo su html, ma sarà iniettata nel dom tramite js, perchè voglio che l'utente prenda colori personalizzati -->
                  <p class="desc-text"> Categoria :</p>
                 <button id="color-btn" type="button">🎨</button>
                 
                 <div class="tutorial category "> Personalizza l'evento!</div>
-                    <ul class="color-list " >
-                          <li class="color" data-color="blue">Blue <span>🟦</span></li>
-                            <li class="color" data-color="green">Green <span>🟩</span></li>
-                            <li class="color" data-color="purple">Purple <span>🟪</span></li>
-                            <li class="color" data-color="red">Red <span>🟥</span></li>
-                </ul>
+                    <ul class="color-list" ></ul>
                     <div id="urgent-container">
                         <p class="desc-text">Urgente :</p>
                         <button id="urgent-btn" type="button" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512">
                                 <!-- da aggiungere checked per spuntare -->
-                                <path class="checkBox checked" fill="none" stroke="currentColor" stroke-linecap="round"  stroke-linejoin="round" stroke-width="32" d="M352 176L217.6 336L160 272"/>
+                                <path class="checkBox " fill="none" stroke="currentColor" stroke-linecap="round"  stroke-linejoin="round" stroke-width="32" d="M352 176L217.6 336L160 272"/>
                                 <rect class="square-checkbox" width="384" height="384" x="64" y="64" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" rx="48" ry="48"/>
                             </svg>
                         </button>
@@ -243,64 +238,33 @@
         <article id="row-time">
             <div class="time-selection ">
                 <div id="da-time">
-                    <button type="button" class="listed-time"> ⌛ </button>
-                    <input type="text" class="input-time from" placeholder="13:00"> <!-- il placeholder sarà l'orario della cella cliccata-->
-                    <!-- anche qui show-menù -->
-                    <ul class="interactive-time-list">
-                        <!-- placeholder -->
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                    </ul>
+                    <button type="button" class="listed-time from">⌛</button>
+
+                    <div class="time-input-group from">
+                    <input type="text" class="input-hour from" placeholder="13" maxlength="2">
+                    <span class="time-separator">:</span>
+                    <input type="text" class="input-minute from" placeholder="00" maxlength="2">
+                    </div>
+
+                    <ul class="interactive-time-list from">
                     
+                    </ul>
                 </div>
+
                 <div id="a-time">
-                    <button type="button" class="listed-time to"> ⏳ </button>
-                    <input type="text" class="input-time to" placeholder="14:30"> <!-- il placeholder sarà l'orario della cella cliccata-->
-                    <ul class="interactive-time-list">
-                        <!-- placeholder -->
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                         <li class="list-item">00:00</li>
-                    </ul>
+                    <button type="button" class="listed-time to">⏳</button>
+
+                    <div class="time-input-group to">
+                    <input type="text" class="input-hour to" placeholder="14" maxlength="2">
+                    <span class="time-separator">:</span>
+                    <input type="text" class="input-minute to" placeholder="30" maxlength="2">
+                    </div>
+
+                    <ul class="interactive-time-list to">
                     
+                    </ul>
                 </div>
+
             </div>
             <div id="event-repeat">
                 <p class="desc-text">Ripeti :</p>

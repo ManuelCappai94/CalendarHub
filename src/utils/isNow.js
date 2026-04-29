@@ -1,7 +1,7 @@
 
 import dayjs from "../day.js";
 
-function nowTarget(target, type){
+export function nowTarget(target, type){
     let now = dayjs().minute(0).format("HH:mm")
     let targetHour = null;
         target.forEach((hour) => {
@@ -18,19 +18,35 @@ function nowTarget(target, type){
     return targetHour
 }
 
+
+
 export function isNow(){
     const selectHourDaily = document.querySelectorAll(".day-box");
     const selectHourWeek = document.querySelectorAll(".week-box");
+    const weekTargetBox = document.querySelector(".week-box")
+    const  targetWeekDay = document.querySelector(".day-name.is-today")
+    const container = document.querySelector("#full-week-view");
+   
     
-//   nowTarget(selectHourDaily)
-  const test =  nowTarget(selectHourDaily, "day")
-  const targetWeek = nowTarget(selectHourWeek)
+  const targetDay =  nowTarget(selectHourDaily, "day")
+  const targetHourWeek = nowTarget(selectHourWeek)
 
-    if (test) {
-        test.scrollIntoView({ block: "center", behavior: "smooth" });     
+  
+
+    if (targetDay) {
+        targetDay.scrollIntoView({ block: "center", behavior: "smooth" });     
     }
-    if (targetWeek){
-        targetWeek.scrollIntoView({ block: "center", behavior: "smooth" })
-    }
+ 
+    // window.scrollTo({
+    //     top: targetHourWeek.getBoundingClientRect().top + window.scrollY - 120,
+    //     behavior: "auto"
+    //     });
+
+    container.scrollTo({
+        left: targetWeekDay.offsetLeft - container.clientWidth / 2 + weekTargetBox.clientWidth/2,
+        behavior: "smooth"
+    })
+
+  
 }
 
