@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="./src/style/modalEvent.css">
     <link rel="stylesheet" href="./src/style/mini-calendar.css">
     <link rel="stylesheet" href="./src/style/tutorial.css">
+    <link rel="stylesheet" href="./src/style/renderEvents.css">
+    <link rel="stylesheet" href="./src/style/optionsBanner.css">
     
 </head>
 <body >
@@ -197,8 +199,10 @@
         </article>
             
             <article class="category-selector">
-                 <p class="desc-text"> Categoria :</p>
-                <button id="color-btn" type="button">🎨</button>
+                <div class="category-container">
+                    <p class="desc-text"> Categoria :</p> <div class="color-preview"></div>
+                    <button id="color-btn" type="button">🎨</button>
+                </div>
                 
                 <div class="tutorial category "> Personalizza l'evento!</div>
                     <ul class="color-list" ></ul>
@@ -245,9 +249,7 @@
                     <span class="time-separator">:</span>
                     <input type="text" class="input-minute from" placeholder="00" maxlength="2">
                     </div>
-
                     <ul class="interactive-time-list from">
-                    
                     </ul>
                 </div>
 
@@ -259,9 +261,7 @@
                     <span class="time-separator">:</span>
                     <input type="text" class="input-minute to" placeholder="30" maxlength="2">
                     </div>
-
                     <ul class="interactive-time-list to">
-                    
                     </ul>
                 </div>
 
@@ -322,33 +322,27 @@
                         </li>
                     </ul>
                     <div class="close-repeat">
-                        <button class="btn save-repeat">salva</button>
-                        <button class="btn cls-repeat">chiudi</button>
+                        <button class="btn save-repeat" type="button">salva</button>
+                        <button class="btn cls-repeat" type="button">chiudi</button>
                     </div>
                 </article>
             </div>
         </article>
         <article id="notification-row">
-            <div class="options-selector">
+            <div class="notification-container">
                 <div class="notification-icon"> ⏰ </div>
                 <!-- il testo del bottone sarà l'output della selezione della lista -->
                 <button type="button" class="notification-button">5 minuti prima</button> 
-                <section class="notification-section hide">
-                    <ul class="notification-list"></ul>
-                    <li> 5 minuti prima</li>
-                    <li> 10 minuti prima</li>
-                    <li> 1 ora prima</li>
-                    <li> 2 ora prima</li>
-                    <li> 4 ora prima</li>
-                    <li> 24 ora prima</li>
-                    
-                </section>
+                
+                    <ul class="notification-list ">
+                    </ul>        
+                
             </div>
             <div id="save-event">
                 <button type="button" class="btn save-btn"> save </button> <!-- questo salva i dati nel local storage-->
             </div>
             <div id="close-event">
-                <button type="button" class="btn close-btn"> chiudi </button> <!-- questo salva i dati nel local storage-->
+                <button type="button" class="btn close-btn"> chiudi </button> 
             </div>
         </article>
 

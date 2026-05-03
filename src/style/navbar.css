@@ -8,7 +8,7 @@
     width:100%;
     box-sizing: border-box;  
     height: 8rem; /*altezza fissa, per cordinarla con il resto del body*/
-    z-index: 50; /* forza un elemento a stare sopra, crea degli starti*/
+    z-index: 100; /* forza un elemento a stare sopra, crea degli starti*/
     top: 0; /* essenziale assieme a position per tenere ferma la nav*/
      left: 0.1rem;
      padding: 0 0.5rem;
@@ -117,7 +117,7 @@
 
 .big-numbers.text.day-displayed {
      font-size: 1rem ;
-    width: 11rem;
+    /* width: 11rem; */
     margin: 0;
 }
 
@@ -236,7 +236,7 @@
 }
 .big-numbers.text.day-displayed {
      font-size: 1.4rem ;
-    width: 16rem;
+    width: 11rem;
     margin: 0;
 }
 

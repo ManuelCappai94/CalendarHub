@@ -7,6 +7,8 @@ import dayjs from "./day.js";
 import { config } from "./utils/config/config.js";
 import openModal from "./eventCreation/eventModal.js";
 import { theme } from "./utils/theme.js";
+import { renderEvents} from "./utils/events/eventRendering.js";
+import { renderExtraInfo } from "./eventCreation/infoBanner.js";
 
 const grid = document.querySelector(".month-structure");
 const weekGrid = document.getElementById("full-week-view");
@@ -50,7 +52,7 @@ const modalEvents = document.querySelector(".event-container")
         const displayMonth = this.date.month(this.date.month()).format("MMMM");
         const monday = this.date.weekday(0).format("DD MMMM");
         const sunday = this.date.weekday(6).format("DD MMMM");
-        const showDailyDate = this.date.format("dddd, DD MMMM");
+        const showDailyDate = this.date.format("DD MMMM");
         const year = this.date.year();
         currentMonthDisplay.innerHTML=`${displayMonth}`; 
         currentWeekDisplay.innerText =`${monday} - ${sunday}`
@@ -66,6 +68,7 @@ const modalEvents = document.querySelector(".event-container")
         this.highLightDayinMonth()
         this.highLightDay()
         theme(this.date)
+        renderEvents()
     }
 ///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.
     nextMonth(){
@@ -145,18 +148,18 @@ const modalEvents = document.querySelector(".event-container")
 }
 export const overlay = new CalendarLogic
 
-function initNavInfo(){
-    const displayMonth = overlay.date.month(overlay.showedMonth).format("MMMM");
-    const currentMonday = overlay.date.weekday(0).format("DD MMMM");
-    const currentSunday = overlay.date.weekday(6).format("DD MMMM");
-    const showDailyDate = overlay.date.format("dddd, DD MMMM");
-    const year = overlay.year;
+// function initNavInfo(){
+//     const displayMonth = overlay.date.month(overlay.showedMonth).format("MMMM");
+//     const currentMonday = overlay.date.weekday(0).format("DD MMMM");
+//     const currentSunday = overlay.date.weekday(6).format("DD MMMM");
+//     const showDailyDate = overlay.date.format("DD MMMM");
+//     const year = overlay.year;
 
-    currentMonthDisplay.innerHTML=`${displayMonth}`;
-    currentWeekDisplay.innerText =`${currentMonday} - ${currentSunday}`
-    currentDailyDisplay.innerHTML=`${showDailyDate}`
-    currentYearDisplay.innerHTML= `${year}`;
-}
+//     currentMonthDisplay.innerHTML=`${displayMonth}`;
+//     currentWeekDisplay.innerText =`${currentMonday} - ${currentSunday}`
+//     currentDailyDisplay.innerHTML=`${showDailyDate}`
+//     currentYearDisplay.innerHTML= `${year}`;
+// }
 
 function highlightDayMonth(button) {
     const selectedDate = button.dataset.day;
@@ -165,8 +168,15 @@ function highlightDayMonth(button) {
 //non serve syncAll anche qua perchè viene chiamato da setdate
 }
 
-
+//qua dentro fermo anche la propagazione del render del evento
 function handleMonthGridClick(e){
+    const eventElement = e.target.closest(".monthly-event");
+    if (eventElement) {
+        e.stopPropagation();
+        renderExtraInfo(eventElement, e)
+        return;
+    }
+
     const selectedBtn = e.target.closest('[data-action="select-date"]')
     const cell = e.target.closest('[data-action="create-event"]')
     if(selectedBtn){
@@ -182,7 +192,7 @@ function handleMonthGridClick(e){
 }
 
 function highLightWeek(e){
- let highLight = e.target.parentElement.parentElement.dataset.day
+ let highLight = e.target.parentElement.dataset.day
     // anche qua non serve syncAll, basta passargli setDate che chiama poi syncAll
     overlay.setDate(dayjs(highLight))
 }
@@ -196,19 +206,17 @@ function OpenModalWeek (e){
     const box = e.target.closest(".week-box, .week-half-box");
         if (!box) return;
 
-    if (!e.target.classList.contains("week-day-display")){
-        e.target.classList.add("selected-week");
-    }
-    
-    if( e.target.classList.contains("week-box")) {
-    e.target.nextElementSibling.classList.add("selected-week")   
-    } else if (e.target.classList.contains("week-half-box")){
-        e.target.previousElementSibling.classList.add("selected-week")
-    }
+ 
    openModal(e)
 }
 
 function handleClickWeek(e){
+    const eventElement = e.target.closest(".weekly-event,.week-allDay-event")
+    if(eventElement){
+         e.stopPropagation()
+        renderExtraInfo(eventElement, e)
+        return
+    }
     if(e.target.classList.contains("week-box") || e.target.classList.contains("week-half-box" )){
         OpenModalWeek(e)
     } 
@@ -222,6 +230,12 @@ function handleClickWeek(e){
 function handleDailyClick (e){
 const selectHour = document.querySelectorAll(".day-box");
     const selectHalfhour = document.querySelectorAll(".day-half-box");
+    const eventElement = e.target.closest(".daily-event, .daily-allDay-event")
+    if(eventElement){
+         e.stopPropagation()
+        renderExtraInfo(eventElement, e)
+        return
+    }
 
     selectHour.forEach( cell => cell.classList.remove("selected-time"))
     selectHalfhour.forEach( cell => cell.classList.remove("selected-time"))
@@ -273,7 +287,7 @@ function bindCalendarEvents(){
 }
 
 export default function initCalendar(){
-    initNavInfo()
+    // initNavInfo()
     bindCalendarEvents()
     //in questo modo faccio partire la costruzione della griglia del mese senza dover chiamare la stessa funzione a parte, nell'init principale in index 
     overlay.syncAll()

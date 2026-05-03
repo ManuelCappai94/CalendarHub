@@ -8,6 +8,8 @@ export const config = {
         colorBox: "set",
         colorOffset: "offset",
         today: "today",
+        eventsContainer: "monthly-events-container",
+        eventAllDay: "event-allDay-container"
     },
     mini: {
         boxesContainer: "mini-boxes-container",

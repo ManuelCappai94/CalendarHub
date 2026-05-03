@@ -75,6 +75,9 @@ const grid = document.querySelector(".month-structure");
                  ${dayNumber}
             </button>
          </div>
+         ${gridConfig.eventsContainer ? `
+            <div class="${gridConfig.eventAllDay}"></div>
+            <div class="${gridConfig.eventsContainer}"></div>` : ""}
         </div>
         `);
             

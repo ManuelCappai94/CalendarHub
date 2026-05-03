@@ -1,5 +1,6 @@
 import dayjs from "./day.js";
 import globalDate from "./state.js";
+import createElement from "./utils/helpers/createElement.js";
 
 const dayGrid = document.getElementById("full-day-view");
 
@@ -9,12 +10,18 @@ function createDailyGrid(currentview){
     dayGrid.innerHTML = "";
 
     let dataDay = currentview.format("YYYY-MM-DD");
-    const div = document.createElement("div");
-    div.classList.add("ul-day-time");
-    dayGrid.appendChild(div);
-    const list = document.createElement("ul");
-    list.classList.add("day-list");
-    div.appendChild(list);
+    const dailyDate = currentview.format("dddd, DD")
+    const dailyHeader = createElement(dayGrid, "daily-header", null, "div")
+     createElement(dailyHeader, "daily-allDay-container", null, "div")
+    createElement(dailyHeader, "daily-todo-container", null, "div")
+    const dailyMain = createElement(dayGrid, "daily-main", null, "div")
+    const div = createElement(dailyMain, "ul-day-time", null, "div" )
+    const list = createElement(div, "day-list", null, "ul")
+    dailyHeader.insertAdjacentHTML("afterbegin", `
+        <div>
+            <h1 class="daily-current-header">${dailyDate}</h1>
+        </div>
+        `)
 
     for(let i=23; i >=0; i--){
         let time = dayjs().hour(i).format("HH");
@@ -23,18 +30,16 @@ function createDailyGrid(currentview){
         list.insertAdjacentHTML("afterbegin", `
           <li class="time-lable-day">
                         <div class="hour-lable-day"><span>${time}</span></div> 
-                        <div class="half-lable-day"><span></span></div>
+                        <div class="half-lable-day"></div>
                     </li>
             `)
     }
-   const dayStructure = document.createElement("div");
-   dayStructure.classList.add("day-structure");
-   dayGrid.appendChild(dayStructure);
-
+    const dayStructure = createElement(dailyMain, "day-structure", null, "div")
+ 
    dayStructure.insertAdjacentHTML("afterbegin", `
     <ul class="daily-name" data-day=${dataDay}> </ul>
     `)
-    const dailyName = document.querySelector(".daily-name")
+    const dailyName = dayStructure.querySelector(".daily-name")
 
    for(let j=23; j>=0; j--){
     

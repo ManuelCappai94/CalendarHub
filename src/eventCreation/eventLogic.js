@@ -1,13 +1,21 @@
 import dayjs from "../day.js";
-import { eventDraft } from "../utils/events/eventDraft.js";
-import { renderColorList } from "../utils/events/createLists.js";
+import { eventDraft, validateTimeRange, timeDraft } from "../utils/events/eventDraft.js";
+import { renderColorList, renderNotificationList } from "../utils/events/createLists.js";
 import { openMiniCalendar } from "../utils/miniCalendar.js";
-import { updateEventDraft } from "../utils/events/eventDraft.js";
+import { updateEventDraft, validatorEventDraft } from "../utils/events/eventDraft.js";
 import { formatDate } from "../utils/events/eventsUI.js";
 import createElement from "../utils/helpers/createElement.js";
 import createCaroseul from "../utils/events/createLists.js";
-import { nowTarget } from "../utils/isNow.js";
+import { nowTarget } from "../utils/isNow.js"
+import { renderEvents } from "../utils/events/eventRendering.js";
+import { getEvents } from "../utils/events/eventStorage.js";
 
+
+
+
+
+const modalEvents = document.querySelector(".event-container")
+const modalOverlay = document.querySelector(".modal-overlay");
 
 const header = document.querySelector(".show-date")
 
@@ -23,6 +31,7 @@ const btnDesc = document.querySelector(".btn-description")
 const showDesc = document.querySelector(".description-area")
 const categoryBtn = document.querySelector("#color-btn")
 const colorLists = document.querySelector(".color-list")
+const colorPreview = document.querySelector(".color-preview")
 const urgentBtn = document.querySelector("#urgent-btn")
 const urgentCheckBox = urgentBtn.querySelector(".checkBox");
 const miniCalendarBtn = document.querySelector(".mini-calendar-btn")
@@ -31,10 +40,14 @@ const allDayCheckBox = allDayBtn.querySelector(".checkBox")
 const timeSelectionContainer = document.querySelector(".time-selection")
 const listedTimeBtnFrom = document.querySelector(".listed-time.from")
 const listedTimeBtnTo = document.querySelector(".listed-time.to")
-const fourthRow = document.querySelector("#row-time")
 const listedTimeFrom = document.querySelector(".interactive-time-list.from")
 const listedTimeTo = document.querySelector(".interactive-time-list.to")
-
+const repeatBtn = document.querySelector(".event-repeat-btn")
+const repeatModal = document.querySelector(".modal-repeat")
+const notificationBtn = document.querySelector(".notification-button")
+const notificationList = document.querySelector(".notification-list")
+const saveBtn = document.getElementById("save-event")
+const closeBtn = document.querySelector(".close-btn")
 
 // const urgentCheckBox = document.querySelector(".checkBox")
 // console.log(urgentCheckBox);
@@ -46,7 +59,7 @@ export const getData = (e)=>{
     let date, time;
     if(e.target.classList.contains("box-grid")){
         date = e.target.firstElementChild.dataset.day
-        time = dayjs().format("HH:mm")
+        time = dayjs().minute(0).format("HH:mm")
         return {
             date: date,
             time: time
@@ -60,6 +73,8 @@ export const getData = (e)=>{
         }
     }    
 }
+
+//da spostare initEventDraft e cleanEventDraft in EventDraft.js
 
 function initEventDraft(date, time, endTime ){
   eventDraft.title = "";
@@ -96,17 +111,28 @@ export function cleanEventDraft(){
     colorLists.querySelectorAll(".color").forEach(item => {
         item.classList.remove("color-selected")
     })
+    colorPreview.style.backgroundColor = "blue"
     if(urgentCheckBox.classList.contains("checked")){
         urgentCheckBox.classList.remove("checked")
     }
     if(allDayCheckBox.classList.contains("checked")){
         allDayCheckBox.classList.remove("checked")
+        timeSelectionContainer.classList.remove("hide-time-section")
     }
     fromHourInput.value = ""
     fromMinuteInput.value = ""
     toHourInput.value = ""
     toMinuteInput.value = ""
-}
+    if(notificationList.classList.contains("show-container")){
+        notificationList.classList.remove("show-container")
+    }
+    notificationList.style.left = ""
+
+    timeDraft.from.hour = "";
+    timeDraft.from.minute = "";
+    timeDraft.to.hour = "";
+    timeDraft.to.minute = "";
+    }
 
 
 
@@ -126,6 +152,11 @@ export function preCompiler(e){
     minute = time.slice(3, 5)
     finalHour = endTime.slice(0, 2)
     finalMinute = endTime.slice(3, 5)
+
+    timeDraft.from.hour = hour;
+    timeDraft.from.minute = minute;
+    timeDraft.to.hour = finalHour;
+    timeDraft.to.minute = finalMinute;
     
     fromHourInput.placeholder = hour
     fromMinuteInput.placeholder = minute
@@ -169,35 +200,7 @@ function inputTimeHelper(timeDraft, caseType, input, classType){
          }
 }
 
-function validateTimeRange(timeDraft){
-  const from = timeDraft.from;
-  const to = timeDraft.to;
 
-  if(
-    from.hour === "" ||
-    from.minute === "" ||
-    to.hour === "" ||
-    to.minute === ""
-    )return false;
-  //Number ritorna il numero dalla stringa, moltiplico l'ora per 60, cosi da normalizzare l'unità di misura in minuti, perchè se no sarebbe come confrontare pere con banane 
-  const fromMinutes = Number(from.hour) * 60 + Number(from.minute)
-  const toMinutes = Number(to.hour) * 60 + Number(to.minute)
-
-  if(fromMinutes >= toMinutes){
-    const alert = createElement(fourthRow, "wrong-time-alert", "orario selezionato non valido", "p")
-    setTimeout(()=>{
-        alert.remove();
-    }, 2000)
-    timeDraft.to.hour = ""
-    timeDraft.to.minute = ""
-    updateEventDraft("to", "")
-    toHourInput.value = ""
-    toMinuteInput.value = ""
-
-    return false
-  }
-  return true
-}
 
 function inputTimeReader(timeDraft){
     fromHourInput.addEventListener("change", ()=>{
@@ -236,16 +239,41 @@ function applySelectedTime(timeDraft, type, time){
     updateEventDraft(type, time);
 }
 
-export function eventFiller(){
+function closeModal(){
+   
+    modalOverlay.classList.remove("show-overlay");
+    modalEvents.classList.remove("show-container")
+    
+    modalEvents.style.top = "";
+    modalEvents.style.left = "";
+    cleanEventDraft()
+}
+
+export function saveEvent(){
+  const isValid = validatorEventDraft()
+  if(!isValid){
+    return
+  } else {
+    const newEvent = {
+      id: crypto.randomUUID(),
+      ...eventDraft
+    }
+  
+    const events = getEvents()
+
+    events.push(newEvent)
+
+    localStorage.setItem("calendarEvents", JSON.stringify(events))
+    closeModal()
+  }
+}
+
+
+export function initEventFormEvents(){
     let title, desc;
-
-    const timeDraft = {
-        from: { hour: "", minute: "" },
-        to: { hour: "", minute: "" }
-        };
-
+ 
     renderColorList()
-       //fa solo il render, meglio farlo una sola volta
+    renderNotificationList()
     createCaroseul()
 
     btnDesc.addEventListener("click", ()=>{
@@ -259,7 +287,6 @@ export function eventFiller(){
     inputDesc.addEventListener("change", ()=>{
          desc = inputDesc.value
          updateEventDraft("description", desc)
-         console.log(eventDraft)
     })
     categoryBtn.addEventListener("click", ()=>{
         colorLists.classList.toggle("show-color-list")
@@ -272,7 +299,9 @@ export function eventFiller(){
             item.classList.remove("color-selected")
         });
         li.classList.add("color-selected")
+        colorPreview.style.backgroundColor = `${li.dataset.color}`
         updateEventDraft("color", li.dataset.color)
+        colorLists.classList.remove("show-color-list")
     })
 
     urgentBtn.addEventListener("click", ()=>{
@@ -294,11 +323,35 @@ export function eventFiller(){
 
     inputTimeReader(timeDraft)
   
-    listedTimeBtnFrom.addEventListener("click", ()=>{
-        listedTimeFrom.classList.toggle("show-menù")
+    listedTimeBtnFrom.addEventListener("click", (e)=>{
+       const isOpen = listedTimeFrom.classList.toggle("show-menù")
+
+       if(isOpen){
+        const targetTime = eventDraft.from
+            const target = nowTarget(
+                listedTimeFrom.querySelectorAll(".list-item"),
+                null,
+                "cellTime",
+                targetTime
+            );
+        target?.scrollIntoView({block: "center", behavior: "auto"})
+       
+       }
     })
     listedTimeBtnTo.addEventListener("click", ()=>{
-        listedTimeTo.classList.toggle("show-menù")
+        const isOpen = listedTimeTo.classList.toggle("show-menù")
+
+        if(isOpen){
+         const targetTime = eventDraft.to
+            const target = nowTarget(
+                listedTimeTo.querySelectorAll(".list-item"),
+                null,
+                "cellTime",
+                targetTime
+            );
+        target?.scrollIntoView({block: "center", behavior: "auto"})
+        
+       }
     })
     
     listedTimeFrom.addEventListener("click", (e) => {
@@ -318,8 +371,38 @@ export function eventFiller(){
     validateTimeRange(timeDraft)
     });
 
-    console.log(timeDraft)
+    repeatBtn.addEventListener(("click"), ()=>{
+        repeatModal.classList.toggle("show-repeat-modal")
+    })
+
+    notificationBtn.addEventListener("click", ()=>{
+        const position = notificationBtn.getClientRects()[0].right
+        notificationList.style.left = position + "px"
+        notificationList.classList.toggle("show-container")
+        
+    })
+
+    notificationList.addEventListener("click", (e)=>{
+        const li = e.target.closest(".single-notification")
+        if(!li) return;
+        updateEventDraft("notification", li.innerText)
+        notificationBtn.innerText = li.innerText
+        notificationList.classList.remove("show-container")
+        
+    })
+
+    saveBtn.addEventListener("click", ()=>{
+        saveEvent()
+        renderEvents()
+        
+    })
 
 
+    closeBtn.addEventListener("click", () =>{
+        closeModal()
+        })
 }
 
+export function initEventModal(){
+    initEventFormEvents()
+}

@@ -1,0 +1,12 @@
+/*usiamo modal overlay da modalEvent*/
+.option-banner-container{
+  z-index: 999;
+  background-color: var(--navBar);
+  position: fixed;
+  display: none;
+  border: 2px solid black;
+}
+
+.show-option-banner{
+  display: block;
+}

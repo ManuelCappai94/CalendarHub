@@ -1,27 +1,22 @@
 import dayjs from "./day.js";
 import globalDate from "./state.js";
+import createElement from "./utils/helpers/createElement.js"
 
 
 const weekGrid = document.getElementById("full-week-view");
-
-
-
-
 let currentview = globalDate.date;
 
 export default function createWeekGrid (currentview) {
     weekGrid.innerHTML= "";
 
-    const div = document.createElement("div");
-    div.classList.add("ul-week-time");
-    weekGrid.appendChild(div);
-    const list = document.createElement("ul");
-    list.classList.add("time-week");
-    div.appendChild(list);
+    const div = createElement(weekGrid, "ul-week-time", null, "div")
+    const list = createElement(div, "time-week", null, "ul")
+    const weekWrapper = createElement( weekGrid, "week-wrapper", null, "div")
+    const weekHeaderRow = createElement(weekWrapper, "week-header-row", null, "div");
+    const weekDaysRow = createElement(weekWrapper, "week-days-row", null, "div");
 
-    for ( let i = 23; i >= 0; i--){ //ho dovuto inveritre la logica, per colpa del css...
+    for ( let i = 23; i >= 0; i--){ 
         let midnight;
-        //qua creo un if per ritornarmi o meno l'orario inglese
         let time = dayjs().hour(i).format("HH");
         time = time + ":00";
 
@@ -53,31 +48,33 @@ export default function createWeekGrid (currentview) {
        } else {
         dayClass = "normal-week"
        }
-       if(j === 0){
-        firstColoumn = "first-coloumn"
-       } else {
-        firstColoumn = ""
-       }
-      weekGrid.insertAdjacentHTML("beforeend", `
-                    <div class="week-structure ${firstColoumn}">
-                    <ul class="day-name ${dayClass}" data-day=${dataDay}>
-                        <li class="week-day-display">
-                        <button type="button" class="header-btn">
-                         <span class="day-label">${weekNumber} </span> 
-                         <br><br>
-                         <span 
-                            class="day-label-text"
-                             data-shrinkDays="${shrinkDays}"
-                             >
-                              ${days}
-                         </span>
-                         </button>
-                        </li>  
-                    </ul>
-                    </div>`)         
-                        } 
-                ;
-   const dayName = document.querySelectorAll(".day-name") // per usare il forEach, ho dovuto creare una nodeList, selezionado per la classe degli elementi creati dal ciclo for qua sopra;
+     
+   weekHeaderRow.insertAdjacentHTML("beforeend", `
+  <div class="week-day-display" data-day="${dataDay}">
+    <button type="button" class="header-btn">
+      <span class="day-label">${weekNumber}</span>
+      <br><br>
+      <span 
+        class="day-label-text"
+        data-shrinkDays="${shrinkDays}"
+      >
+        ${days}
+      </span>
+    </button>
+    <div class="week-header-content">
+      <div class="week-all-day-container"></div>
+      <div class="week-todo-container"></div>
+    </div> 
+  </div>
+`);
+
+weekDaysRow.insertAdjacentHTML("beforeend", `
+  <div class="week-structure">
+    <ul class="day-name ${dayClass}" data-day="${dataDay}"></ul>
+  </div>
+`);      
+        };
+   const dayName = document.querySelectorAll(".day-name") 
 
     dayName.forEach((day) => {
     for( let k=0 ; k < 24; k++) {
@@ -86,13 +83,9 @@ export default function createWeekGrid (currentview) {
     let dayOfWeek = currentview.weekday(p + 1).hour(k);
     let hour = dayOfWeek.minute(0).format("HH:mm");
     let halfHour = dayOfWeek.minute(30).format("HH:mm");
-    if (k === 0) {
-        midnight = "midnight-box";
-    } else {
-        midnight = null;
-    };
+ 
     day.insertAdjacentHTML("beforeend", `
-        <li class="week-box ${midnight}" data-time="${hour}"></li>
+        <li class="week-box" data-time="${hour}"></li>
         <li class="week-half-box" data-time=${halfHour}></li>
         `)
 };

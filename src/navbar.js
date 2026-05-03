@@ -4,6 +4,7 @@ import { openMiniCalendar } from "./utils/miniCalendar.js";
 import { overlay } from "./calendarSync.js";
 import { initTodo } from "./to-do-list/toDo.js";
 import { resetTutorial } from "./tutorial.js";
+import { renderDailyEvents, renderWeeklyEvents } from "./utils/events/eventRendering.js";
 
 //elementi bottone
 const monthBtn = document.getElementById("month-btn");
@@ -53,11 +54,13 @@ function bindNavEvents(){
 
         weekBtn.addEventListener("click", () => {
          switchView(1)
+         renderWeeklyEvents()
          isNow()
         })
 
        dayBtn.addEventListener("click", () =>{
          switchView(2)
+         renderDailyEvents()
          isNow()
         })
         reset.addEventListener("click", function(){

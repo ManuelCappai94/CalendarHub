@@ -67,7 +67,7 @@ div.box-grid  {
     border: 1px solid black;
     /* height: 5rem; */
     display:flex;
-    /* flex-direction: column; mi ha messo sopra lo span, e sotto il bottone */
+    flex-direction: column;
     align-items: flex-start;
     padding: 2px; 
     overflow: hidden; /*cosi il testo non sborda fuori */  
