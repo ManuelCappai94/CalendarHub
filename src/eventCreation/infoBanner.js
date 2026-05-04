@@ -2,10 +2,14 @@
   import createElement from "../utils/helpers/createElement.js"
   import getFloatingPosition from "../utils/helpers/floatingPositioner.js";
   import { renderEvents } from "../utils/events/eventRendering.js";
+  import { createMessage } from "../utils/helpers/createElement.js";
+  import { preCompilerEdit } from "./eventLogic.js";
+  import openModal from "./eventModal.js";
 
-  const modalOverlay = document.querySelector(".modal-overlay");
+  const modalLayer = document.querySelector(".mini-calendar-layer");
 
   let selectedCurrentID = null
+  let colorClass = null
 
   export function initOptionsBanner(currentEvent){
  
@@ -17,8 +21,7 @@
     )
   
     const close = createElement(optionsBanner, "close-banner", "x", "button")
-    
-
+  
     const infoSection = createElement(
       optionsBanner,
       "info-section",
@@ -36,6 +39,7 @@
       {html:true}
     )
     optionsBanner.querySelector(".close-banner").addEventListener("click", closeInfoBanner);
+    optionsBanner.querySelector(".edit-event-btn").addEventListener("click", handleClickEditButton)
     optionsBanner.querySelector(".delete-event-btn").addEventListener("click", deleteEventFromLocalStorage)
   }
   
@@ -46,10 +50,13 @@
     const selectedEvent = events.find(event => event.id === currentEvent.dataset.id)
     if(!selectedEvent)return
 
-    banner.style.background = selectedEvent.color
+    // banner.style.background = selectedEvent.color
+    banner.classList.add(`event-${selectedEvent.color}`)
+    colorClass = selectedEvent.color
+
     selectedCurrentID = currentEvent.dataset.id
 
-    modalOverlay.classList.add("show-overlay");
+    modalLayer.classList.add("show-mini-calendar-layer");
     banner.classList.add("show-option-banner")
 
     const rect = e.target.getBoundingClientRect()
@@ -70,23 +77,44 @@
   }
   
 function deleteEventFromLocalStorage(){
+  const banner = document.querySelector(".option-banner-container");
+  
   const events = getEvents() 
    const updatedEvents = events.filter(event => event.id !== selectedCurrentID)
+
    localStorage.setItem("calendarEvents", JSON.stringify(updatedEvents));
+
+   createMessage("l'evento è stato rimosso", banner, document.body )
    closeInfoBanner()
    renderEvents()
+}
+
+
+export function getEventFromID(){
+  const ID = selectedCurrentID;
+  const events = getEvents();
+  const currentEvent = events.find(event => event.id === ID)
+  return currentEvent
 }
   
 export function closeInfoBanner(){
   const banner = document.querySelector(".option-banner-container");
+  banner.classList.remove(`event-${colorClass}`)
     selectedCurrentID = null
-  modalOverlay.classList.remove("show-overlay")  
+    colorClass = null
+  modalLayer.classList.remove("show-mini-calendar-layer")  
   banner.classList.remove("show-option-banner")
   console.log(selectedCurrentID)
   
 }
 
+function handleClickEditButton(e){
+ const currentEvent =  getEventFromID()
+ preCompilerEdit(currentEvent)
+ openModal(e)
+ closeInfoBanner()
+}
 
-  export function initExtraInfos(){
+export function initExtraInfos(){
   initOptionsBanner()
  }

@@ -30,15 +30,16 @@ let isEvent = false;
     dayInput.value = miniLocalDate.format("DD");
 }
 
-export function openMiniCalendar(type) {
+export function openMiniCalendar(type, date) {
     let display, top, left;
 
-    miniLocalDate = dayjs(overlay.date);
-    syncMiniInputs();
-    createMiniCalendar(miniLocalDate);
+  
     miniCalendarLayer.classList.add("show-mini-calendar-layer")
     if(type === "normal"){
+        miniLocalDate = dayjs(overlay.date);
+        syncMiniInputs();
         isEvent = false;
+        createMiniCalendar(miniLocalDate);
         showModal.classList.add("show-mini-calendar");
         displayOverlay.forEach(item => {
            display = item.closest(".show-display")
@@ -50,11 +51,14 @@ export function openMiniCalendar(type) {
         
     }
     if(type === "event"){
+        miniLocalDate = dayjs(date);
+        syncMiniInputs();
         isEvent = true;
+        createMiniCalendar(miniLocalDate);
         showModal.classList.add("show-mini-calendar");
         const eventDateDivRect =  eventDateDiv.getBoundingClientRect()
         top = eventDateDivRect.top - miniCalendar.clientHeight/2
-        left = eventDateDivRect.left 
+        left = eventDateDivRect.left + 100
     }
 
      calendarContainer.style.top = `${top}px`

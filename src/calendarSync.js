@@ -5,7 +5,7 @@ import globalDate from "./state.js";
 import { isNow } from "./utils/isNow.js";
 import dayjs from "./day.js";
 import { config } from "./utils/config/config.js";
-import openModal from "./eventCreation/eventModal.js";
+import { handleOpenCreate } from "./eventCreation/eventLogic.js";
 import { theme } from "./utils/theme.js";
 import { renderEvents} from "./utils/events/eventRendering.js";
 import { renderExtraInfo } from "./eventCreation/infoBanner.js";
@@ -186,7 +186,7 @@ function handleMonthGridClick(e){
     }
     if(cell){
         e.stopPropagation()
-        openModal(e)
+        handleOpenCreate(e)
         return
     }
 }
@@ -207,7 +207,7 @@ function OpenModalWeek (e){
         if (!box) return;
 
  
-   openModal(e)
+   handleOpenCreate(e)
 }
 
 function handleClickWeek(e){
@@ -250,7 +250,7 @@ const selectHour = document.querySelectorAll(".day-box");
     }
         e.target.classList.add("selected-time");
     if( e.target.closest(".day-box, .day-half-box")){
-        openModal(e)
+       handleOpenCreate(e)
     }
 };
 

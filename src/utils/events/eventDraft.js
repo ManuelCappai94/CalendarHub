@@ -1,5 +1,5 @@
 import createElement from "../helpers/createElement.js";
-
+import { createMessage } from "../helpers/createElement.js";
 
 
 const eventContainer = document.querySelector(".event-form")
@@ -34,24 +34,7 @@ export function updateEventDraft(field, value){
     eventDraft[field] = value;
 }
 
-function createMessage(message, container){
-  const positionTop = container.getClientRects()[0].top
-  const positionLeft = container.getClientRects()[0].left + 50
-  
-    const alert = createElement(
-      eventContainer,
-      "missing-info-alert",
-        message,
-      "p"
-    )
-    setTimeout(()=>{
-      alert.remove()
-    }, 2000)
 
-    const messageContainer = document.querySelector(".missing-info-alert")
-    messageContainer.style.top = positionTop + "px"
-    messageContainer.style.left = positionLeft + "px"
-}
 
 export function validateTimeRange(timeDraft){
   const from = timeDraft.from;
@@ -69,7 +52,7 @@ export function validateTimeRange(timeDraft){
   const toMinutes = Number(to.hour) * 60 + Number(to.minute)
 
   if(fromMinutes >= toMinutes){
-    createMessage("l'orario di fine deve essere nello stesso giorno", fourthRow)
+    createMessage("l'orario di fine deve essere nello stesso giorno", fourthRow, eventContainer)
     timeDraft.to.hour = ""
     timeDraft.to.minute = ""
     updateEventDraft("to", "")
@@ -84,20 +67,20 @@ export function validateTimeRange(timeDraft){
 
 export function validatorEventDraft(){
   if(!eventDraft.title){
-    createMessage("inserisci un titolo", firstRow)
+    createMessage("inserisci un titolo", firstRow, eventContainer)
     return false
   }
   if (!eventDraft.date) {
-  createMessage("seleziona una data", dateRow);
+  createMessage("seleziona una data", dateRow, eventContainer);
   return false;
 }
   if (!eventDraft.allDay) {
     if (!eventDraft.from || !eventDraft.to) {
-      createMessage("inserisci entrambi gli orari", fourthRow);
+      createMessage("inserisci entrambi gli orari", fourthRow, eventContainer);
       return false;
     } 
      if (!validateTimeRange(timeDraft)) {
-      createMessage("seleziona un orario", fourthRow);
+      createMessage("seleziona un orario", fourthRow, eventContainer);
       return false;
     }
   }  else {

@@ -1,12 +1,54 @@
 /*usiamo modal overlay da modalEvent*/
-.option-banner-container{
-  z-index: 999;
-  background-color: var(--navBar);
+.option-banner-container {
+  min-width: 15rem;
+  max-width: 18rem;
+  z-index: 1001;
+  /* background-color: var(--navBar); */
   position: fixed;
   display: none;
-  border: 2px solid black;
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 0.2rem;
 }
-
+/*con currentColor ripesco il colore passato al banner tramite variabile*/
+.option-banner-container h2{
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+.option-banner-container p{
+  color: currentColor;
+  margin: 0.5rem 0;
+  font-family: "Joti One", serif; 
+  
+  word-break: break-word;
+}
+.option-banner-container h2{
+  margin: 0;
+}
 .show-option-banner{
   display: block;
+  
+}
+
+.close-banner{
+position: sticky;
+left: 100%;
+font-family: "Lacquer", system-ui;
+border-radius: 40px;
+border:3px solid black;
+font-size: 1.2rem;
+font-weight: bold;
+}
+.options-section{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-event-btn, .delete-event-btn{
+  border: 3px solid black;
+  width: fit-content;
+  font-family: "Lacquer", system-ui ;
+  font-weight: bold;
+  font-size: 1rem;
 }

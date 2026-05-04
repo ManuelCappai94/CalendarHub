@@ -1,5 +1,3 @@
-import { getData, preCompiler } from "./eventLogic.js";
-import { initEventFormEvents } from "./eventLogic.js";
 import getFloatingPosition from "../utils/helpers/floatingPositioner.js";
 
 
@@ -9,21 +7,15 @@ const modalOverlay = document.querySelector(".modal-overlay");
 
 
 function openModal(e) {
+    // cleanEventDraft()
     const rect = e.target.getBoundingClientRect()
     modalOverlay.classList.add("show-overlay");
     modalEvents.classList.add("show-container")
     const isDailyview = e.target.closest(".day-box, .day-half-box")
-    getFloatingPosition(modalEvents, rect, isDailyview)
-
-    getData(e)
-    preCompiler(e)
-    
+    getFloatingPosition(modalEvents, rect, isDailyview)     
 }
 
- 
-export function initEventModal(){
-    initEventFormEvents()
-}
+
 
 
 export default openModal

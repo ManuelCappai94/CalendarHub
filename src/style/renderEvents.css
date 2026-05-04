@@ -71,7 +71,7 @@ padding: 0.2rem;
     border-radius: 10px;
     /* padding: 2rem; */
     font-family: "Joti One", serif;
-    color: var(--textModal);
+    /* color: var(--textModal); */
     overflow: hidden;
     box-sizing: border-box;
     font-size: 0.7rem;
@@ -104,12 +104,12 @@ padding: 0.2rem;
 .event-blue, .event-green, .event-purple, .event-red, .event-yellow, .event-orange, .event-pink {
     opacity: 0.8;
 }
-.event-blue { background: blue; }
-.event-green { background: green; }
-.event-purple { background: purple; }
-.event-red { background: red; }
+.event-blue { background: blue; color: var(--textModal)}
+.event-green { background: green; color: var(--textModal)}
+.event-purple { background: purple; color: var(--textModal)}
+.event-red { background: red; color: var(--textModal)}
 .event-yellow{background: yellow; color: var(--background);}
-.event-orange{background: orange;}
+.event-orange{background: orange;color: var(--background)}
 .event-pink{background: pink; color: var(--background);}
 
 /* current color usa il colore del testo attuale */

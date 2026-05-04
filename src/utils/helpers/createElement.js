@@ -20,4 +20,26 @@ function createElement(father, elClass, el, tag, options = {}){
     return container
 }
 
+
+export function createMessage(message, container, father){
+  const positionTop = container.getClientRects()[0].top
+  const positionLeft = container.getClientRects()[0].left 
+  
+    const alert = createElement(
+      father,
+      "missing-info-alert",
+        message,
+      "p"
+    )
+    setTimeout(()=>{
+      alert.remove()
+    }, 2000)
+
+    const messageContainer = document.querySelector(".missing-info-alert")
+    messageContainer.style.top = positionTop + "px"
+    messageContainer.style.left = positionLeft + "px"
+}
+
+
+
 export default createElement
