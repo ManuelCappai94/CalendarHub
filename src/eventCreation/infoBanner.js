@@ -1,4 +1,4 @@
-  import { getEvents } from "../utils/events/eventStorage.js"
+  import { getEvents, deleteEventFromLocalStorage } from "../utils/events/eventStorage.js"
   import createElement from "../utils/helpers/createElement.js"
   import getFloatingPosition from "../utils/helpers/floatingPositioner.js";
   import { renderEvents } from "../utils/events/eventRendering.js";
@@ -40,7 +40,7 @@
     )
     optionsBanner.querySelector(".close-banner").addEventListener("click", closeInfoBanner);
     optionsBanner.querySelector(".edit-event-btn").addEventListener("click", handleClickEditButton)
-    optionsBanner.querySelector(".delete-event-btn").addEventListener("click", deleteEventFromLocalStorage)
+    optionsBanner.querySelector(".delete-event-btn").addEventListener("click", deleteEvent)
   }
   
   export function renderExtraInfo(currentEvent, e){
@@ -76,13 +76,10 @@
       `;
   }
   
-function deleteEventFromLocalStorage(){
+function deleteEvent(){
   const banner = document.querySelector(".option-banner-container");
   
-  const events = getEvents() 
-   const updatedEvents = events.filter(event => event.id !== selectedCurrentID)
-
-   localStorage.setItem("calendarEvents", JSON.stringify(updatedEvents));
+  deleteEventFromLocalStorage(selectedCurrentID)
 
    createMessage("l'evento è stato rimosso", banner, document.body )
    closeInfoBanner()

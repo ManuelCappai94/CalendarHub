@@ -1,0 +1,185 @@
+
+.modal-repeat{
+    display: none;
+    position: absolute;
+    top: -25dvh;
+    left: -50dvi;
+    border: 3px solid black;
+    z-index: 200;
+    background: var(--darker);
+    border-radius: 15px;
+    padding: 0.5rem;   
+    width: 20rem;
+    box-shadow: var(--light-shadow);
+    height: fit-content;
+}
+.show-repeat-modal{
+    display: flex;
+    flex-direction: column;
+}
+
+.repeat-mode-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+.repeat-mode-btn{
+    width: fit-content;
+    /* height: 1.5rem; */
+    border-radius: 10px;
+    font-family: "Lacquer", system-ui;
+}
+
+.repeat-mode-list{
+    list-style: none;
+    padding: 0.2rem;
+    display: none;
+    position: absolute;
+    margin: 0;
+    left: 100%;
+    /* transform: translateX(-50%); */
+    background-color: var(--textModal);
+    color:black;
+    border-radius: 10px;
+    border: 3px solid black;
+    width: 10rem;
+}
+.repeat-mode-list li {
+    border-bottom: 1px solid black;
+    cursor: pointer;
+    width: 100%;
+}
+
+.show-mode-list{
+    display: block;
+}
+.repeat-intervall-container{
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+}
+.intervall-input{
+    width: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+}
+.weekly-repetion-container{
+    display: none;
+}
+.show-repat-section{
+    display: flex;
+    gap: 1rem;
+}
+.weekly-repetion-list{
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.weekly-repetion-item{
+    border: 2px solid black;
+    box-shadow: var(--light-shadow);
+    background-color: var(--textModal);
+    color: black;
+    width: 1rem;
+    text-align: center;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.end-repeat-event-container{
+    display: none;
+    justify-content: space-around;
+
+}
+.open-miniCalendar-repeation-container{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.open-miniCalendar-repeation, .open-miniCalendar-custom-date{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    font-family: "Lacquer", system-ui;
+    box-shadow: var(--light-shadow);
+    background: var(--darkerBtns);
+    padding: 0;
+}
+.end-repeation-event-date{
+    font-family: "Joti One", serif;
+}
+
+.custom-dates-container{
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.open-custom-date-container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+.custom-dates-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.custom-date-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--textModal);
+    color: black;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 0.2rem 0.5rem;
+    box-shadow: var(--light-shadow);
+}
+
+.remove-custom-date{
+    border-radius: 50%;
+    cursor: pointer;
+    font-family: "Lacquer", system-ui;
+}
+
+
+.close-repeat{
+    display: flex;
+    justify-content: space-around;
+    align-items: center ;
+}
+.btn{
+    border-radius: 8px;
+    box-shadow: var(--light-shadow);
+    font-family: "Lacquer", system-ui;
+}
+.show-repat-section{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+@media screen and (min-width:992px){
+    .modal-repeat{
+    bottom: 0;
+    left: -300px;
+}
+.repeat-mode-list li:hover{
+    background-color: black;
+    color: var(--textModal);
+}
+}

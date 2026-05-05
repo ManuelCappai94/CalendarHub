@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="./src/style/tutorial.css">
     <link rel="stylesheet" href="./src/style/renderEvents.css">
     <link rel="stylesheet" href="./src/style/optionsBanner.css">
-    
+    <link rel="stylesheet" href="./src/style/modalRepeat.css">
 </head>
 <body >
     <!-- L'id della navBar verrà modificata come blocco unico -->
@@ -273,54 +273,70 @@
                 </button> 
                 <!-- questo si apre con show-repeat-modal-->
                 <article class="modal-repeat ">
-                    <section class="repeat-intervall">
-                        <div class="intervall-options">
-                            <p class="desc-text">Ripeti ogni : <input placeholder="2" class="skipped-list"> <span>giorni <!--questa variabile sarà decisa dalla selezione di intervall list--></span></p>
-                            <!-- placeholder -->
-                             <div class="intervall-list-container">
-                                <button class="intervall-btn" type="button">quotidiano</button>
-                                <!-- vuole show-menù -->
-                                <ul class="intervall-list">
-                                    <li>quotidiano</li>
-                                    <li>settimanale</li>
-                                    <li>mensile</li> 
-                                    <li>annuale</li> 
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="repeat-since">
-                           <p class="desc-text">Fino a :</p>
-                           <button class="open-minicalendar" type="button">📆</button>
-                           <span class="date-empty">
-                            <!-- data decisa nel mini-calendario -->
-                             27/01/1994
-                           </span>
-                        </div>
+                    <section class="repeat-mode-container">
+                        <p>Scegli tipo di ripezione : </p>
+                        <button type="button" class="repeat-mode-btn">
+                            quotidiano
+                        </button>
+                        <ul class="repeat-mode-list ">
+                            <li class="repeat-mode-list-item" data-repeat-type="daily">Quotidiano</li>
+                            <li class="repeat-mode-list-item" data-repeat-type="weekly">Settimanale</li>
+                            <li class="repeat-mode-list-item" data-repeat-type="monthly">Mensile</li>
+                            <li class="repeat-mode-list-item" data-repeat-type="custom">Personalizzata</li>
+                        </ul>
                     </section>
-                    <ul class="repeat-btns">
-                        <!-- 7 bttoni itterati con for -->
-                        <li>
-                            <button type="button">L</button>
+                    <section class="repeat-intervall-container show-repat-section ">
+                        <!-- assente per data personalizzata -->
+                        <p class="static-intervall-text">Intervallo :</p>
+                    
+                        <input type="text" placeholder="2" class="intervall-input">
+                        <p class="dinamic-interval-text">
+                            <!-- se tutti i giorni se intervallo = 1, ogni mese, ogni 2 mesi eccc, a seconda della modalità-->
+                             ogni 2 giorni
+                        </p>
+                    </section>
+                   <section class="weekly-repetion-container ">
+                    <!-- presente solo per ripetizione settimanale -->
+                        <p>Ripeti il:</p>
+                        <ul class="weekly-repetion-list">
+                            <li class="weekly-repetion-item">L</li>
+                            <li class="weekly-repetion-item">m</li>
+                            <li class="weekly-repetion-item">m</li>
+                            <li class="weekly-repetion-item">g</li>
+                            <li class="weekly-repetion-item">v</li>
+                            <li class="weekly-repetion-item">s</li>
+                            <li class="weekly-repetion-item">d</li>
+                        </ul>
+                   </section>
+                   <section class="end-repeat-event-container ">
+                    <div class="open-miniCalendar-repeation-container">
+                        <p>Fino al: </p>
+                        <button class="open-miniCalendar-repeation">
+                            📆
+                        </button>
+                    </div>
+                    <p class="end-repeation-event-date">
+                        <!-- contenitore per la data scelta di default skip 1 mese -->
+                        5 Marzo 2026 
+                    </p>
+                   </section>
+                   <section class="custom-dates-container show-repat-section">
+                    <div class="open-custom-date-container">
+                        <p>Date personalizzate:</p>
+                        <button class="open-miniCalendar-custom-date" type="button">
+                            📆
+                        </button>
+                    </div>
+
+                    <ul class="custom-dates-list">
+                        <!-- esempio:
+                        <li class="custom-date-item">
+                            <span>15 Dicembre 2026</span>
+                            <button type="button" class="remove-custom-date">x</button>
                         </li>
-                        <li>
-                            <button type="button">m</button>
-                        </li>
-                        <li>
-                            <button type="button">M</button>
-                        </li>
-                        <li>
-                            <button type="button">G</button>
-                        </li>
-                        <li>
-                            <button type="button">V</button>
-                        </li>
-                        <li>
-                            <button type="button">S</button>
-                        </li>
-                        <li>
-                            <button type="button">D</button>
-                        </li>
+                        -->
                     </ul>
+                </section>
                     <div class="close-repeat">
                         <button class="btn save-repeat" type="button">salva</button>
                         <button class="btn cls-repeat" type="button">chiudi</button>

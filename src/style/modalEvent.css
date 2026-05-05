@@ -423,86 +423,8 @@ margin-left: 0.5rem;
     display: flex;
     align-items: center;
     gap: 0.4rem;
-}
-
-
-.modal-repeat{
-    display: none;
-    position: absolute;
-    top: -20dvh;
-    left: -50dvi;
-    border: 3px solid black;
-    z-index: 200;
-    background: black;
-    border-radius: 15px;
-    padding: 0.5rem;
-    
-}
-.show-repeat-modal{
-    display: flex;
-    flex-direction: column;
-}
-.skipped-list{
-    width: 1rem;
-    border-radius: 30px;
-    text-align: center;
-}
-.intervall-options{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    
-}
-.intervall-list-container{
-    position: relative;
-}
-.intervall-btn{
-    border-radius: 5px;
-}
-.intervall-list{
-    list-style: none;
-    display: none;
-    position: absolute;
-    margin: 0;
-    left: -50%;
-}
-.intervall-list li{
-    background-color: var(--textModal);
-    padding: 0.2rem 0.5rem;
-    border-bottom: 1px solid black;
-}
-.repeat-since{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-.date-empty{
-    background: var(--textModal);
-    min-width: 2rem;
-   padding: 0.2rem 0.5rem;
-   border-radius: 5px;
-}
-
-.repeat-btns{
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    list-style: none;
-    gap: 0.5rem;
-    padding: 0;
-}
-.repeat-btns *{
-     border-radius: 30px;
-      font-family: "Lacquer", system-ui;
-}
-.close-repeat{
-    display: flex;
-    justify-content: space-around;
-    align-items: center ;
-}
-.btn{
-    border-radius: 8px;
-    box-shadow: var(--light-shadow);
-     font-family: "Lacquer", system-ui;
+    font-family: "Lacquer", system-ui;
+    color: var(--textModal);
 }
 /*****************Ultima Riga **************************** */
 #notification-row {
@@ -558,6 +480,8 @@ margin-left: 0.5rem;
     display: block ;
     opacity: 1;
 }
+
+
 
 /* .show-menù {
     display: block;
@@ -634,11 +558,6 @@ margin-left: 0.5rem;
     top: -3rem;
     font-size: 1.8rem;
 
-}
-.modal-repeat{
-    
-    bottom: 0;
-    left: -210%;
 }
 
 }

@@ -1,5 +1,5 @@
 import dayjs from "../day.js";
-import { eventDraft, validateTimeRange, timeDraft } from "../utils/events/eventDraft.js";
+import { eventDraft, validateTimeRange, timeDraft, initEventDraft, resetEventDraft} from "../utils/events/eventDraft.js";
 import { renderColorList, renderNotificationList } from "../utils/events/createLists.js";
 import { openMiniCalendar } from "../utils/miniCalendar.js";
 import { updateEventDraft, validatorEventDraft } from "../utils/events/eventDraft.js";
@@ -9,9 +9,11 @@ import createCaroseul from "../utils/events/createLists.js";
 import { createMessage } from "../utils/helpers/createElement.js";
 import { nowTarget } from "../utils/isNow.js"
 import { renderEvents } from "../utils/events/eventRendering.js";
-import { getEvents } from "../utils/events/eventStorage.js";
-import { separateHourFromMinute } from "../utils/helpers/timeHelper.js";
+import { getEvents, saveEventsInLocalStorage } from "../utils/events/eventStorage.js";
+import { separateHourFromMinute, setTimeUIAndDraft} from "../utils/helpers/timeHelper.js";
 import openModal from "./eventModal.js";
+import { initRepeatEvents } from "./repeatEvent.js";
+import handleListSelection from "../utils/helpers/listSelection.js";
 
 const modalEvents = document.querySelector(".event-container")
 const modalOverlay = document.querySelector(".modal-overlay");
@@ -44,12 +46,8 @@ const notificationList = document.querySelector(".notification-list")
 const saveBtn = document.getElementById("save-event")
 const closeBtn = document.querySelector(".close-btn")
 
-// const urgentCheckBox = document.querySelector(".checkBox")
-// console.log(urgentCheckBox);
 let formMode = "create";
 let editingEventId = null;
-
-
 
 export const getData = (e)=>{
     let date, time;
@@ -72,46 +70,21 @@ export const getData = (e)=>{
 
 //da spostare initEventDraft e cleanEventDraft in EventDraft.js
 
-function initEventDraft(date, time, endTime ){
-  eventDraft.title = "";
-  eventDraft.date = date;
-  eventDraft.from = time;
-  eventDraft.to = endTime;
-  eventDraft.description = "";
-  eventDraft.icon = "✏️";
-  eventDraft.color = "blue";
-  eventDraft.urgent = false;
-  eventDraft.allDay = false;
-  eventDraft.repeat = null;
-  eventDraft.notification = "5 minuti prima";
-}
 
-export function cleanEventDraft(){
+
+export function resetEventModal(){
     formMode = "create";
     editingEventId = null
 
-    eventDraft.title = "";
-    eventDraft.date = "";
-    eventDraft.from = "";
-    eventDraft.to = "";
-    eventDraft.description = "";
-    eventDraft.icon = "✏️";
-    eventDraft.color = "blue";
-    eventDraft.urgent = false;
-    eventDraft.allDay = false;
-    eventDraft.repeat = null;
-    eventDraft.notification = "5 minuti prima";
-    // delete eventDraft.id cancella direttamente la key storata, perchè in primis eventDraft non dovrebbe averla, ma l'id mi serve per il salvataggio e sostutuzione
-    // delete eventDraft.id
-
+    resetEventDraft()
+ 
     inputTitle.value = ""
     inputDesc.value = "";
+
     if(colorLists.classList.contains("show-color-list")){
         colorLists.classList.remove("show-color-list")
     }
-    colorLists.querySelectorAll(".color").forEach(item => {
-        item.classList.remove("color-selected")
-    })
+
     colorPreview.style.backgroundColor = "blue"
     if(urgentCheckBox.classList.contains("checked")){
         urgentCheckBox.classList.remove("checked")
@@ -138,34 +111,16 @@ export function cleanEventDraft(){
 
 
 export function preCompiler(e){
-    // header.firstElementChild = "";
-    let hour, minute, finalHour, finalMinute;
-   
     const {date, time} = getData(e)
     const endTime = dayjs(time, "HH:mm").add(1, "hour").format("HH:mm")
 
     header.firstElementChild.innerHTML = formatDate(date)
     header.firstElementChild.dataset.day = date
     header.firstElementChild.nextElementSibling.innerHTML = time
-    // fromTimeBtn.placeholder = time
-    // toTimeBtn.placeholder = endTime
+
+     setTimeUIAndDraft(timeDraft, "from", time)
+     setTimeUIAndDraft(timeDraft, "to", endTime)
     
-    hour = time.slice(0, 2)
-    minute = time.slice(3, 5)
-    finalHour = endTime.slice(0, 2)
-    finalMinute = endTime.slice(3, 5)
-
-    timeDraft.from.hour = hour;
-    timeDraft.from.minute = minute;
-    timeDraft.to.hour = finalHour;
-    timeDraft.to.minute = finalMinute;
-    
-    fromHourInput.placeholder = hour
-    fromMinuteInput.placeholder = minute
-
-    toHourInput.placeholder = finalHour
-    toMinuteInput.placeholder = finalMinute
-
     initEventDraft(date, time, endTime)
 }
 
@@ -179,8 +134,7 @@ export function preCompilerEdit(event){
     editingEventId = event.id  
     
     header.firstElementChild.innerHTML = formatDate(event.date)
-    //risolve il miniCalendario data iniziale
-    header.firstElementChild.dataset.day = event.date
+    header.firstElementChild.dataset.day = event.date  //risolve il miniCalendario data iniziale
     header.firstElementChild.nextElementSibling.innerHTML = event.from
 
     inputTitle.value = event.title;
@@ -251,24 +205,9 @@ function inputTimeReader(timeDraft){
     })
     
 }
-function setTimeUIAndDraft(timeDraft,type, time){
-    const {hour, minute} = separateHourFromMinute(time)
 
-    if(type === "from"){
-        fromHourInput.value = hour
-        fromMinuteInput.value = minute
-    }
-      if (type === "to") {
-        toHourInput.value = hour;
-        toMinuteInput.value = minute;
-    }
-
-    timeDraft[type].hour = hour;
-    timeDraft[type].minute = minute;
-}
 
 function applySelectedTime(timeDraft, type, time){
-
     setTimeUIAndDraft(timeDraft, type, time)
     updateEventDraft(type, time);
 }
@@ -279,7 +218,7 @@ function closeModal(){
     
     modalEvents.style.top = "";
     modalEvents.style.left = "";
-    cleanEventDraft()
+    resetEventModal()
 }
 
 export function saveEvent(){
@@ -296,7 +235,7 @@ export function saveEvent(){
       ...eventDraft
     }
     events.push(newEvent)
-    localStorage.setItem("calendarEvents", JSON.stringify(events))
+    saveEventsInLocalStorage(events)
 
     } else if(formMode === "edit"){
         const updatedEvents = events.map(event =>{
@@ -305,10 +244,9 @@ export function saveEvent(){
             : event;
             
         })
-    
-        localStorage.setItem("calendarEvents", JSON.stringify(updatedEvents))
+        saveEventsInLocalStorage(updatedEvents)
+        createMessage("l'evento è stato modificato!", modalEvents, document.body )
     }
-    createMessage("l'evento è stato modificato!", modalEvents, document.body )
     closeModal()
   }
 }
@@ -317,7 +255,6 @@ export function saveEvent(){
 export function initEventFormEvents(){
     let title, desc;
    
- 
     renderColorList()
     renderNotificationList()
     createCaroseul()
@@ -338,17 +275,15 @@ export function initEventFormEvents(){
         colorLists.classList.toggle("show-color-list")
     })
 
-    colorLists.addEventListener("click", (e)=>{
-        const li = e.target.closest(".color")
-        if(!li)return;
-        colorLists.querySelectorAll(".color").forEach(item =>{
-            item.classList.remove("color-selected")
-        });
-        li.classList.add("color-selected")
-        colorPreview.style.backgroundColor = `${li.dataset.color}`
-        updateEventDraft("color", li.dataset.color)
-        colorLists.classList.remove("show-color-list")
-    })
+    handleListSelection(
+        colorLists,
+        ".color",
+        (li) => {
+            colorPreview.style.backgroundColor = li.dataset.color
+            updateEventDraft("color", li.dataset.color)
+        },
+        "show-color-list"
+    )
 
     urgentBtn.addEventListener("click", ()=>{
         const isChecked = urgentCheckBox.classList.toggle("checked");
@@ -403,23 +338,26 @@ export function initEventFormEvents(){
         
        }
     })
-    
-    listedTimeFrom.addEventListener("click", (e) => {
-        const li = e.target.closest(".list-item");
-        if (!li) return;
-        listedTimeFrom.classList.remove("show-menù");
 
-     applySelectedTime(timeDraft, "from", li.dataset.time)
-     validateTimeRange(timeDraft)
-    });
-    listedTimeTo.addEventListener("click", (e) => {
-        const li = e.target.closest(".list-item");
-        if (!li) return;
+    handleListSelection(
+        listedTimeFrom,
+         ".list-item",
+        (li)=>{
+        applySelectedTime(timeDraft, "from", li.dataset.time)
+        validateTimeRange(timeDraft)
+        },
+        "show-menù"
+      )
+    handleListSelection(
+        listedTimeTo,
+        ".list-item",
+        (li)=>{
+            applySelectedTime(timeDraft, "to", li.dataset.time);
+            validateTimeRange(timeDraft)
+        },
+        "show-menù"
+    )
 
-        listedTimeTo.classList.remove("show-menù");
-    applySelectedTime(timeDraft, "to", li.dataset.time);
-    validateTimeRange(timeDraft)
-    });
 
     repeatBtn.addEventListener(("click"), ()=>{
         repeatModal.classList.toggle("show-repeat-modal")
@@ -432,28 +370,29 @@ export function initEventFormEvents(){
         
     })
 
-    notificationList.addEventListener("click", (e)=>{
-        const li = e.target.closest(".single-notification")
-        if(!li) return;
-        updateEventDraft("notification", li.innerText)
-        notificationBtn.innerText = li.innerText
-        notificationList.classList.remove("show-container")  
-    })
+    handleListSelection(
+    notificationList,
+        ".single-notification",
+        (li) => {
+            updateEventDraft("notification", li.innerText)
+            notificationBtn.innerText = li.innerText
+        },
+        "show-container"
+    )
 
     saveBtn.addEventListener("click", ()=>{
         saveEvent()
         renderEvents()   
     })
-
-
     closeBtn.addEventListener("click", () =>{
         closeModal()
-        })
+    })
 }
 
 
 export function initEventModal(){
     initEventFormEvents()
+    initRepeatEvents()
 }
 
 export function handleOpenCreate(e){

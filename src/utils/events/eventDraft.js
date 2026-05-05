@@ -1,5 +1,6 @@
 import createElement from "../helpers/createElement.js";
 import { createMessage } from "../helpers/createElement.js";
+import { timeToMinutes } from "../helpers/timeHelper.js";
 
 
 const eventContainer = document.querySelector(".event-form")
@@ -21,6 +22,34 @@ export const eventDraft = {
   allDay: false,
   repeat: null,
   notification: "5 minuti prima",
+}
+
+export function initEventDraft(date, time, endTime ){
+  eventDraft.title = "";
+  eventDraft.date = date;
+  eventDraft.from = time;
+  eventDraft.to = endTime;
+  eventDraft.description = "";
+  eventDraft.icon = "✏️";
+  eventDraft.color = "blue";
+  eventDraft.urgent = false;
+  eventDraft.allDay = false;
+  eventDraft.repeat = null;
+  eventDraft.notification = "5 minuti prima";
+}
+
+export function resetEventDraft(){
+    eventDraft.title = "";
+    eventDraft.date = "";
+    eventDraft.from = "";
+    eventDraft.to = "";
+    eventDraft.description = "";
+    eventDraft.icon = "✏️";
+    eventDraft.color = "blue";
+    eventDraft.urgent = false;
+    eventDraft.allDay = false;
+    eventDraft.repeat = null;
+    eventDraft.notification = "5 minuti prima";
 }
 
 
@@ -47,9 +76,9 @@ export function validateTimeRange(timeDraft){
     to.minute === ""
     )return false;
 
-  //Number ritorna il numero dalla stringa, moltiplico l'ora per 60, cosi da normalizzare l'unità di misura in minuti, perchè se no sarebbe come confrontare pere con banane 
-  const fromMinutes = Number(from.hour) * 60 + Number(from.minute)
-  const toMinutes = Number(to.hour) * 60 + Number(to.minute)
+
+  const fromMinutes = timeToMinutes(`${from.hour}:${from.minute}`);
+  const toMinutes = timeToMinutes(`${to.hour}:${to.minute}`);
 
   if(fromMinutes >= toMinutes){
     createMessage("l'orario di fine deve essere nello stesso giorno", fourthRow, eventContainer)
