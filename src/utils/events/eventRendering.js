@@ -1,22 +1,29 @@
 import { getEvents } from "./eventStorage.js"
 import createElement from "../helpers/createElement.js"
 import { separateHourFromMinute, timeToMinutes } from "../helpers/timeHelper.js"
+import { getRepeatedEvents } from "../../eventCreation/generateRepeatEvents.js"
+
+export function getAllRenderableEvents() {
+  const eventsUpdated = getEvents()
+  const eventOccurrencies = getRepeatedEvents()
+  return [...eventsUpdated, ...eventOccurrencies]
+}
 
 
 export function renderEvents(){
-   
-   renderMonthEvents()
-   renderDailyEvents()
-   renderWeeklyEvents()
+   const allEvents = getAllRenderableEvents()
 
+   renderMonthEvents(allEvents)
+   renderDailyEvents(allEvents)
+   renderWeeklyEvents(allEvents)
+ 
 }
 
-function renderMonthEvents(){
+function renderMonthEvents(allEvents){
     
     const monthlyBoxes = document.querySelectorAll(".box-grid")
 
-    const eventsUpdated = getEvents()
-
+    //ore prando gli eventi generati ripetuti(non sono salvati nel localStorage)
     monthlyBoxes.forEach(box =>{
      const container = box.querySelector(".monthly-events-container")
      const allDayContainer = box.querySelector(".event-allDay-container");
@@ -26,7 +33,7 @@ function renderMonthEvents(){
        allDayContainer.innerHTML = "";
     
        const dataDay = box.firstElementChild.dataset.day;
-       const eventOfDay = eventsUpdated.filter( event => event.date === dataDay);
+       const eventOfDay = allEvents.filter( event => event.date === dataDay);
     
        eventOfDay.sort((a, b) => {
 
@@ -72,7 +79,7 @@ function renderMonthEvents(){
 }
 
 //ogni casella ha un'altezza coerente, ed equivale a 30 minuti, quindi ogni frazione di essa corrispondera ad un minuto
-export function renderDailyEvents(){
+export function renderDailyEvents(allEvents){
     const container = document.querySelector(".day-structure")
     const allDayContainer = document.querySelector(".daily-allDay-container")
     
@@ -80,20 +87,19 @@ export function renderDailyEvents(){
     allDayContainer.querySelectorAll(".daily-allDay-event").forEach(event => event.remove())
     const dailybox = document.querySelector(".day-box")
     const dataDay = dailybox.parentElement.dataset.day
-    const eventsUpdated = getEvents()
     const height = dailybox.getBoundingClientRect().height
     // const width = dailybox.getBoundingClientRect().width
   renderHelper(
     height,
      container,
-      eventsUpdated,
+      allEvents,
        dataDay,
         "daily-event",
          allDayContainer,
          "daily-allDay-event"
         )
 }
-export function renderWeeklyEvents(){
+export function renderWeeklyEvents(allEvents){
   const containers = document.querySelectorAll(".day-name")
    const allDayContainers = document.querySelectorAll(".week-all-day-container")
    const allDayContainer= [...allDayContainers]
@@ -105,12 +111,12 @@ export function renderWeeklyEvents(){
     const height = weeklyBox.getBoundingClientRect().height
     // const width = weeklyBox.getBoundingClientRect().width
     const dataDay = container.dataset.day
-    const eventsUpdated = getEvents()
+ 
     // console.log(height /30)
     renderHelper(
       height,
        container,
-        eventsUpdated,
+        allEvents,
          dataDay,
           "weekly-event",
            allDayContainer[index],

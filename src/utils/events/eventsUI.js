@@ -1,4 +1,5 @@
 import createElement from "../helpers/createElement.js";
+import dayjs from "../../day.js";
 
 const header = document.querySelector(".show-date");
 
@@ -9,11 +10,15 @@ export function formatDate(date){
     year = date.slice(0, 4)
     month = date.slice(5, 7)
     day = date.slice(8, 10)
-   return `${day}/${month}/${year}`
+    const actualMonth = Number(month) - 1
+    const monthInLetters = dayjs().month(actualMonth).format("MMMM")
+  
+   return `${day} ${monthInLetters} ${year}`
 }
 
 export function updateEventDateUI(date) {
    
   header.firstElementChild.textContent =  formatDate(date);
+  header.firstElementChild.dataset.day = date
 }
 

@@ -4,7 +4,7 @@ import { openMiniCalendar } from "./utils/miniCalendar.js";
 import { overlay } from "./calendarSync.js";
 import { initTodo } from "./to-do-list/toDo.js";
 import { resetTutorial } from "./tutorial.js";
-import { renderDailyEvents, renderWeeklyEvents } from "./utils/events/eventRendering.js";
+import { renderDailyEvents, renderWeeklyEvents, getAllRenderableEvents } from "./utils/events/eventRendering.js";
 
 //elementi bottone
 const monthBtn = document.getElementById("month-btn");
@@ -44,9 +44,10 @@ function initDefaultView(){
         OverlayMonth.classList.add("show-display");
 
 }
+
 function bindNavEvents(){
         allOverlays.forEach(overlay => {
-                overlay.addEventListener("click", ()=>openMiniCalendar("normal"))
+        overlay.addEventListener("click", ()=>openMiniCalendar("normal"))
         })
         monthBtn.addEventListener("click", () => {
          switchView(0)
@@ -54,13 +55,15 @@ function bindNavEvents(){
 
         weekBtn.addEventListener("click", () => {
          switchView(1)
-         renderWeeklyEvents()
+         const allEvents = getAllRenderableEvents()
+         renderWeeklyEvents(allEvents)
          isNow()
         })
 
        dayBtn.addEventListener("click", () =>{
          switchView(2)
-         renderDailyEvents()
+          const allEvents = getAllRenderableEvents()
+         renderDailyEvents(allEvents)
          isNow()
         })
         reset.addEventListener("click", function(){

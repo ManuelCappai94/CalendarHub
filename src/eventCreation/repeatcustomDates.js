@@ -1,0 +1,88 @@
+import { createMessage } from "../utils/helpers/createElement.js"
+import createElement from "../utils/helpers/createElement.js"
+import { updateRepeatDraft } from "../utils/events/repeatEventsDraft.js"
+import { formatDate } from "../utils/events/eventsUI.js"
+import dateValidator from "../utils/helpers/dateValidator.js"
+
+const repeatContainer = document.querySelector(".modal-repeat") 
+const customContainer = repeatContainer.querySelector(".custom-dates-container")
+const customList = repeatContainer.querySelector(".custom-dates-list")
+const header = document.querySelector(".show-date")
+
+let listOfDates = []
+
+export function validateAndReturnCustomDate(date){
+    const initialDate = header.firstElementChild.dataset.day
+    const isNotValid = dateValidator(initialDate, date)
+
+    if(isNotValid){
+        return createMessage("La data deve essere successiva all'evento", customContainer, repeatContainer)
+    } else {
+        if(date && !listOfDates.includes(date)){
+        const li = createElement(
+            customList,
+             "custom-date-item",
+             `<span>${formatDate(date)}</span>
+              <button type="button" class="remove-custom-date">x</button>`,
+             "li",
+             {
+                html : true,
+                dataset: {day : date}
+             }
+             
+             )
+         listOfDates.push(li.dataset.day)   
+         syncCustomDatesDraft()
+         console.log(listOfDates)
+    }
+    }
+
+}
+
+export function initCustomDateRemoval(){
+    customList.addEventListener("click", (e)=>{
+    const btn = e.target.closest(".remove-custom-date")
+    if(!btn) return 
+
+     const li = btn.closest(".custom-date-item")
+    const date = li.dataset.day
+
+    listOfDates = listOfDates.filter(item => item !== date)
+    syncCustomDatesDraft()
+    li.remove()
+})
+}
+
+function syncCustomDatesDraft(){
+    updateRepeatDraft("customDates", [...listOfDates])
+}
+
+export function getStoredCustomDates(){
+   return [...listOfDates]
+}
+export function clearDatesStates(){
+    listOfDates = [];
+    customList.innerHTML ="";
+    syncCustomDatesDraft()
+}
+
+export function hydrateCustomDates(dates){
+  listOfDates = [...dates]
+  customList.innerHTML = ""
+
+  dates.forEach(date => {
+    createElement(
+      customList,
+      "custom-date-item",
+      `<span>${formatDate(date)}</span>
+       <button type="button" class="remove-custom-date">x</button>`,
+      "li",
+      {
+        html: true,
+        dataset: { day: date }
+      }
+    )
+  })
+
+  syncCustomDatesDraft()
+}

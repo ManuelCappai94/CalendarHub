@@ -12,7 +12,7 @@ import { renderEvents } from "../utils/events/eventRendering.js";
 import { getEvents, saveEventsInLocalStorage } from "../utils/events/eventStorage.js";
 import { separateHourFromMinute, setTimeUIAndDraft} from "../utils/helpers/timeHelper.js";
 import openModal from "./eventModal.js";
-import { initRepeatEvents } from "./repeatEvent.js";
+import { initRepeatEvents, forceResetRepeatModalState } from "./repeatEvent.js";
 import handleListSelection from "../utils/helpers/listSelection.js";
 
 const modalEvents = document.querySelector(".event-container")
@@ -48,6 +48,8 @@ const closeBtn = document.querySelector(".close-btn")
 
 let formMode = "create";
 let editingEventId = null;
+let editingMotherEventId = null
+let editingOccurrenceDate = null
 
 export const getData = (e)=>{
     let date, time;
@@ -74,7 +76,9 @@ export const getData = (e)=>{
 
 export function resetEventModal(){
     formMode = "create";
-    editingEventId = null
+    editingEventId = null;
+    editingMotherEventId = null;
+    editingOccurrenceDate = null;
 
     resetEventDraft()
  
@@ -106,6 +110,7 @@ export function resetEventModal(){
     timeDraft.from.minute = "";
     timeDraft.to.hour = "";
     timeDraft.to.minute = "";
+
     }
 
 
@@ -124,15 +129,23 @@ export function preCompiler(e){
     initEventDraft(date, time, endTime)
 }
 
-export function preCompilerEdit(event){
-     formMode = "edit";
+export function preCompilerEdit(event, mode){
+     formMode = mode;
  
     Object.entries(event).forEach(([key, value]) =>{
-        if(key === "id") return
+        if(key === "id" || key === "isOccurrence" || key === "seriesId" || key === "originalEventId") return
         eventDraft[key] = value
     })
     editingEventId = event.id  
-    
+
+    if(mode === "edit-single-occurrence"){
+        editingEventId = null;
+        editingMotherEventId = event.originalEventId ? event.originalEventId : event.id;
+        editingOccurrenceDate = event.date;
+        eventDraft.repeat = null;
+        console.log(editingMotherEventId, editingOccurrenceDate)
+    }
+   
     header.firstElementChild.innerHTML = formatDate(event.date)
     header.firstElementChild.dataset.day = event.date  //risolve il miniCalendario data iniziale
     header.firstElementChild.nextElementSibling.innerHTML = event.from
@@ -153,6 +166,7 @@ export function preCompilerEdit(event){
     setTimeUIAndDraft(timeDraft, "to", event.to )
 
     notificationBtn.innerText = event.notification
+    console.log(eventDraft, editingEventId)
 }
 
 function updateTimeInput(part, value){
@@ -218,6 +232,8 @@ function closeModal(){
     
     modalEvents.style.top = "";
     modalEvents.style.left = "";
+
+    forceResetRepeatModalState()
     resetEventModal()
 }
 
@@ -227,26 +243,55 @@ export function saveEvent(){
   if(!isValid){
     return
   } else {
-    const events = getEvents()
-    
-    if(formMode === "create"){
-    const newEvent = {
-      id: crypto.randomUUID(),
-      ...eventDraft
-    }
-    events.push(newEvent)
-    saveEventsInLocalStorage(events)
+  const events = getEvents()
 
-    } else if(formMode === "edit"){
-        const updatedEvents = events.map(event =>{
-           return event.id === editingEventId
-            ? {id: editingEventId, ...eventDraft}
-            : event;
-            
+    switch (formMode) {
+      case "create": {
+        const newEvent = {
+          id: crypto.randomUUID(),
+          ...eventDraft
+        }
+
+        events.push(newEvent)
+        console.log(newEvent)
+        saveEventsInLocalStorage(events)
+        break
+      }
+
+      case "edit": {
+        const updatedEvents = events.map(event => {
+          return event.id === editingEventId
+            ? { id: editingEventId, ...eventDraft }
+            : event
         })
+
         saveEventsInLocalStorage(updatedEvents)
-        createMessage("l'evento è stato modificato!", modalEvents, document.body )
+        createMessage("l'evento è stato modificato!", modalEvents, document.body)
+        break
+      }
+      case "edit-single-occurrence": {
+        const updatedEvents = events.map(event => {
+            if (event.id !== editingMotherEventId) return event
+        return {
+            ...event,
+            repeat: {
+                ...event.repeat,
+                exceptions: [...event.repeat.exceptions, editingOccurrenceDate]
+            }
+          }  
+        })
+        const newEvent = {
+          id: crypto.randomUUID(),
+          ...eventDraft
+        }
+        console.log(updatedEvents, newEvent)
+        updatedEvents.push(newEvent)
+        saveEventsInLocalStorage(updatedEvents)
+         createMessage("l'occorrenza è stata modificata!", modalEvents, document.body)
+         break
+      }
     }
+
     closeModal()
   }
 }
@@ -293,7 +338,7 @@ export function initEventFormEvents(){
     miniCalendarBtn.addEventListener("click",()=> {
         const date = header.firstElementChild.dataset.day
         
-        openMiniCalendar("event", date)
+        openMiniCalendar("event", date, "event-date")
     })
 
     allDayBtn.addEventListener("click", ()=>{
@@ -334,8 +379,7 @@ export function initEventFormEvents(){
                 "cellTime",
                 targetTime
             );
-        target?.scrollIntoView({block: "center", behavior: "auto"})
-        
+        target?.scrollIntoView({block: "center", behavior: "auto"}) 
        }
     })
 
@@ -357,7 +401,6 @@ export function initEventFormEvents(){
         },
         "show-menù"
     )
-
 
     repeatBtn.addEventListener(("click"), ()=>{
         repeatModal.classList.toggle("show-repeat-modal")

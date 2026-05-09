@@ -35,6 +35,10 @@
     font-size: 2rem;
     align-items: center;
 }
+.first-row-date{
+    text-transform: capitalize;
+    /* font-family: "Joti One", serif; */
+}
 /*****************PRIMA RIGA **************************** */
 .event-description {
     display: flex;

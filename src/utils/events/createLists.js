@@ -1,7 +1,9 @@
 import createElement from "../helpers/createElement.js";
+import dayjs from "../../day.js";
 const colorLists = document.querySelector(".color-list")
 const ulContainer = document.querySelectorAll(".interactive-time-list")
 const notificationList = document.querySelector(".notification-list")
+const dayOfWeekList = document.querySelector(".weekly-repetion-list")
 
 const notifications = [
     {
@@ -91,4 +93,30 @@ ulContainer.forEach(ul => {
     })
 })
 
+}
+// con dayjs().weekday(i).day() prendo l'index stabile, che non varia con il cambio formato, il che mi verrà d'aiuto per indicare i giorni della settimana ove ripetere l'evento.
+export function createDayOfWeek(){
+    const array = Array.from({length: 7}, (_, i)=>{
+        const days = dayjs().weekday(i).format("dddd")
+        const index = dayjs().weekday(i).day()
+       return {
+        days : days,
+        index : index
+       }
+    })
+    array.forEach(day =>{
+        createElement(
+            dayOfWeekList,
+             "weekly-repetion-item",
+             day.days.slice(0, 1),
+             "li",
+             {
+                dataset : {
+                    day: day.days,
+                    dayIndex: day.index
+                }
+             }
+            
+            )
+    })
 }

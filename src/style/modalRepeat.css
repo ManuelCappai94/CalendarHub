@@ -9,7 +9,7 @@
     background: var(--darker);
     border-radius: 15px;
     padding: 0.5rem;   
-    width: 20rem;
+    width: 22rem;
     box-shadow: var(--light-shadow);
     height: fit-content;
 }
@@ -27,8 +27,15 @@
 .repeat-mode-btn{
     width: fit-content;
     /* height: 1.5rem; */
-    border-radius: 10px;
+  
     font-family: "Lacquer", system-ui;
+    min-width: 3rem;
+    min-height: 2rem;
+     font-size: 1rem;
+    border-radius: 10px;
+        box-shadow: var(--light-shadow);
+    background: var(--darkerBtns);
+    color: var(--textModal);
 }
 
 .repeat-mode-list{
@@ -37,7 +44,7 @@
     display: none;
     position: absolute;
     margin: 0;
-    left: 100%;
+    left: 25%;
     /* transform: translateX(-50%); */
     background-color: var(--textModal);
     color:black;
@@ -58,6 +65,11 @@
     display: none;
     justify-content: space-around;
     align-items: center;
+}
+.intervall-text-container{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 .intervall-input{
     width: 1.5rem;
@@ -88,6 +100,10 @@
     border-radius: 20px;
     cursor: pointer;
 }
+.weekly-repetion-item-selected{
+    color: var(--textModal);
+    background-color: black;
+}
 .end-repeat-event-container{
     display: none;
     justify-content: space-around;
@@ -113,6 +129,7 @@
 }
 .end-repeation-event-date{
     font-family: "Joti One", serif;
+    text-transform: capitalize;
 }
 
 .custom-dates-container{
@@ -140,6 +157,7 @@
 
 .custom-date-item{
     display: flex;
+    gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
     background-color: var(--textModal);
@@ -148,9 +166,12 @@
     border-radius: 10px;
     padding: 0.2rem 0.5rem;
     box-shadow: var(--light-shadow);
+    font-family: "Joti One", serif;
+    text-transform: capitalize;
 }
 
 .remove-custom-date{
+    font-size: 1.2rem;
     border-radius: 50%;
     cursor: pointer;
     font-family: "Lacquer", system-ui;
@@ -167,7 +188,7 @@
     box-shadow: var(--light-shadow);
     font-family: "Lacquer", system-ui;
 }
-.show-repat-section{
+.show-repeat-section{
     display: flex;
     gap: 1rem;
     align-items: center;

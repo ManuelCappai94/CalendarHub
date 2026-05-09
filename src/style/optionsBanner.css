@@ -1,7 +1,7 @@
 /*usiamo modal overlay da modalEvent*/
 .option-banner-container {
   min-width: 15rem;
-  max-width: 18rem;
+  max-width: 30rem;
   z-index: 1001;
   /* background-color: var(--navBar); */
   position: fixed;
@@ -43,6 +43,7 @@ font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .edit-event-btn, .delete-event-btn{
@@ -50,5 +51,5 @@ font-weight: bold;
   width: fit-content;
   font-family: "Lacquer", system-ui ;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }

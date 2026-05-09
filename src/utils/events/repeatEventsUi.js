@@ -1,0 +1,71 @@
+import { formatDate } from "./eventsUI.js"
+import { createMessage } from "../helpers/createElement.js"
+import { updateRepeatDraft } from "./repeatEventsDraft.js"
+import dateValidator from "../helpers/dateValidator.js"
+
+const header = document.querySelector(".show-date")
+const repeatContainer = document.querySelector(".modal-repeat") 
+const intervalText = repeatContainer.querySelector(".dinamic-interval-text")
+const untilContainer = repeatContainer.querySelector(".end-repeat-event-container")
+const untilText = repeatContainer.querySelector(".end-repeation-event-date")
+
+
+
+
+export function updateIntervaltext(state, interval){
+    if(state === "custom")return
+    if(state === "daily"){
+        if(interval === 1){
+            intervalText.innerText = "ogni giorno"
+        }else {
+            intervalText.innerText = `ogni ${interval} giorni`
+        }
+    }
+    if(state === "weekly"){
+        if(interval === 1){
+            intervalText.innerText = "ogni settimana"
+        }else {
+            intervalText.innerText = `ogni ${interval} settimane`
+        }
+    }
+    if(state === "monthly"){
+        if(interval === 1){
+            intervalText.innerText = "ogni mese"
+        }else {
+            intervalText.innerText = `ogni ${interval} mesi`
+        }
+    }
+}
+
+export const unitlDateDefault = (type, currentDate)=>{
+    let dateDisplayed;
+    if(type === "normal"){
+    const date = header.firstElementChild.dataset.day
+    const month = dayjs(date).add(1, "month").format("YYYY-MM-DD")
+     dateDisplayed = formatDate(month)
+     untilText.innerText = dateDisplayed
+   return month
+    } 
+    if(type === "edit") {
+        dateDisplayed = formatDate(currentDate)
+        untilText.innerText = dateDisplayed
+        return currentDate
+    }
+     
+}
+
+
+
+export function updateUntilUIAndDraft(date){
+    const initialDate = header.firstElementChild.dataset.day
+    const dateDisplayed = formatDate(date)
+    
+    const isNotValid = dateValidator(initialDate, date)
+    if(isNotValid){
+        return   createMessage("La data deve essere successiva all'evento", untilContainer, repeatContainer)
+    } else {
+        untilText.innerText = dateDisplayed
+        updateRepeatDraft("until", date)
+    }
+}
+

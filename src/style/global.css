@@ -2,7 +2,7 @@
 
 /* CSS HEX */
 :root {
---darker: #880d1eff;
+--darker: rgba(136, 13, 29, 0.925);
 --darkerBtns: rgb(70, 7, 15);
 --navBar: rgba(221, 45, 74, 0.801);
 --body: rgba(242, 106, 140, 0.758);
