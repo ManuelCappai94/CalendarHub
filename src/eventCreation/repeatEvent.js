@@ -1,6 +1,6 @@
 import dayjs from "../day.js";
 import { repeatEventsDraft, updateRepeatDraft, initRepeatDraft, clearRepeatDraft, validatorRepeatDraft } from "../utils/events/repeatEventsDraft.js";
-import handleListSelection from "../utils/helpers/listSelection.js";
+import {handleListSelection, handleOutSideClick} from "../utils/helpers/listSelection.js";
 import { updateIntervaltext, unitlDateDefault } from "../utils/events/repeatEventsUi.js";
 import {createMessage} from "../utils/helpers/createElement.js"
 import { createDayOfWeek } from "../utils/events/createLists.js";
@@ -24,6 +24,7 @@ const UntilMiniCalendarBtn = repeatContainer.querySelector(".open-miniCalendar-r
 const customMiniCalendarBtn = repeatContainer.querySelector(".open-miniCalendar-custom-date")
 const header = document.querySelector(".show-date")
 const customList = repeatContainer.querySelector(".custom-dates-list")
+const repeatOverlay = document.querySelector(".repeat-overlay")
 
 const closeBtn = repeatContainer.querySelector(".cls-repeat")
 const saveBtn = repeatContainer.querySelector(".save-repeat")
@@ -80,7 +81,8 @@ function repeatModalUiState(state){
     const repeatDraftInfo = eventDraft.repeat
     if(repeatDraftInfo === null)return
 
-  repeatModalUiState(repeatDraftInfo.type)
+    repeatUiState = repeatDraftInfo.type
+    repeatModalUiState(repeatUiState)
 
    modeBtn.innerText = repeatDraftInfo.type
    intervalInput.value = repeatDraftInfo.interval
@@ -93,16 +95,16 @@ function repeatModalUiState(state){
    })
    unitlDateDefault("edit", repeatDraftInfo.until)
 
-hydrateCustomDates(repeatDraftInfo.customDates)
-repeatEventsDraft.type = repeatDraftInfo.type
-repeatEventsDraft.interval = repeatDraftInfo.interval
-repeatEventsDraft.weekdays = [...repeatDraftInfo.weekdays]
-// repeatEventsDraft.customDates = [...repeatDraftInfo.customDates]
-repeatEventsDraft.until = repeatDraftInfo.until
-repeatEventsDraft.exceptions = [...repeatDraftInfo.exceptions]
-selectedDays = [...repeatDraftInfo.weekdays]
+    hydrateCustomDates(repeatDraftInfo.customDates)
+    repeatEventsDraft.type = repeatDraftInfo.type
+    repeatEventsDraft.interval = repeatDraftInfo.interval
+    repeatEventsDraft.weekdays = [...repeatDraftInfo.weekdays]
+    // repeatEventsDraft.customDates = [...repeatDraftInfo.customDates]
+    repeatEventsDraft.until = repeatDraftInfo.until
+    repeatEventsDraft.exceptions = [...repeatDraftInfo.exceptions]
+    selectedDays = [...repeatDraftInfo.weekdays]
 
-console.log(repeatEventsDraft.customDates)
+
   
 }
 
@@ -154,9 +156,10 @@ function resetRepeatModalState(){
 
 function closeRepeatEvent(){
     repeatContainer.classList.remove("show-repeat-modal")
+    repeatOverlay.classList.remove("show-repeat-overlay")
     if(editMode){
         return
-    }
+    } 
     resetRepeatModalState()
     clearDatesStates()         
 }
@@ -176,8 +179,6 @@ function saveRepeatEvent(){
     eventDraft.repeat = {
         ...repeatEventsDraft
     }
-    // resetRepeatModalState()
-    console.log(eventDraft)
     closeRepeatEvent()
    }
 }
@@ -185,6 +186,7 @@ function saveRepeatEvent(){
 export function initRepeatEvents(){
 
     createDayOfWeek()
+    handleOutSideClick(".repeat-mode-list, .repeat-mode-btn", modeList, "show-mode-list")
     
     modeBtn.addEventListener("click", ()=>{
         modeList.classList.toggle("show-mode-list")
@@ -217,6 +219,7 @@ export function initRepeatEvents(){
 
         updateRepeatDraft("interval", newValue)
         updateIntervaltext(repeatUiState, repeatEventsDraft.interval)
+        console.log(repeatUiState)
     })
 
     dayOfWeekList.addEventListener("click", (e)=>{

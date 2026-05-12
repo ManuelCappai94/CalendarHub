@@ -63,7 +63,7 @@ function renderMonthEvents(allEvents){
            const eventElement =  createElement(
             box.querySelector(".monthly-events-container"), 
               `monthly-event`,
-              `<span>${event.from}</span> <span>${event.title}</span>`,
+              `<span>${event.title}</span> <span >${event.from}</span> `,
               "div",
               {
                 html: true,
@@ -146,7 +146,7 @@ export function renderWeeklyEvents(allEvents){
         const eventElement = createElement(
           allDayContainer,
           allDayClass,
-           `<span>Oggi:</span> <p>${event.title}</p>`,
+           `<span class="all-event-start-text">Oggi:</span> <p><span text-background>${event.icon}</span>${event.title}</p>`,
            "div",
            {
             html: true,
@@ -168,7 +168,7 @@ export function renderWeeklyEvents(allEvents){
           ${event.from}
           </span> 
           <p class="render-title">
-          ${event.title}
+          <span text-background>${event.icon}</span> ${event.title}
           </p>`,
           "div",
           {

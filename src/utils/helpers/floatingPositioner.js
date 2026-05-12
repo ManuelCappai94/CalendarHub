@@ -3,7 +3,12 @@ export default function getFloatingPosition(floatingElement, target, option){
     const viewportWidth = window.innerWidth
     const viewportHeight = window.innerHeight;
     let top, left;
+    const margin = 16;
 
+    const floatingRect = floatingElement.getBoundingClientRect();
+
+    const floatingWidth = floatingRect.width;
+    const floatingHeight = floatingRect.height;
     
     //controllo verticale, ritorna boolenano falso se sta giu, true se in alto
     const hasSpaceBelow = target.bottom + floatingElement.clientHeight <= viewportHeight
@@ -42,6 +47,9 @@ export default function getFloatingPosition(floatingElement, target, option){
         left = viewportWidth/2 - floatingElement.clientWidth/2
     }
    }
+
+top = Math.max(margin, Math.min(top, viewportHeight - floatingHeight - margin))
+
   floatingElement.style.top = `${top}px`;
   floatingElement.style.left = `${left}px`;
 }

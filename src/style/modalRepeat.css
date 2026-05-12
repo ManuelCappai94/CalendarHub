@@ -1,17 +1,33 @@
+.repeat-overlay{
+    position: fixed;
+    inset: 0; /*prende tutto lo spazio disponiile da top 0 a left 0*/
+    background: rgba(0, 0, 0, 0.2);
+    /* backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(2px); */
+    z-index: 100;
+    display: none;
+}
+.show-repeat-overlay{
+    display: block;
+}
 
 .modal-repeat{
     display: none;
     position: absolute;
-    top: -25dvh;
-    left: -50dvi;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border: 3px solid black;
     z-index: 200;
-    background: var(--darker);
+     background: var(--textModal);
+    color: currentColor;
     border-radius: 15px;
     padding: 0.5rem;   
     width: 22rem;
     box-shadow: var(--light-shadow);
     height: fit-content;
+    font-family: "Lacquer", system-ui;
+    font-weight: bold;
 }
 .show-repeat-modal{
     display: flex;
@@ -34,7 +50,7 @@
      font-size: 1rem;
     border-radius: 10px;
         box-shadow: var(--light-shadow);
-    background: var(--darkerBtns);
+    background: var(--background);
     color: var(--textModal);
 }
 
@@ -124,7 +140,7 @@
     border-radius: 10px;
     font-family: "Lacquer", system-ui;
     box-shadow: var(--light-shadow);
-    background: var(--darkerBtns);
+    background: var(--background);
     padding: 0;
 }
 .end-repeation-event-date{
@@ -196,8 +212,8 @@
 
 @media screen and (min-width:992px){
     .modal-repeat{
-    bottom: 0;
-    left: -300px;
+    /* bottom: 0;
+    left: -300px; */
 }
 .repeat-mode-list li:hover{
     background-color: black;

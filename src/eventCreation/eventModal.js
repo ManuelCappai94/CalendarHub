@@ -1,13 +1,12 @@
 import getFloatingPosition from "../utils/helpers/floatingPositioner.js";
 
-
 const modalEvents = document.querySelector(".event-container")
 const modalOverlay = document.querySelector(".modal-overlay");
 
 
 
 function openModal(e) {
-    // cleanEventDraft()
+
     const rect = e.target.getBoundingClientRect()
     modalOverlay.classList.add("show-overlay");
     modalEvents.classList.add("show-container")

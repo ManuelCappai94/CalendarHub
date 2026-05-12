@@ -1,4 +1,4 @@
-function handleListSelection(list, itemSelector, onSelect, closeDropDownClass){
+ export function handleListSelection(list, itemSelector, onSelect, closeDropDownClass){
     list.addEventListener("click", (e)=>{
      const item = e.target.closest(itemSelector)
         if (!item) return       
@@ -9,4 +9,13 @@ function handleListSelection(list, itemSelector, onSelect, closeDropDownClass){
     })
 }
 
-export default handleListSelection
+
+export function handleOutSideClick(selector, list, className){
+    document.addEventListener("click", (e) => {
+        const inside = e.target.closest(selector)
+
+        if(!inside){
+            list.classList.remove(className)
+        }
+    })
+}

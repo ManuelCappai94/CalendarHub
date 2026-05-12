@@ -1,7 +1,10 @@
 /*usiamo modal overlay da modalEvent*/
 .option-banner-container {
-  min-width: 15rem;
-  max-width: 30rem;
+  /* min-width: 15rem;
+  max-width: 20rem; */
+ width: 90dvw;
+ /* min-height: 8rem; */
+  height: fit-content;
   z-index: 1001;
   /* background-color: var(--navBar); */
   position: fixed;
@@ -11,9 +14,20 @@
   padding: 0.2rem;
 }
 /*con currentColor ripesco il colore passato al banner tramite variabile*/
+.info-title{
+display: flex;
+align-items: center;
+height: fit-content;
+gap: 1rem;
+}
+.info-title, .text-background{
+  font-size: 1.8rem;
+}
 .option-banner-container h2{
   font-size: 1.7rem;
   font-weight: bold;
+  word-break: break-word;
+
 }
 .option-banner-container p{
   color: currentColor;
@@ -52,4 +66,10 @@ font-weight: bold;
   font-family: "Lacquer", system-ui ;
   font-weight: bold;
   font-size: 0.8rem;
+}
+
+@media screen and (min-width:992px) {
+  .option-banner-container{
+    width: 20rem;
+  }
 }

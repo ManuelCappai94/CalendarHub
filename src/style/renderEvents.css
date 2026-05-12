@@ -27,7 +27,9 @@
   -webkit-line-clamp: 1;
   overflow: hidden;
 font-family:"Joti One", serif;
+padding-left: 0.1rem;
 }
+
 .event-allDay-container{
   width: 100%;
 }
@@ -40,7 +42,7 @@ font-family:"Joti One", serif;
  font-family:"Kaushan Script", cursive;
  font-size: 0.8rem;
 }
-.render-allDay span, .week-allDay-event span{
+.render-allDay span{
 display: none;
 }
 .render-allDay p, .week-allDay-event p, .daily-allDay-event p{
@@ -48,13 +50,24 @@ display: none;
 }
 .week-allDay-event{
   display: flex;
+ /* max-width: 95%; */
+  overflow: hidden;
   gap: 0.2rem;
 font-family:"Kaushan Script", cursive;
 box-shadow: var(--light-shadow);
 font-size: 0.8rem;
 }
+.all-event-start-text{
+  display: none;
+}
+.week-allDay-event p {
+  display: flex;
+  /* overflow: hidden;  */
+}
 .daily-allDay-event{
   display: flex;
+  max-width: 90%;
+  overflow: hidden;
   gap: 0.3rem;
 font-family:"Kaushan Script", cursive;
 font-weight: bold;
@@ -100,15 +113,20 @@ padding: 0.2rem;
   display: flex;
   gap: 1rem;
 }
+.text-background{
+  background-color: rgba(2, 0, 0, 0.041);
+    border-radius: 4px;
+  padding-inline: 4px;
+}
 
 .event-blue, .event-green, .event-purple, .event-red, .event-yellow, .event-orange, .event-pink {
-    opacity: 0.8;
+    opacity: 0.9;
 }
 .event-blue { background: blue; color: var(--textModal)}
 .event-green { background: green; color: var(--textModal)}
 .event-purple { background: purple; color: var(--textModal)}
 .event-red { background: red; color: var(--textModal)}
-.event-yellow{background: yellow; color: var(--background);}
+.event-yellow{background: rgba(255, 255, 0, 0.87); color: var(--background);}
 .event-orange{background: orange;color: var(--background)}
 .event-pink{background: pink; color: var(--background);}
 
@@ -127,6 +145,7 @@ padding: 0.2rem;
 
 
 @media screen and (min-width:992px) {
+
   .monthly-events-container{
     width: 90%;
   }
@@ -142,8 +161,15 @@ padding: 0.2rem;
  
   font-size: 1rem;
 }
-  .render-allDay span, .week-allDay-event span{
+  .render-allDay span, .all-event-start-text{
    display: block;
 }
+.daily-allDay-container{
+  width: 20rem;
+}
+.week-allDay-event .all-event-start-text{
+  display: none;
+}
+
 }
 

@@ -9,8 +9,9 @@
 
   const modalLayer = document.querySelector(".mini-calendar-layer");
 
-  let selectedCurrentID = null
-  let colorClass = null
+  let selectedCurrentID = null;
+  let colorClass = null;
+
 
   function handleOptionsClick(e){
       const button = e.target.closest("button[data-action]")
@@ -41,16 +42,13 @@
    } 
 
   export function initOptionsBanner(currentEvent){
- 
     const optionsBanner = createElement(
       document.body,
       "option-banner-container",
       null,
       "div"
     )
-  
     const close = createElement(optionsBanner, "close-banner", "x", "button")
-  
     const infoSection = createElement(
       optionsBanner,
       "info-section",
@@ -65,54 +63,22 @@
       "section",
       {html:true}
     )
-  optionsSection.addEventListener("click", handleOptionsClick)
-   
+   optionsSection.addEventListener("click", handleOptionsClick)
    optionsBanner.querySelector(".close-banner").addEventListener("click", closeInfoBanner);
   }
-  
-  export function renderExtraInfo(currentEvent, e){
-    const banner = document.querySelector(".option-banner-container");
-    const infoSection = banner.querySelector(".info-section");
-    const optionSection = banner.querySelector(".options-section")
-    const events = getAllRenderableEvents()
-    const selectedEvent = events.find(event => event.id === currentEvent.dataset.id)
-    if(!selectedEvent)return
 
-    const isRepeatedEvent = selectedEvent.repeat !== null || selectedEvent.isOccurrence === true
+function getOptionButtons(isRepeatedEvent){
+  const banner = document.querySelector(".option-banner-container");
+  const optionSection = banner.querySelector(".options-section")
 
-    // banner.style.background = selectedEvent.color
-    banner.classList.add(`event-${selectedEvent.color}`)
-    colorClass = selectedEvent.color
-
-    selectedCurrentID = currentEvent.dataset.id
-
-    modalLayer.classList.add("show-mini-calendar-layer");
-    banner.classList.add("show-option-banner")
-
-    const rect = e.target.getBoundingClientRect()
-    const isDailyview = e.target.closest(".daily-event, .daily-allDay-event")
-
-    getFloatingPosition(banner, rect, isDailyview)
-    
-    infoSection.innerHTML= `
-    <h2>${selectedEvent.title}</h2>
-    ${
-      selectedEvent.allDay
-        ? `<p>Tutto il giorno</p>`
-        : `<p>${selectedEvent.from} - ${selectedEvent.to}</p>`
-    }
-    ${selectedEvent.description ? `<p>${selectedEvent.description}</p>` : ""}
-    ${selectedEvent.urgent ? `<p>Urgente!</p>` : ""}
-      `;
-
-    if(isRepeatedEvent){
+  if(isRepeatedEvent){
       optionSection.innerHTML=`
       <button 
         class="edit-event-btn" 
         type='button' 
         data-action="edit-single"
       >
-        modifica singolo evento
+        modifica evento
       </button>
       <button 
         class="edit-event-btn" 
@@ -126,7 +92,7 @@
         type='button' 
         data-action="delete-single"
       >
-        elimina singolo evento
+        elimina evento
       </button>
       <button 
         class="delete-event-btn" 
@@ -153,46 +119,94 @@
       elimina evento
       </button>`
     }
-  }
+}
   
+  export function renderExtraInfo(currentEvent, e){
+    const banner = document.querySelector(".option-banner-container");
+    const infoSection = banner.querySelector(".info-section");
+    const events = getAllRenderableEvents()
+    const selectedEvent = events.find(event => event.id === currentEvent.dataset.id)
+    if(!selectedEvent)return
+    const isRepeatedEvent = selectedEvent.repeat !== null || selectedEvent.isOccurrence === true
+    const isDailyview = e.target.closest(".daily-event, .daily-allDay-event")
+    const target = {
+         top: e.clientY,
+        bottom: e.clientY,
+        left: e.clientX,
+        right: e.clientX
+    }
+
+    banner.classList.add(`event-${selectedEvent.color}`)
+    modalLayer.classList.add("show-mini-calendar-layer");
+    banner.classList.add("show-option-banner")
+
+    getFloatingPosition(banner, target, isDailyview)
+    getOptionButtons(isRepeatedEvent)
+
+    colorClass = selectedEvent.color
+    selectedCurrentID = currentEvent.dataset.id
+
+    infoSection.innerHTML= `
+    <div class="info-title">
+     <span text-background>${selectedEvent.icon}</span> <h2> ${selectedEvent.title}</h2>
+    </div>
+    ${
+      selectedEvent.allDay
+        ? `<p>Tutto il giorno</p>`
+        : `<p>${selectedEvent.from} - ${selectedEvent.to}</p>`
+    }
+    ${selectedEvent.description ? `<p>${selectedEvent.description}</p>` : ""}
+    ${selectedEvent.urgent ? `<p>Urgente!</p>` : ""}
+      `;
+  }
+
+function finalizeBannerAction(message, banner){
+    createMessage(message, banner, document.body )
+    closeInfoBanner()
+    renderEvents()
+  }
+
+function getEventContext(){
+  const ID = selectedCurrentID;
+  const events = getAllRenderableEvents()
+  const currentEvent = events.find(event => event.id === ID)
+  const motherId = currentEvent.originalEventId ?? currentEvent.id
+
+  return{
+    events,
+    currentEvent,
+    motherId
+  }
+}
+
 function deleteEvent(){
   const banner = document.querySelector(".option-banner-container");
   
   deleteEventFromLocalStorage(selectedCurrentID)
-
-   createMessage("l'evento è stato rimosso", banner, document.body )
-   closeInfoBanner()
-   renderEvents()
+  finalizeBannerAction("l'evento è stato rimosso", banner)
 }
+
 function deleteEventsOccurrencies(){
   const banner = document.querySelector(".option-banner-container");
   const events = getAllRenderableEvents()
  
-  const ID = selectedCurrentID;
-  const currentEvent = events.find(event => event.id === ID)
-  const motherId = currentEvent.originalEventId ?? currentEvent.id 
+  const {motherId} = getEventContext()
   
   deleteEventFromLocalStorage(motherId)
-
-   createMessage("la serie è stato rimossa", banner, document.body )
-   closeInfoBanner()
-   renderEvents()
+  finalizeBannerAction("la serie è stato rimossa", banner)
 }
 
 function deleteSingleOccurrence(){
   const banner = document.querySelector(".option-banner-container");
-   const ID = selectedCurrentID;
-   const events = getAllRenderableEvents()
-    const storedEvents = getEvents()
-  
-   const currentEvent = events.find(event => event.id === ID)
+
+  const {events, currentEvent, motherId} = getEventContext()
    if(!currentEvent)return
 
-   const occurrenceDate = currentEvent.date
+  const storedEvents = getEvents()
+  const occurrenceDate = currentEvent.date
    
-    const motherId = currentEvent.originalEventId ?? currentEvent.id
-
-    const updatedEvents = storedEvents.map(event => {
+    if(currentEvent.isOccurrence === true && currentEvent.repeat !==null){
+      const updatedEvents = storedEvents.map(event => {
             if (event.id !== motherId) return event
         return {
             ...event,
@@ -201,29 +215,38 @@ function deleteSingleOccurrence(){
                 exceptions: [...event.repeat.exceptions, occurrenceDate]
             }
           }  
-        })
-        console.log(updatedEvents)
+        })  
     saveEventsInLocalStorage(updatedEvents)
-    createMessage("l'evento è stato rimosso", banner, document.body )
-       closeInfoBanner()
-   renderEvents()
-}
+    finalizeBannerAction("l'evento è stato rimosso", banner)
+} else {
+ //con find so che mi ritorna il primo elemento corrispondente, essendo che sono in ordine 
+  const nextOccurrence = events.find(event => event.originalEventId === currentEvent.id)
+   const updatedEvents = storedEvents.map( event => {
+    if (event.id !== motherId) return event
+    return {
+      ...event,
+      date: nextOccurrence.date,
+      repeat : {
+        ...event.repeat,
+        exceptions: [...event.repeat.exceptions, event.date],
+      }
+    }
+   })
+    saveEventsInLocalStorage(updatedEvents)
+    finalizeBannerAction("l'evento è stato rimosso", banner)
+}}
 
 
 function getEventFromID(){
-  const ID = selectedCurrentID;
-  const events = getAllRenderableEvents();
-  // const localStorageEvents = getEvents()
-  const currentEvent = events.find(event => event.id === ID)
-  const motherId = currentEvent.originalEventId ?? currentEvent.id
+  const {events, currentEvent, motherId} = getEventContext()
   const motherEvent = events.find(event => event.id === motherId)
-  console.log(currentEvent, motherEvent)
+ 
   return {
     currentEvent: currentEvent,
     motherEvent: motherEvent
   }
 }
-  
+
 export function closeInfoBanner(){
   const banner = document.querySelector(".option-banner-container");
   banner.classList.remove(`event-${colorClass}`)
@@ -233,27 +256,26 @@ export function closeInfoBanner(){
   banner.classList.remove("show-option-banner")
 }
 
-function handleClickEditButton(e){
- const currentEvent =  getEventFromID().currentEvent
- preCompilerEdit(currentEvent, "edit")
- rehydrateRepeatModal()
+function handleEditFlow(event, mode, shouldRehydrate, e){
+ preCompilerEdit(event, mode)
+ if(shouldRehydrate){
+  rehydrateRepeatModal()
+ }
  openModal(e)
  closeInfoBanner()
+ } 
+
+function handleClickEditButton(e){
+ const currentEvent =  getEventFromID().currentEvent
+ handleEditFlow(currentEvent, "edit", false, e)
 }
 function handleClickEditSingleEventBtn(e){
   const currentEvent =  getEventFromID().currentEvent
-  preCompilerEdit(currentEvent, "edit-single-occurrence")
-  openModal(e)
-  closeInfoBanner()
+  handleEditFlow(currentEvent, "edit-single-occurrence", false, e)
 }
 function handleClickEditSeriesBtn(e){
-   const currentEvent =  getEventFromID().motherEvent
-   
-    // console.log(currentEvent.id, motherId)
- preCompilerEdit(currentEvent, "edit")
- rehydrateRepeatModal()
- openModal(e)
- closeInfoBanner()
+  const currentEvent =  getEventFromID().motherEvent
+  handleEditFlow(currentEvent, "edit-series", true, e)
 }
 
 export function initExtraInfos(){

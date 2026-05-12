@@ -171,7 +171,7 @@
 <!-- modale per gli eventi -->
 
 <!-- -------------------event container-------------------------------------- -->
-<!-- userrò getBoundingClient + position fixed per ancorarlo nel punto preciso al toggle della classe-->
+
 <div class="modal-overlay"></div>
 <section class="event-container ">
     <form class="event-form">
@@ -183,16 +183,15 @@
                 <button id="icons-btn" type="button">
                     ✏️
                 </button>
-                <!-- per visualizzare i menù: show-menù -->
-                    <div class="icons-list ">
-                    </div>
+                    <ul class="icons-list">
+                    </ul>
             </div>
             <div id="title-container">
                 <input type="text" class="input-name" placeholder="Titolo">
             </div>
             <div id="description-container">
                 <p class="desc-text"> Descrivi :</p>
-                <button type="button" class="btn-description">📃</button> <!-- questo apre un modale con un text container-->
+                <button type="button" class="btn-description">📃</button>
                     <section class="description-area" ><textarea class="description-area-text" maxlength="200" placeholder="Max 200 caratteri"></textarea> </section>
                     <div class="tutorial desc "> aggiungi una descrizione!</div>
             </div>
@@ -221,10 +220,8 @@
         <article id="row-date">
             <div class="event-date">
                <div class="tutorial mini-calendar-tut"> Seleziona una data</div>
-                <!-- qui verrà ancorato l'event per aprire il mini calendario-->
                  <p class="desc-text">Data :</p>
                 <div class="date-icon">
-                    <!--apre mini-calndario  -->
                     <button type="button" class="mini-calendar-btn">📆</button>
                 </div>  
             </div>
@@ -236,14 +233,13 @@
                                 <path class="checkBox" fill="none" stroke="currentColor" stroke-linecap="round"  stroke-linejoin="round" stroke-width="32" d="M352 176L217.6 336L160 272"/>
                                 <rect class="square-checkbox" width="384" height="384" x="64" y="64" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" rx="48" ry="48"/>
                             </svg> 
-                </button> <!-- se questo è premuto renderà invisibili gli input per la data, farà da toogle-->
+                </button> 
             </div>
         </article>
         <article id="row-time">
             <div class="time-selection ">
                 <div id="da-time">
                     <button type="button" class="listed-time from">⌛</button>
-
                     <div class="time-input-group from">
                     <input type="text" class="input-hour from" placeholder="13" maxlength="2">
                     <span class="time-separator">:</span>
@@ -255,7 +251,6 @@
 
                 <div id="a-time">
                     <button type="button" class="listed-time to">⏳</button>
-
                     <div class="time-input-group to">
                     <input type="text" class="input-hour to" placeholder="14" maxlength="2">
                     <span class="time-separator">:</span>
@@ -271,8 +266,23 @@
                 <button type="button" class="event-repeat-btn"> 
                     &#10227;
                 </button> 
-                <!-- questo si apre con show-repeat-modal-->
-                <article class="modal-repeat ">
+            </div>
+        </article>
+        <article id="notification-row">
+            <div class="notification-container">
+                <div class="notification-icon"> ⏰ </div>
+                <button type="button" class="notification-button">5 minuti prima</button> 
+                    <ul class="notification-list ">
+                    </ul>        
+            </div>
+            <div id="save-event">
+                <button type="button" class="btn save-btn"> save </button> <!-- questo salva i dati nel local storage-->
+            </div>
+            <div id="close-event">
+                <button type="button" class="btn close-btn"> chiudi </button> 
+            </div>
+        </article>
+        <article class="modal-repeat ">
                     <section class="repeat-mode-container">
                         <p>Scegli tipo di ripetizione : </p>
                         <button type="button" class="repeat-mode-btn"></button>
@@ -335,26 +345,7 @@
                         <button class="btn cls-repeat" type="button">chiudi</button>
                     </div>
                 </article>
-            </div>
-        </article>
-        <article id="notification-row">
-            <div class="notification-container">
-                <div class="notification-icon"> ⏰ </div>
-                <!-- il testo del bottone sarà l'output della selezione della lista -->
-                <button type="button" class="notification-button">5 minuti prima</button> 
-                
-                    <ul class="notification-list ">
-                    </ul>        
-                
-            </div>
-            <div id="save-event">
-                <button type="button" class="btn save-btn"> save </button> <!-- questo salva i dati nel local storage-->
-            </div>
-            <div id="close-event">
-                <button type="button" class="btn close-btn"> chiudi </button> 
-            </div>
-        </article>
-
+                <div class="repeat-overlay"></div>
     </form>
 </section>
 

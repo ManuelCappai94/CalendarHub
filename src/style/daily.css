@@ -21,10 +21,12 @@
     z-index: 60;
     box-sizing: border-box;
     border: 3px solid black;
-    display: flex;
+    display: grid;
+    grid-template-columns: 40% 60%;
     align-items: center;
 }
 .daily-current-header{
+    font-size: 1.2rem;
     margin: 0 1rem;
     text-transform: capitalize;
     font-family: "Kaushan Script", cursive;
@@ -107,8 +109,16 @@
     .daily-main {   
     grid-template-columns: 5rem 1fr;   
 }
+.daily-header{
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+}
 .time-lable-day{
     margin: 0;
+}
+.daily-current-header{
+    font-size: 2rem;
 
 }
 

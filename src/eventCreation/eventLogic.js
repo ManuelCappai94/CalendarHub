@@ -1,6 +1,6 @@
 import dayjs from "../day.js";
 import { eventDraft, validateTimeRange, timeDraft, initEventDraft, resetEventDraft} from "../utils/events/eventDraft.js";
-import { renderColorList, renderNotificationList } from "../utils/events/createLists.js";
+import { renderColorList, renderNotificationList, renderIconsList } from "../utils/events/createLists.js";
 import { openMiniCalendar } from "../utils/miniCalendar.js";
 import { updateEventDraft, validatorEventDraft } from "../utils/events/eventDraft.js";
 import { formatDate } from "../utils/events/eventsUI.js";
@@ -13,7 +13,7 @@ import { getEvents, saveEventsInLocalStorage } from "../utils/events/eventStorag
 import { separateHourFromMinute, setTimeUIAndDraft} from "../utils/helpers/timeHelper.js";
 import openModal from "./eventModal.js";
 import { initRepeatEvents, forceResetRepeatModalState } from "./repeatEvent.js";
-import handleListSelection from "../utils/helpers/listSelection.js";
+import {handleListSelection, handleOutSideClick} from "../utils/helpers/listSelection.js";
 
 const modalEvents = document.querySelector(".event-container")
 const modalOverlay = document.querySelector(".modal-overlay");
@@ -45,11 +45,55 @@ const notificationBtn = document.querySelector(".notification-button")
 const notificationList = document.querySelector(".notification-list")
 const saveBtn = document.getElementById("save-event")
 const closeBtn = document.querySelector(".close-btn")
+const repeatOverlay = modalEvents.querySelector(".repeat-overlay") 
+
+const iconBtn = modalEvents.querySelector("#icons-btn")
+const iconsList = modalEvents.querySelector(".icons-list")
+
+const outsideDropdowns = [
+  {
+    selector: ".icons-list, #icons-btn",
+    dropdown: iconsList,
+    className: "show-icons-list"
+  },
+
+  {
+    selector: ".description-area, .btn-description",
+    dropdown: showDesc,
+    className: "show-desc-area"
+  },
+
+  {
+    selector: ".color-list, #color-btn",
+    dropdown: colorLists,
+    className: "show-color-list"
+  },
+
+  {
+    selector: ".notification-list, .notification-button",
+    dropdown: notificationList,
+    className: "show-container"
+  },
+
+  {
+    selector: ".interactive-time-list.from, .listed-time.from",
+    dropdown: listedTimeFrom,
+    className: "show-menù"
+  },
+
+  {
+    selector: ".interactive-time-list.to, .listed-time.to",
+    dropdown: listedTimeTo,
+    className: "show-menù"
+  }
+];
 
 let formMode = "create";
 let editingEventId = null;
-let editingMotherEventId = null
-let editingOccurrenceDate = null
+let editingMotherEventId = null;
+let editingOccurrenceDate = null;
+let originalRepeatSnapshot = null;
+let originalSeriesDate = null;
 
 export const getData = (e)=>{
     let date, time;
@@ -72,45 +116,54 @@ export const getData = (e)=>{
 
 //da spostare initEventDraft e cleanEventDraft in EventDraft.js
 
-
+function classRemovalHelper(sections){
+    sections.forEach(item =>{
+        if(item.section.classList.contains(item.class)){
+            item.section.classList.remove(item.class)
+        }
+       
+    }) 
+}
 
 export function resetEventModal(){
     formMode = "create";
     editingEventId = null;
     editingMotherEventId = null;
     editingOccurrenceDate = null;
+    originalRepeatSnapshot = null;
+    originalSeriesDate = null;
 
-    resetEventDraft()
- 
-    inputTitle.value = ""
-    inputDesc.value = "";
-
-    if(colorLists.classList.contains("show-color-list")){
-        colorLists.classList.remove("show-color-list")
-    }
-
-    colorPreview.style.backgroundColor = "blue"
-    if(urgentCheckBox.classList.contains("checked")){
-        urgentCheckBox.classList.remove("checked")
-    }
-    if(allDayCheckBox.classList.contains("checked")){
+    const sections = [
+        {section: colorLists, class: "show-color-list" },
+        {section: urgentCheckBox, class : "checked"},
+        {section: iconsList, class: "show-icons-list"},
+        {section: notificationList, class: "show-container"},
+        {section: showDesc, class: "show-desc-area"},
+        {section: listedTimeFrom, class: "show-menù"},
+        {section: listedTimeTo, class: "show-menù"},
+    ]
+     if(allDayCheckBox.classList.contains("checked")){
         allDayCheckBox.classList.remove("checked")
         timeSelectionContainer.classList.remove("hide-time-section")
     }
+
+    classRemovalHelper(sections)
+    resetEventDraft()
+
+    iconBtn.innerText = "✏️"
+    inputTitle.value = ""
+    inputDesc.value = "";
+    colorPreview.style.backgroundColor = "blue"
     fromHourInput.value = ""
     fromMinuteInput.value = ""
     toHourInput.value = ""
     toMinuteInput.value = ""
-    if(notificationList.classList.contains("show-container")){
-        notificationList.classList.remove("show-container")
-    }
     notificationList.style.left = ""
     notificationBtn.innerText = "5 minuti prima"
     timeDraft.from.hour = "";
     timeDraft.from.minute = "";
     timeDraft.to.hour = "";
     timeDraft.to.minute = "";
-
     }
 
 
@@ -143,15 +196,22 @@ export function preCompilerEdit(event, mode){
         editingMotherEventId = event.originalEventId ? event.originalEventId : event.id;
         editingOccurrenceDate = event.date;
         eventDraft.repeat = null;
-        console.log(editingMotherEventId, editingOccurrenceDate)
+    }
+
+    if(mode === "edit-series"){
+        // structuredClone(event.repeat) crea un clone dell'elemento
+        originalRepeatSnapshot = structuredClone(event.repeat);
+        originalSeriesDate = event.date;
+        console.log(event.date, originalRepeatSnapshot )
     }
    
     header.firstElementChild.innerHTML = formatDate(event.date)
     header.firstElementChild.dataset.day = event.date  //risolve il miniCalendario data iniziale
     header.firstElementChild.nextElementSibling.innerHTML = event.from
 
+    iconBtn.innerText = event.icon;
     inputTitle.value = event.title;
-    inputDesc.value = event.description
+    inputDesc.value = event.description;
 
     colorPreview.style.backgroundColor = `${event.color}`
 
@@ -251,9 +311,7 @@ export function saveEvent(){
           id: crypto.randomUUID(),
           ...eventDraft
         }
-
         events.push(newEvent)
-        console.log(newEvent)
         saveEventsInLocalStorage(events)
         break
       }
@@ -284,11 +342,41 @@ export function saveEvent(){
           id: crypto.randomUUID(),
           ...eventDraft
         }
-        console.log(updatedEvents, newEvent)
+        // console.log(updatedEvents, newEvent)
         updatedEvents.push(newEvent)
         saveEventsInLocalStorage(updatedEvents)
          createMessage("l'occorrenza è stata modificata!", modalEvents, document.body)
          break
+      }
+      case "edit-series": {
+        const patternChanged = originalSeriesDate !== eventDraft.date ||
+        JSON.stringify({
+            type: originalRepeatSnapshot.type,
+            interval: originalRepeatSnapshot.interval,
+            weekdays: originalRepeatSnapshot.weekdays,
+            customDates: originalRepeatSnapshot.customDates,
+        }) !== JSON.stringify({
+            type: eventDraft.repeat.type,
+            interval: eventDraft.repeat.interval,
+            weekdays: eventDraft.repeat.weekdays,
+            customDates: eventDraft.repeat.customDates,
+        })
+         const updatedEvents = events.map(event => {
+          return event.id === editingEventId
+            ? { 
+                ...eventDraft,
+                id: editingEventId, 
+
+                repeat: {
+                    ...eventDraft.repeat,
+                    exceptions : patternChanged ? [] : originalRepeatSnapshot.exceptions
+                }
+            }
+            : event
+        })
+        saveEventsInLocalStorage(updatedEvents)
+        createMessage("la serie è stato modificata!", modalEvents, document.body)
+        break
       }
     }
 
@@ -303,6 +391,25 @@ export function initEventFormEvents(){
     renderColorList()
     renderNotificationList()
     createCaroseul()
+    renderIconsList()
+
+    outsideDropdowns.forEach(item =>{
+        handleOutSideClick(item.selector, item.dropdown, item.className)
+    })
+
+    iconBtn.addEventListener("click", ()=>{
+        iconsList.classList.toggle("show-icons-list")
+    })
+
+    handleListSelection(
+        iconsList, 
+        ".icon-list-item",
+       (li) => {
+        iconBtn.innerText = li.innerText
+        updateEventDraft("icon", li.innerText)
+       },
+       "show-icons-list" 
+    )
 
     btnDesc.addEventListener("click", ()=>{
         showDesc.classList.toggle("show-desc-area")
@@ -404,6 +511,7 @@ export function initEventFormEvents(){
 
     repeatBtn.addEventListener(("click"), ()=>{
         repeatModal.classList.toggle("show-repeat-modal")
+        repeatOverlay.classList.add("show-repeat-overlay")
     })
 
     notificationBtn.addEventListener("click", ()=>{

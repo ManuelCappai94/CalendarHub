@@ -1,42 +1,65 @@
 # 🗓️ CalendarHub
 
-A modular calendar application built from scratch using vanilla JavaScript.
+A modular calendar application built entirely from scratch using vanilla JavaScript.
 
-The project focuses on **state synchronization**, **interactive UI design**, and a scalable architecture supporting multiple views (month, week, day) and event creation.
+CalendarHub focuses on **scalable architecture**, **state synchronization**, and advanced **event management systems**, including recurring events, runtime occurrence generation, contextual UI interactions, and synchronized multi-view rendering.
+
+The project is designed as a long-term architecture-focused application rather than a simple CRUD calendar demo.
 
 ---
 
 ## ⚙️ Features
 
 - Fully synchronized **Month, Week, and Daily views**
-- Centralized state management (single source of truth)
+- Centralized state management (**single source of truth**)
+- Advanced event management system:
+  - Event creation & editing
+  - Recurring events engine
+  - Single occurrence exceptions
+  - Series editing & deletion
+  - Runtime occurrence generation
+  - Contextual info banner
+  - Preloaded date & time synchronization
 - Interactive grid system:
   - Click-based navigation
   - Time-slot interaction
-- Event creation modal:
-  - Opens from all views
-  - Pre-filled date and time
-- Mini calendar for quick date navigation
+  - Context-aware modal opening
+- Interactive mini calendar for fast date navigation
 - Dynamic seasonal background system
-- Responsive layout
-- Modular architecture (separated logic and UI)
-- Dedicated tutorial system 
+- Dedicated onboarding tutorial system
+- Modular architecture with separated UI and logic layers
+- Responsive interaction model optimized for desktop and mobile
+
+---
+
+## 🧠 Technical Highlights
+
+- Runtime recurring event generation system
+- Centralized synchronization architecture
+- Dynamic event rendering across multiple calendar views
+- Exception-based recurring event handling
+- Contextual floating UI positioning system
+- Modular vanilla JavaScript architecture
+- Reusable rendering pipeline
+- Dynamic DOM-driven UI system
 
 ---
 
 ## 🚀 Current Version
 
-- [v0.5 – Major refactor and event system](./README-this-version-0.5.md)
+- [v0.8 – Major refactor and advanced event system](./README-this-version-0.8.md)
 
 ---
 
 ## 🔮 Next Updates
 
-- Complete **event system logic** (creation, rendering, persistence)
-- Add **event visualization inside calendar grid**
-- Implement **date & time format switch (EU ↔ US)**
-- Complete **To-Do list functionality**
-- Improve UI consistency and interactions
+- Notification system implementation
+- Tutorial chapter navigation system
+- Additional event customization options
+- Mini calendar architecture cleanup
+- DOM centralization refactor
+- To-Do list completion
+- Additional UI & UX polish
 
 ---
 
@@ -46,14 +69,13 @@ The project focuses on **state synchronization**, **interactive UI design**, and
 ![Month View](./images/screenshots/month.jpeg)
 
 ### 📆 Week View
-![Week View](./images/screenshots/week.jpeg)
+![Week View](./images/screenshots/week+events.png)
 
-### 📆 Daily View
-![Daily view](./images/screenshots/modal+daily.jpeg)
+### 📆 Daily View + Event System
+![Daily view](./images/screenshots/modal+daily.png)
 
-### 📆 Mobile View
-![Mobile view](./images/screenshots/mobile.png)
-
+### 📌 Contextual Info Banner
+![Contextual Info Banner](./images/screenshots/contextual_info_banner.png)
 
 ---
 

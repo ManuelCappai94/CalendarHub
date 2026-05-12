@@ -4,6 +4,7 @@ const colorLists = document.querySelector(".color-list")
 const ulContainer = document.querySelectorAll(".interactive-time-list")
 const notificationList = document.querySelector(".notification-list")
 const dayOfWeekList = document.querySelector(".weekly-repetion-list")
+const iconsList = document.querySelector(".icons-list")
 
 const notifications = [
     {
@@ -45,6 +46,43 @@ const colors = [
   { name: "Orange", value: "orange", icon: "🟧" },
   { name: "Pink", value: "pink", icon: "🩷" },
 ];
+
+const eventIcons = {
+    notes: "✏️",
+  work: "💼",
+  study: "📚",
+  gym: "🏋️",
+  doctor: "💉",
+  food: "🍕",
+  travel: "✈️",
+  music: "🎵",
+  gaming: "🕹️",
+  meeting: "📅",
+  money: "💰",
+  coding: "💻",
+  idea: "💡",
+  shopping: "🛒",
+  party: "🎉",
+  warning: "‼️",
+  love: "🩷",
+  book: "📖",
+  tree: "🌳",
+  luck: "🍀",
+  medicine: "💊",
+  dog: "🐶",
+  cat: "🐱",
+}
+export function renderIconsList (){
+    iconsList.innerHTML = "";
+    Object.entries(eventIcons).forEach(([key, value])=>{
+           createElement(
+            iconsList, 
+            "icon-list-item",
+            value,
+            "li"
+        )
+    })
+}
 
 export function renderColorList(){
     colorLists.innerHTML = "";
