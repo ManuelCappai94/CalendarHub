@@ -1,9 +1,8 @@
 import dayjs from "./day.js";
 import globalDate from "./state.js";
 import createElement from "./utils/helpers/createElement.js"
+import { weekGrid } from "./utils/helpers/dom/mainCalendarDom.js";
 
-
-const weekGrid = document.getElementById("full-week-view");
 let currentview = globalDate.date;
 
 export default function createWeekGrid (currentview) {

@@ -1,7 +1,7 @@
 import dayjs from "../day.js";
 import { eventDraft, validateTimeRange, timeDraft, initEventDraft, resetEventDraft} from "../utils/events/eventDraft.js";
 import { renderColorList, renderNotificationList, renderIconsList } from "../utils/events/createLists.js";
-import { openMiniCalendar } from "../utils/miniCalendar.js";
+import { openMiniCalendar } from "../miniCalendar/miniCalendar.js";
 import { updateEventDraft, validatorEventDraft } from "../utils/events/eventDraft.js";
 import { formatDate } from "../utils/events/eventsUI.js";
 import createElement from "../utils/helpers/createElement.js";
@@ -14,41 +14,45 @@ import { separateHourFromMinute, setTimeUIAndDraft} from "../utils/helpers/timeH
 import openModal from "./eventModal.js";
 import { initRepeatEvents, forceResetRepeatModalState } from "./repeatEvent.js";
 import {handleListSelection, handleOutSideClick} from "../utils/helpers/listSelection.js";
+import {
+    modalEvents,
+    modalOverlay,
+    header,
+    fromHourInput, 
+    fromMinuteInput,
+    toHourInput, 
+    toMinuteInput,
+    inputTitle, 
+    inputDesc,
+    btnDesc,
+    showDesc,
+    categoryBtn, 
+    colorLists,
+    colorPreview, 
+    urgentBtn, 
+    urgentCheckBox, 
+    miniCalendarBtn,
+    allDayBtn,
+    allDayCheckBox,
+    timeSelectionContainer,
+    listedTimeBtnFrom,
+    listedTimeBtnTo,
+    listedTimeFrom,
+    listedTimeTo,
+    repeatBtn,
+    notificationBtn,
+    notificationList,
+    saveBtn, 
+    closeBtn,
+    modalInfoMode,
+    smallMessage,
+    iconBtn,
+    iconsList
+    
 
-const modalEvents = document.querySelector(".event-container")
-const modalOverlay = document.querySelector(".modal-overlay");
-const header = document.querySelector(".show-date")
-const fromHourInput = document.querySelector(".input-hour.from");
-const fromMinuteInput = document.querySelector(".input-minute.from");
-const toHourInput = document.querySelector(".input-hour.to");
-const toMinuteInput = document.querySelector(".input-minute.to");
-const inputTitle = document.querySelector(".input-name")
-const inputDesc = document.querySelector(".description-area-text")
-const btnDesc = document.querySelector(".btn-description")
-const showDesc = document.querySelector(".description-area")
-const categoryBtn = document.querySelector("#color-btn")
-const colorLists = document.querySelector(".color-list")
-const colorPreview = document.querySelector(".color-preview")
-const urgentBtn = document.querySelector("#urgent-btn")
-const urgentCheckBox = urgentBtn.querySelector(".checkBox");
-const miniCalendarBtn = document.querySelector(".mini-calendar-btn")
-const allDayBtn = document.getElementById("all-day-btn")
-const allDayCheckBox = allDayBtn.querySelector(".checkBox")
-const timeSelectionContainer = document.querySelector(".time-selection")
-const listedTimeBtnFrom = document.querySelector(".listed-time.from")
-const listedTimeBtnTo = document.querySelector(".listed-time.to")
-const listedTimeFrom = document.querySelector(".interactive-time-list.from")
-const listedTimeTo = document.querySelector(".interactive-time-list.to")
-const repeatBtn = document.querySelector(".event-repeat-btn")
-const repeatModal = document.querySelector(".modal-repeat")
-const notificationBtn = document.querySelector(".notification-button")
-const notificationList = document.querySelector(".notification-list")
-const saveBtn = document.getElementById("save-event")
-const closeBtn = document.querySelector(".close-btn")
-const repeatOverlay = modalEvents.querySelector(".repeat-overlay") 
+} from "../utils/helpers/dom/eventModalDom.js"
+import {repeatContainer as repeatModal, repeatOverlay} from "../utils/helpers/dom/repeatModalDom.js"
 
-const iconBtn = modalEvents.querySelector("#icons-btn")
-const iconsList = modalEvents.querySelector(".icons-list")
 
 const outsideDropdowns = [
   {
@@ -166,7 +170,28 @@ export function resetEventModal(){
     timeDraft.to.minute = "";
     }
 
-
+const renderModeTextInfo = (mode, eventTitle) => {
+    const header = modalInfoMode
+     smallMessage.innerText = ""
+    switch (mode) {
+        case "create":
+            header.innerText = "Crea un nuovo evento!"
+            break;
+        case "edit":
+            header.innerText = `Stai modificando : ${eventTitle}`
+            break
+        case "edit-series":
+            header.innerText = `Stai modificando la serie ${eventTitle}`
+            smallMessage.innerText = "Le modifiche verranno applicate a tutta la serie."
+            break
+        case "edit-single-occurrence":
+            header.innerText = `Stai modificando : ${eventTitle}`
+            smallMessage.innerText = "Questa occorrenza verrà separata dalla serie."
+            break
+        default:
+            break;
+    }
+}
 
 export function preCompiler(e){
     const {date, time} = getData(e)
@@ -180,10 +205,12 @@ export function preCompiler(e){
      setTimeUIAndDraft(timeDraft, "to", endTime)
     
     initEventDraft(date, time, endTime)
+    renderModeTextInfo(formMode)
 }
 
 export function preCompilerEdit(event, mode){
      formMode = mode;
+     renderModeTextInfo(formMode, event.title)
  
     Object.entries(event).forEach(([key, value]) =>{
         if(key === "id" || key === "isOccurrence" || key === "seriesId" || key === "originalEventId") return
@@ -393,6 +420,7 @@ export function initEventFormEvents(){
     createCaroseul()
     renderIconsList()
 
+   
     outsideDropdowns.forEach(item =>{
         handleOutSideClick(item.selector, item.dropdown, item.className)
     })

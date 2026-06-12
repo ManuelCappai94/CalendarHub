@@ -1,22 +1,12 @@
-
 import dayjs from "./day.js"
-
 import globalDate from "./state.js";
 import { config } from "./utils/config/config.js";
 
-
-
-
-const grid = document.querySelector(".month-structure");
-
-
  let vistaCorrente = globalDate.date;
-
 
 //appunti, avere usato j, al posto dell'indice, vuol dire che ad ogni ciclo, siccomme aumenta il numero da 0 a 6, incrementa sia la casella, che l'indice dell'array; poi ho modificato entrambi in beforeend, che se no sarebbe stato invertito; 
 
  function createMonthGrid (vistaCorrente, gridType, gridConfig) { 
-    //creiamo tutte le variabili che ci servono dalla libreria
         const giorniMese = vistaCorrente.daysInMonth(); //giorni del mese totale
         const primoGiorno = vistaCorrente.date(1);
         const firstDayIndex = vistaCorrente.startOf("month").weekday()

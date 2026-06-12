@@ -1,11 +1,240 @@
-const createList = document.querySelector(".section-center")
+import { 
+    createList,
+     newToDoBtn,
+      closeToDo,
+      toDoHeader,
+      headerDate,
+      headerTitle,
+      toDoItemsContainer,
+      addNewItemContainer,
+      itemInput,
+      addItemBtn,
+      toDoProgress
+     } from "../utils/helpers/dom/toDoDom.js"
 
+import {
+     createNewTodo,
+      toDoDraft,
+       initTodoDraft,
+        resetStates,
+         toDoItems,
+         resetToDoItemsValues
+         } from "./toDoDraft.js"
 
-export function initTodo(){
+import globalDate from "../state.js"
+import { saveTodo, getTodoFromLocalStorage, deleteItemsFromLocalStorage } from "./toDoStorage.js"
+import { createMessage } from "../utils/helpers/createElement.js"
+import createElement from "../utils/helpers/createElement.js"
+
+let activeTodoList = null;
+
+export function openTodo(){
     const viewportWidth = window.innerWidth
     createList.classList.toggle("show-modal")
     const toDoWidth = createList.clientWidth
     let toDoPosition = viewportWidth/2 - toDoWidth/2
     
     createList.style.left = `${toDoPosition}px`
+}
+
+
+function initHeader(){
+    let month, day;
+    const currentDay = globalDate.date.format("YYYY-MM-DD")
+        month = currentDay.slice(5, 7)
+        day = currentDay.slice(8, 10)
+    const date = `${day}-${month}`
+    toDoHeader.classList.add("show-title-header")
+    headerDate.innerText = ""
+    headerDate.innerText = date
+    initTodoDraft(date)
+    
+}
+function titleValidator(title){
+   if(!title.value.trim()) return false 
+   return true
+}
+
+function closeToDoList(){
+    resetStates()
+    toDoHeader.classList.remove("show-title-header")
+    createList.classList.remove("show-modal")
+    addNewItemContainer.classList.remove("show-add-new-item")
+    toDoItemsContainer.innerHTML = "";
+    toDoProgress.classList.remove("show-modal")
+    activeTodoList = null
+}
+
+function handleCreateTodoList(){
+    newToDoBtn.addEventListener("click", initHeader)
+
+    headerTitle.addEventListener("change", ()=> {
+        const isValid = titleValidator(headerTitle)
+        if(!isValid) return
+        const date = toDoDraft.date
+        const title = headerTitle.value.trim()
+         const existingTodo = getTodoFromLocalStorage()
+
+        if(!activeTodoList){
+            const newToDo = createNewTodo(date, title)
+           
+            existingTodo.push({...toDoDraft})
+            activeTodoList = toDoDraft.id
+            saveTodo(existingTodo)  
+            toDoProgress.classList.add("show-modal")
+            addNewItemContainer.classList.add("show-add-new-item")
+            return
+        }
+     const updatedTodos = existingTodo.map(todo => {
+        return todo.id === activeTodoList
+            ? { ...todo, title }
+            : todo
+    })
+
+    saveTodo(updatedTodos)
+        
+   })
+}
+function updateToDoCounter(updateList){
+    if(!updateList) return
+    const updatedActiveList = updateList.find(todoList => todoList.id === activeTodoList)
+    if (!updatedActiveList) return
+
+    const total = updatedActiveList.items.length
+    const completed = updatedActiveList.items.filter(todoItem => todoItem.completed).length
+       if (total === 0) {
+        toDoProgress.innerText = "Nessuna attività"
+        return
+    }
+    toDoProgress.innerText = `${completed}/${total} attività completate`
+}
+
+function handleCompletedItems(itemId, checkBtn){
+      const existingTodo = getTodoFromLocalStorage()
+
+      const checked = checkBtn.classList.toggle("checked")
+     
+        const  modTodo = existingTodo.map( todo => {
+        
+            return todo.id === activeTodoList 
+            ? {
+                ...todo,
+                items : todo.items.map(todoItem => {
+                    return todoItem.id === itemId
+                    ? {
+                        ...todoItem,
+                        completed : checked
+                    }
+                    : todoItem
+                })
+            }
+            : todo
+        })
+        saveTodo(modTodo)
+       // Passo lo stato aggiornato delle ToDo al counter,
+        // così evito di rileggere subito dal LocalStorage.
+        updateToDoCounter(modTodo)
+}
+
+
+function deleteItems(id, item){
+      const modTodo = deleteItemsFromLocalStorage(id, activeTodoList)
+        item.remove()
+        updateToDoCounter(modTodo)
+}
+
+function handleTodoItemActions(e) {
+    const item = e.target.closest(".todo-item")
+    if (!item) return
+
+    const id = item.dataset.id
+
+    const deleteBtn = e.target.closest(".delete-item-todo-btn")
+    const checkBtn = e.target.closest(".check-btn")
+
+    if (deleteBtn) {
+        deleteItems(id, item)
+        return
+    }
+
+    if (checkBtn) {
+        handleCompletedItems(id, checkBtn)
+        return
+    }
+}
+
+function handleCreateItems(){
+    
+    itemInput.addEventListener("change", ()=>{
+      const isValid = titleValidator(itemInput)
+        if(!isValid) return
+        toDoItems.title = itemInput.value.trim()
+    })
+
+    addItemBtn.addEventListener("click", ()=> {
+        if(!toDoItems.title) {
+            createMessage("Aggiungi un titolo", itemInput, addNewItemContainer )
+            return
+        } else {
+            // toDoItems.id = crypto.randomUUID()
+            const newItem = {
+                ...toDoItems,
+                id : crypto.randomUUID()
+            }
+          //add "checked" to the check-btn
+            createElement(
+                toDoItemsContainer,
+                 "todo-item",
+                `<button type="button" class="check-btn" aria-label="Completa attività">
+                    <svg viewBox="0 0 24 24" class="todo-check-icon">
+                        <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                        <path d="M7 12.5l3 3 7-7"></path>
+                    </svg>
+                </button>
+
+                <strong class="title-item">${newItem.title}</strong>
+
+                <button type="button" class="delete-item-todo-btn show-delete" aria-label="Elimina attività">
+                    <svg viewBox="0 0 24 24" class="todo-delete-icon">
+                        <path d="M3 6h18"></path>
+                        <path d="M8 6V4h8v2"></path>
+                        <path d="M6 6l1 15h10l1-15"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                    </svg>
+                </button>`,
+                "article",
+                {
+                    html: true, 
+                    dataset: {id: newItem.id}
+                }
+             )
+             const existingTodo = getTodoFromLocalStorage()
+             const modTodo = existingTodo.map(item => {
+                return item.id === activeTodoList
+                ? {
+                    ...item,
+                    items : [
+                        ...item.items,
+                        newItem
+                    ]
+                }
+                : item
+             })
+            saveTodo(modTodo)
+             updateToDoCounter(modTodo)
+        }
+        resetToDoItemsValues()
+    })
+ 
+}
+
+
+export function initToDobinds(){
+    handleCreateTodoList()
+    handleCreateItems()
+     
+    toDoItemsContainer.addEventListener("click", handleTodoItemActions)
+
+    closeToDo.addEventListener("click", closeToDoList)
 }

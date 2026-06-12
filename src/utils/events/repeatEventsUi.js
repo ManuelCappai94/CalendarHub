@@ -3,13 +3,8 @@ import { createMessage } from "../helpers/createElement.js"
 import { updateRepeatDraft } from "./repeatEventsDraft.js"
 import dateValidator from "../helpers/dateValidator.js"
 
-const header = document.querySelector(".show-date")
-const repeatContainer = document.querySelector(".modal-repeat") 
-const intervalText = repeatContainer.querySelector(".dinamic-interval-text")
-const untilContainer = repeatContainer.querySelector(".end-repeat-event-container")
-const untilText = repeatContainer.querySelector(".end-repeation-event-date")
-
-
+import { header } from "../helpers/dom/eventModalDom.js"
+import { repeatContainer, intervalText, untilContainer, untilText } from "../helpers/dom/repeatModalDom.js"
 
 
 export function updateIntervaltext(state, interval){

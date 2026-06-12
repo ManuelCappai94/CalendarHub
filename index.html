@@ -17,10 +17,44 @@
     <link rel="stylesheet" href="./src/style/renderEvents.css">
     <link rel="stylesheet" href="./src/style/optionsBanner.css">
     <link rel="stylesheet" href="./src/style/modalRepeat.css">
+    <link rel="stylesheet" href="./src/style/theme.css">
+    <link rel="stylesheet" href="./src/style/loader.css">
 </head>
 <body >
-    <!-- L'id della navBar verrà modificata come blocco unico -->
-  <nav id="navbar" class="blur ">
+  <div class="loader-layer">
+    <div class="loader-box">
+        <h1 class="loader-text">
+            CARICAMENTO IN CORSO
+        </h1>
+                <span class="loader-spinner">
+            <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="50" 
+                height="50" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="2" 
+                stroke-linecap="round" 
+                stroke-linejoin="round" 
+                class="lucide lucide-loader-icon lucide-loader"
+            >
+                <path class="active-line" d="M12 2v4"/>
+                <path d="m16.2 7.8 2.9-2.9"/>
+                <path d="M18 12h4"/>
+                <path d="m16.2 16.2 2.9 2.9"/>
+                <path d="M12 18v4"/>
+                <path d="m4.9 19.1 2.9-2.9"/>
+                <path d="M2 12h4"/>
+                <path d="m4.9 4.9 2.9 2.9"/>
+            </svg>
+        </span>
+    </div>
+  </div>
+  <div id="prev-layer"></div>
+  <div id="next-layer"></div>
+ 
+  <nav id="navbar" class="blur">
     <!-- primo layer -->
     <div id="first-layer">
         <div class="mode-btns">
@@ -107,51 +141,98 @@
     </article>
 </div>
 </section>
-            <div id="event-container ">
-                <!-- evento di prova -->
-                 <div class="activity hide"> placeholder</div>
-                 <div class="activity2 hide"> placeholder</div>
-            </div>
+    
 <!-- /////////////////////to do list//////////////////////////////////// -->
-<section class="section-center  "> <!--qui show-modal-->
-<form class="to-do-form">
-    <div class="main-title"> <p class="title-main-todo "> To-do List (placeholder)</p></div>
-    <div class="my-list-row">
-         <p class="my-list-text"> My Lists</p>
-         <div class="my-list-buttons-container">
-           
-                <!-- il tag i, viene usato per elementi neutri, come ad esempio mettere al posto di un bottone un png -->
+<section class="todo-panel">
+    <div class="todo-header">
+        <p class="title-main-todo">To-do List</p>
 
+        <button type="button" class="close-todo-btn" aria-label="Chiudi To-do List">
+            ✕
+        </button>
+    </div>
+
+    <div class="my-list-row">
+        <p class="my-list-text">My Lists</p>
+
+        <div class="my-list-buttons-container">
             <button type="button" class="new-list">
-                <i class="create-new-list"> New</i>
+                New
             </button>
-         </div>
+        </div>
     </div>
-    <!-- mi serve solo per creare spessore -->
+
     <div class="underline"></div>
-    <div data-id="list-id" class="to-do-container show-section">
-        <article class="to-do-title">
+
+    <section data-id="list-id" class="to-do-container">
+        <header class="to-do-title ">
             <p data-day="2025-10-11" class="date-to-do">10-11</p>
-            <p class="title-list"> Lista Spesa</p> <!--prende il nome dall'id del container-->
-        </article>
-        <!-- la modifica e l'aggiunta di elementi sarà configurato direttamente cliccando sulla casella del paragrafo -->
-        <article data-id="id-item" class="to-do-item">
-            <div class="check-box"><button type="button" class="check-btn checked"><i class=" fa-check"></i></button></div>
-            <p class="title-item">prendere banane</p>
-            <div class="delete-box"><button type="button" class="delete-btn show-delete"><i class=" fa-delete"></i></button></div>
-        </article>
-          <article data-id="id-item" class="to-do-item">
-            <div class="check-box"><button type="button" class="check-btn"><i class=" fa-check"></i></button></div>
-            <p class="title-item">comprare carne</p>
-            <div class="delete-box"><button type="button" class="delete-btn show-delete"><i class=" fa-delete"></i></button></div>
-        </article>
-        <article data-id="id-item" class="to-do-item">
-            <div class="check-box"><button type="button" class="check-btn"><i class=" fas-check" ></i></button></div>
-            <p class="title-item"></p>
-            <div class="delete-box"><button type="button" class="delete-btn"><i class=" fa-delete"></i></button></div>
-        </article>
-    </div>
-</form>
+            <input class="todo-input-title" placeholder="inserisci un titolo"></input>
+
+            <button type="button" class="delete-list-btn" aria-label="Elimina lista">
+                <svg viewBox="0 0 24 24" class="todo-delete-icon">
+                        <path d="M3 6h18"></path>
+                        <path d="M8 6V4h8v2"></path>
+                        <path d="M6 6l1 15h10l1-15"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                    </svg>
+            </button>
+        </header>
+        <section><p class="todo-progress">Nessuna Attività</p></section>
+
+        <div class="todo-items-container">
+            <!-- <article data-id="id-item" class="to-do-item">
+                <button type="button" class="check-btn checked" aria-label="Completa attività">
+                    <svg viewBox="0 0 24 24" class="todo-check-icon">
+                        <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                        <path d="M7 12.5l3 3 7-7"></path>
+                    </svg>
+                </button>
+
+                <p class="title-item">prendere banane</p>
+
+                <button type="button" class="delete-btn show-delete" aria-label="Elimina attività">
+                    <svg viewBox="0 0 24 24" class="todo-delete-icon">
+                        <path d="M3 6h18"></path>
+                        <path d="M8 6V4h8v2"></path>
+                        <path d="M6 6l1 15h10l1-15"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                    </svg>
+                </button>
+            </article>
+
+            <article data-id="id-item" class="to-do-item">
+                <button type="button" class="check-btn" aria-label="Completa attività">
+                    <svg viewBox="0 0 24 24" class="todo-check-icon">
+                        <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                        <path d="M7 12.5l3 3 7-7"></path>
+                    </svg>
+                </button>
+
+                <p class="title-item">comprare carne</p>
+
+                <button type="button" class="delete-btn show-delete" aria-label="Elimina attività">
+                    <svg viewBox="0 0 24 24" class="todo-delete-icon">
+                        <path d="M3 6h18"></path>
+                        <path d="M8 6V4h8v2"></path>
+                        <path d="M6 6l1 15h10l1-15"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                    </svg>
+                </button>
+            </article> -->
+        </div>
+
+        <div class="add-todo-row">
+            <input type="text" class="todo-input" placeholder="Nuova attività...">
+
+            <button type="button" class="add-todo-btn" aria-label="Aggiungi attività">
+                +
+            </button>
+        </div>
+    </section>
 </section>
 
 <div class="mini-calendar-layer"></div>
@@ -174,7 +255,12 @@
 
 <div class="modal-overlay"></div>
 <section class="event-container ">
-    <form class="event-form">
+            <article class="current-event-mode">
+            <h3 class="modal-info-mode"></h3>
+            <small class="current-mode-secondary-message"></small>
+        </article>
+    <div class="event-form">
+
         <article class="show-date">
             <span data-day="" class="first-row-date"></span><span></span>
         </article>
@@ -346,7 +432,7 @@
                     </div>
                 </article>
                 <div class="repeat-overlay"></div>
-    </form>
+    </div>
 </section>
 
 <script src="./dayjs/dayjs.min.js"></script>

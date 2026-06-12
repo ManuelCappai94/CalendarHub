@@ -67,7 +67,9 @@ font-weight: bold;
   font-weight: bold;
   font-size: 0.8rem;
 }
-
+.time-row{
+  padding-left: 3rem;
+}
 @media screen and (min-width:992px) {
   .option-banner-container{
     width: 20rem;

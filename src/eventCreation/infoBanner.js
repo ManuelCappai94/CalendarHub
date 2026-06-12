@@ -7,7 +7,7 @@
   import { rehydrateRepeatModal } from "./repeatEvent.js";
   import openModal from "./eventModal.js";
 
-  const modalLayer = document.querySelector(".mini-calendar-layer");
+  import { miniCalendarLayer as modalLayer } from "../utils/helpers/dom/miniCalendarDom.js";
 
   let selectedCurrentID = null;
   let colorClass = null;
@@ -152,11 +152,12 @@ function getOptionButtons(isRepeatedEvent){
     </div>
     ${
       selectedEvent.allDay
-        ? `<p>Tutto il giorno</p>`
-        : `<p>${selectedEvent.from} - ${selectedEvent.to}</p>`
+        ? `<p class="time-row">Tutto il giorno</p>`
+        : `<p class="time-row">${selectedEvent.from} - ${selectedEvent.to}</p>`
     }
     ${selectedEvent.description ? `<p>${selectedEvent.description}</p>` : ""}
     ${selectedEvent.urgent ? `<p>Urgente!</p>` : ""}
+     ${isRepeatedEvent ? `<p>🔗 Evento ripetuto</p>` : ""}
       `;
   }
 

@@ -43,6 +43,7 @@ function renderMonthEvents(allEvents){
         return aTotal - bTotal
         });
        eventOfDay.forEach(event =>{
+  
         if(event.allDay){
           const eventElement = createElement(
            box.querySelector(".event-allDay-container") ,
@@ -63,7 +64,7 @@ function renderMonthEvents(allEvents){
            const eventElement =  createElement(
             box.querySelector(".monthly-events-container"), 
               `monthly-event`,
-              `<span>${event.title}</span> <span >${event.from}</span> `,
+              `<span class="icon-month">${event.icon}</span> <span class="title-month">${event.title}</span> `,
               "div",
               {
                 html: true,
@@ -73,7 +74,11 @@ function renderMonthEvents(allEvents){
     eventElement.classList.add(`event-${event.color}`)
     if(event.urgent){
         eventElement.classList.add("event-urgent")  
+    }
+    if(event.isOccurrence){
+      eventElement.innerHTML=`<span class="icon-month">${event.icon}</span> <span class="title-month">${event.title}</span> <small class="repeat-icon" >🔗</small>  `
     }};
+   
     });
     }); 
 }
@@ -146,7 +151,7 @@ export function renderWeeklyEvents(allEvents){
         const eventElement = createElement(
           allDayContainer,
           allDayClass,
-           `<span class="all-event-start-text">Oggi:</span> <p><span text-background>${event.icon}</span>${event.title}</p>`,
+           `<span class="all-event-start-text">Oggi:</span> <p><span >${event.icon}</span>${event.title}</p>`,
            "div",
            {
             html: true,
@@ -168,7 +173,7 @@ export function renderWeeklyEvents(allEvents){
           ${event.from}
           </span> 
           <p class="render-title">
-          <span text-background>${event.icon}</span> ${event.title}
+          <span >${event.icon}</span> ${event.title}
           </p>`,
           "div",
           {
@@ -207,6 +212,9 @@ export function renderWeeklyEvents(allEvents){
         if(event.urgent){
           eventElement.classList.add("event-urgent")  
         }
+        if(event.isOccurrence){
+      eventElement.innerHTML=`<span >${event.icon}</span> <span>${event.title}</span> <small class="repeat-icon-alt" >🔗</small>  `
+    }
       })
   }
 

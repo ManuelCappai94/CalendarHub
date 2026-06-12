@@ -1,7 +1,7 @@
 import createElement from "../helpers/createElement.js";
 import dayjs from "../../day.js";
+import { header } from "../helpers/dom/eventModalDom.js";
 
-const header = document.querySelector(".show-date");
 
 //questa funzione avrà acnhe il compito di cambiare il formato mostrato nel modulo eventi in ue/usa
 export function formatDate(date){

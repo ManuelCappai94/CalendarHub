@@ -1,13 +1,11 @@
-.section-center {
+.todo-panel {
     position: fixed;
     z-index: 400;
     top: 20%;
-    /* left:10%; */
     border-radius: 20px;
-    /* background-color: wheat ; */
     background-image: url("../../images/righe.png");
     background-size: 20rem;
-    opacity: 0.9;
+    opacity: 0.95;
     border: 2px solid black;
     box-shadow: 4px 4px 10px black;
     box-sizing: border-box;
@@ -16,115 +14,172 @@
     max-height: 50rem;
     display: none;
 }
-.show-modal {
-    display: block;
+
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
 }
 
-.main-title {
-    margin-left: 2rem;
-}
 .title-main-todo {
-    /* provvisiorio, il font li sistemo più avanti */
     font-family: "Lacquer", system-ui;
     font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 12px;
 }
+
+.close-todo-btn,
+.delete-list-btn,
+.check-btn,
+.delete-item-todo-btn,
+.add-todo-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.close-todo-btn,
+.delete-list-btn {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+.delete-list-btn{
+    color: var(--darker);
+}
+
 .my-list-row {
     display: flex;
     justify-content: space-around;
     font-family: "Lacquer", system-ui;
-   
 }
-/* lo rendo cliccabile per visualizzare le vecchie liste */
+
 .my-list-text {
     font-size: 1.2rem;
     margin-top: 10px;
 }
-.my-list-buttons-container{
+
+.my-list-buttons-container {
     padding-top: 6px;
 }
+
 .new-list {
     border: 2px solid black;
     border-radius: 7px;
     width: 3rem;
     height: 2rem;
-}
-.create-new-list {
     font-family: "Lacquer", system-ui;
     font-weight: bold;
 }
 
-/* il contenitore dinamico*/
-/* .to-do-container {
-    /* display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto; 
-
-}  */
-
 .to-do-title {
-    display: flex;
+    width: 100%;
+    display: none;
+    align-items: center;
     font-family: "Kaushan Script", cursive;
     font-size: 1.5rem;
-    
+    justify-content: space-around;
+}
+.show-title-header {
+    display: flex;
 }
 
 .date-to-do {
-  margin: 5px 40px 0px;
-    
+    margin:  0;
 }
-.title-list {
+
+.todo-input-title {
     width: 50%;
-    margin-top: 5px;
+    margin: 0;
     overflow: hidden;
-}
-.to-do-item {
-display: grid;
-grid-template-columns: 3rem 70% 1.5rem;
-
-    font-family: "Kaushan Script", cursive;
-    font-size: 1rem;
-    font-weight: bold;
-
-  /* position: relative; */
-}
-/*uso piskel per disegnare una checkbox personalizzata*/
-.check-btn {
-    background: transparent;
-    background-image: url("../../images/checkbox.png");
-    background-size: 40px;
     border: none;
-    width: 30px ;
-    height: 30px;
-    padding:0
-    
-    /* border: none; */
+    border-bottom: 2px solid black;
+    font-family: "Kaushan Script", cursive;
+    font-size: 1.4rem;
+    background: transparent;
 }
-.checked {
- /* background-image: url("./images/checkboxgif.gif"); */
+
+.todo-items-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+     margin-top: 1.5rem;
+}
+
+.todo-item {
+    padding: 0 0.5rem;
+    display: grid;
+    grid-template-columns: 3rem 1fr 2rem;
+    align-items: center;
+    font-family: "Kaushan Script", cursive;
+    font-size: 1.2rem;
+    font-weight: bold;
+   
 }
 
 .title-item {
     margin-left: 15px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
     border-bottom: 1px solid black;
 }
-.delete-btn {
-    background: transparent;
-   background-image: url("../../images/trash-can.png");
-   background-size: 30px;
-   border: none;
-   width: 30px;
-   height: 30px;
-   display: none;
+
+.todo-check-icon,
+.todo-delete-icon {
+    width: 26px;
+    height: 26px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
-.show-delete {
+
+.check-btn .todo-check-icon path {
+    opacity: 0;
+}
+
+.check-btn.checked .todo-check-icon path {
+    opacity: 1;
+}
+
+.delete-item-todo-btn {
+    display: none;
+}
+
+.delete-item-todo-btn.show-delete {
     display: block;
 }
 
-/**********effetto blur da aggiungere sotto i modal***********************/
-.blur-active {
-  filter: blur(2px);
-  transition: filter 0.4s ease;
+.add-todo-row {
+    display: none;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    position: relative;
+}
+.show-add-new-item {
+    display: flex;
+}
+.todo-input {
+    flex: 1;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+}
+.add-todo-btn{
+    border: 1px solid black;
+    font-size: 1.2rem;
+    border-radius: 30px;
+}
+.todo-progress {
+    display: none;
+    text-align: center;
+     font-family: "Kaushan Script", cursive;
+     margin-bottom: 0;
+     font-size: 0.8rem;
+}
+
+.show-modal {
+    display: block;
 }

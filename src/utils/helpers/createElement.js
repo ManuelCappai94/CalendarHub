@@ -15,16 +15,24 @@ function createElement(father, elClass, el, tag, options = {}){
             container.dataset[key] = value
         })
     }
+    if(options.attributes){
+      Object.entries(options.attributes).forEach(([key, value]) => {
+        container.setAttribute(key, value)
+      })
+    }
 
     father.appendChild(container)
     return container
 }
 
 
-export function createMessage(message, container, father){
-  const positionTop = container.getClientRects()[0].top
-  const positionLeft = container.getClientRects()[0].left 
-  
+export function createMessage(message, container, father, type){
+  const containerRect = container.getBoundingClientRect()
+  const fatherRect = father.getBoundingClientRect()
+
+ const  top = containerRect.top - fatherRect.top
+ const  left = containerRect.left - fatherRect.left
+
     const alert = createElement(
       father,
       "missing-info-alert",
@@ -34,10 +42,15 @@ export function createMessage(message, container, father){
     setTimeout(()=>{
       alert.remove()
     }, 2000)
+    const alertHeight = alert.getBoundingClientRect().height
+    const alertWidth = alert.getBoundingClientRect().width
+    console.log(alertHeight)
 
-    const messageContainer = document.querySelector(".missing-info-alert")
-    messageContainer.style.top = positionTop + "px"
-    messageContainer.style.left = positionLeft + "px"
+     alert.style.top = `${top - alertHeight*0.5}px`
+    alert.style.left = `${left}px`
+    
+    
+
 }
 
 

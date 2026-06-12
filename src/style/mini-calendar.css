@@ -131,30 +131,38 @@
     background-color: var(--darker);
 }
 
-.month-lists{
+.month-lists, .year-lists{
     display: none;
     position: absolute;
     top: 10%;
-    left: -100%;
-    width: 100%;
+
     max-height: 100px;
     overflow-y: auto;
     background:var(--darker);
     border: 1px solid #ccc;
     z-index: 10;
 }
+.month-lists{
+    left: -100%;
+    width: 100%;
+}
+.year-lists{
+    left: 100%;
+    width: 100%;
+}
 
 .show-carousel{
     display: block;
 }
-.mini-month-item {
+.mini-month-item, .mini-year-item {
     padding: 4px 8px;
     cursor: pointer;
-    color: black;
+    color: var(--textModal);
 }
 
-.mini-month-item:hover {
+.mini-month-item:hover, .mini-year-item:hover {
     background-color: #f0f0f0;
+    color: var(--background);
 }
 .mini-actions{
     display: flex;

@@ -1,8 +1,5 @@
 import { createMessage } from "../helpers/createElement.js"
-
-const repeatContainer = document.querySelector(".modal-repeat")
-const modeContainer = repeatContainer.querySelector(".repeat-mode-container")
-const customContainer = repeatContainer.querySelector(".custom-dates-container")
+import { repeatContainer, modeContainer, customContainer } from "../helpers/dom/repeatModalDom.js"
 
 export const  repeatEventsDraft = {
     seriesId : null,

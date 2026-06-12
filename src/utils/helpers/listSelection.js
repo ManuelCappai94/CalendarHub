@@ -1,5 +1,6 @@
  export function handleListSelection(list, itemSelector, onSelect, closeDropDownClass){
     list.addEventListener("click", (e)=>{
+        e.stopPropagation()
      const item = e.target.closest(itemSelector)
         if (!item) return       
 

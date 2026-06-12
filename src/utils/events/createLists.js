@@ -1,10 +1,14 @@
 import createElement from "../helpers/createElement.js";
 import dayjs from "../../day.js";
-const colorLists = document.querySelector(".color-list")
-const ulContainer = document.querySelectorAll(".interactive-time-list")
-const notificationList = document.querySelector(".notification-list")
-const dayOfWeekList = document.querySelector(".weekly-repetion-list")
-const iconsList = document.querySelector(".icons-list")
+import { 
+    colorLists,
+    ulContainer,
+    notificationList,
+    iconsList
+ } from "../helpers/dom/eventModalDom.js";
+import { dayOfWeekList } from "../helpers/dom/repeatModalDom.js";
+
+
 
 const notifications = [
     {

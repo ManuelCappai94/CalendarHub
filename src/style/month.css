@@ -6,6 +6,7 @@
     width: 100%;
     box-sizing: border-box; /*larghezza e altezza includono anche padding e bordo, il contenuto si restringe automaticamente, assicura che il layout resti allineato */  
     /* border-left: 1px solid black;   */
+    
 }
 .month-view {
     display: none;
@@ -13,6 +14,7 @@
 
 .show-section {
     display:block;
+   
 }
 
 .day-grid  {
@@ -37,10 +39,12 @@
 
 .offset {
     background-color: var(--offset);
+     z-index: 1;
 }
 .set{
 
     background-color: var(--body);
+     z-index: 1;
 }
 .today{
     background-color:  var(--today)!important;

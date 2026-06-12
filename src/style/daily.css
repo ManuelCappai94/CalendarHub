@@ -46,6 +46,7 @@
     list-style-type: none; 
     padding: 0;
     margin-top: 0;
+    
 }
 .daily-name {
      list-style-type: none;
@@ -72,6 +73,7 @@
     border-left: 2px solid black;
     border-right: 2px solid black;
     width: 100%;
+    z-index: 1;
 }
 
 

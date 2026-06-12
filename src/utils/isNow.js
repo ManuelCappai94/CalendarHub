@@ -23,6 +23,22 @@ export function nowTarget(target, type, nowType, targetTime){
     return targetHour
 }
 
+export function dateListTarget(target, mode){
+    let now, targetList;
+
+    if(mode === "month"){
+        now = dayjs().month().format("MMMM")
+    }
+
+    target.forEach((item)=> {
+        if(item.innerText === now){
+                  targetList = item
+        }
+  
+    })
+
+    return targetList
+}
 
 
 export function isNow(){
@@ -35,24 +51,19 @@ export function isNow(){
    
     
   const targetDay =  nowTarget(selectHourDaily, "day", "currentTime")
-//   const targetHourWeek = nowTarget(selectHourWeek)
-
-  
+  const targetHourWeek = nowTarget(selectHourWeek, "week", "cellTime", "08:00" )
 
     if (targetDay) {
         targetDay.scrollIntoView({ block: "center", behavior: "smooth" });     
     }
- 
-    // window.scrollTo({
-    //     top: targetHourWeek.getBoundingClientRect().top + window.scrollY - 120,
-    //     behavior: "auto"
-    //     });
 
-    container.scrollTo({
-        left: targetWeekDay.closest(".week-structure").offsetLeft - container.clientWidth / 2 + weekTargetBox.clientWidth/2,
-        behavior: "smooth"
-    })
-
-  
+    if(container && targetWeekDay && targetHourWeek){
+        container.scrollTo({
+            left: targetWeekDay.closest(".week-structure").offsetLeft - container.clientWidth / 2 + weekTargetBox.clientWidth/2,
+            top : targetHourWeek.offsetTop,
+            behavior: "smooth"
+        })
+    }
 }
 
+//nel target left e top di scrollTo, bisogna accedere al valore dei rispettivi offset, se no ritorna undefined ovviamente.

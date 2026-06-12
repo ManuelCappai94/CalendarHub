@@ -1,8 +1,7 @@
 import dayjs from "./day.js";
 import globalDate from "./state.js";
 import createElement from "./utils/helpers/createElement.js";
-
-const dayGrid = document.getElementById("full-day-view");
+import { dayGrid } from "./utils/helpers/dom/mainCalendarDom.js";
 
 let currentview = globalDate.date;
 

@@ -4,31 +4,31 @@ import {handleListSelection, handleOutSideClick} from "../utils/helpers/listSele
 import { updateIntervaltext, unitlDateDefault } from "../utils/events/repeatEventsUi.js";
 import {createMessage} from "../utils/helpers/createElement.js"
 import { createDayOfWeek } from "../utils/events/createLists.js";
-import { openMiniCalendar } from "../utils/miniCalendar.js";
+import { openMiniCalendar } from "../miniCalendar/miniCalendar.js";
 import { getStoredCustomDates, initCustomDateRemoval, clearDatesStates } from "./repeatcustomDates.js";
 import { eventDraft } from "../utils/events/eventDraft.js";
 import { hydrateCustomDates } from "./repeatcustomDates.js";
-// import { formatDate } from "../utils/events/eventsUI.js";
-// import createElement from "../utils/helpers/createElement.js";
 
-const repeatContainer = document.querySelector(".modal-repeat") 
-const modeBtn = repeatContainer.querySelector(".repeat-mode-btn")
-const modeList = repeatContainer.querySelector(".repeat-mode-list")
-const intervalContainer = repeatContainer.querySelector(".repeat-intervall-container")
-const weeklyContainer = repeatContainer.querySelector(".weekly-repetion-container")
-const untilContainer = repeatContainer.querySelector(".end-repeat-event-container")
-const customContainer = repeatContainer.querySelector(".custom-dates-container")
-const intervalInput =repeatContainer.querySelector(".intervall-input")
-const dayOfWeekList = repeatContainer.querySelector(".weekly-repetion-list")
-const UntilMiniCalendarBtn = repeatContainer.querySelector(".open-miniCalendar-repeation")
-const customMiniCalendarBtn = repeatContainer.querySelector(".open-miniCalendar-custom-date")
-const header = document.querySelector(".show-date")
-const customList = repeatContainer.querySelector(".custom-dates-list")
-const repeatOverlay = document.querySelector(".repeat-overlay")
+import { 
+    repeatContainer,
+    modeBtn,
+    modeList,
+    intervalContainer, 
+    weeklyContainer,
+    untilContainer,
+    customContainer,
+    intervalInput,
+    dayOfWeekList,
+    untilMiniCalendarBtn,
+    customMiniCalendarBtn,
+    customList,
+    repeatOverlay,
+    closeBtn,
+    saveBtn
 
-const closeBtn = repeatContainer.querySelector(".cls-repeat")
-const saveBtn = repeatContainer.querySelector(".save-repeat")
+ } from "../utils/helpers/dom/repeatModalDom.js";
 
+import { header } from "../utils/helpers/dom/eventModalDom.js";
 
 let editMode = false;
 let repeatUiState = "default";
@@ -241,7 +241,7 @@ export function initRepeatEvents(){
       updateRepeatDraft("weekdays", selectedDays)
       console.log(repeatEventsDraft)
     })
-    UntilMiniCalendarBtn.addEventListener("click", ()=>{
+    untilMiniCalendarBtn.addEventListener("click", ()=>{
         if(editMode){
             const untilDateRestored = unitlDateDefault("edit", eventDraft.repeat.until)
             openMiniCalendar("event", untilDateRestored, "repeat-until")

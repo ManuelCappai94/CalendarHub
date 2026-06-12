@@ -3,11 +3,14 @@ import createElement from "../utils/helpers/createElement.js"
 import { updateRepeatDraft } from "../utils/events/repeatEventsDraft.js"
 import { formatDate } from "../utils/events/eventsUI.js"
 import dateValidator from "../utils/helpers/dateValidator.js"
+import { 
+    repeatContainer,
+     customContainer,
+      customList
+ } from "../utils/helpers/dom/repeatModalDom.js"
 
-const repeatContainer = document.querySelector(".modal-repeat") 
-const customContainer = repeatContainer.querySelector(".custom-dates-container")
-const customList = repeatContainer.querySelector(".custom-dates-list")
-const header = document.querySelector(".show-date")
+import { header } from "../utils/helpers/dom/eventModalDom.js"
+
 
 let listOfDates = []
 

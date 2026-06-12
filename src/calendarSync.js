@@ -10,26 +10,22 @@ import { theme } from "./utils/theme.js";
 import { renderEvents} from "./utils/events/eventRendering.js";
 import { renderExtraInfo } from "./eventCreation/infoBanner.js";
 
-const grid = document.querySelector(".month-structure");
-const weekGrid = document.getElementById("full-week-view");
-const dayGrid = document.getElementById("full-day-view");
-const currentMonthDisplay = document.querySelector(".big-numbers.text") ;
-const currentYearDisplay = document.querySelector(".big-numbers.year");
-const displayOverlayWeek = document.querySelector(".display-overlay.week") ;
-const displayOverlayDay = document.querySelector(".display-overlay.day");
-/////month-overlay
-const leftArrowMonth = currentMonthDisplay.previousElementSibling;
-const rightArrowMonth = currentMonthDisplay.nextElementSibling;
-///////week-overlay /////////
-const currentWeekDisplay = displayOverlayWeek.firstElementChild.nextElementSibling
-const leftArrowWeek = displayOverlayWeek.firstElementChild;
-const rightArrowWeek = currentWeekDisplay.nextElementSibling;
-///// daily-overlay //////////////////
-const currentDailyDisplay = displayOverlayDay.firstElementChild.nextElementSibling;
-const leftArrowDay = displayOverlayDay.firstElementChild;
-const rightArrowDay = currentDailyDisplay.nextElementSibling;
-const modalEvents = document.querySelector(".event-container")
+import {
+    monthGrid, 
+    weekGrid, 
+    dayGrid,
+    currentMonthDisplay,
+    currentYearDisplay,
+    currentWeekDisplay,
+    currentDailyDisplay,
+    leftArrowMonth,
+    leftArrowWeek,
+    leftArrowDay,
+    rightArrowDay,
+    rightArrowWeek,
+    rightArrowMonth
 
+} from "./utils/helpers/dom/mainCalendarDom.js"
 
  class CalendarLogic {
     constructor () {
@@ -61,7 +57,7 @@ const modalEvents = document.querySelector(".event-container")
     }
 //questo metodo wrappa tutte le funzioni
     syncAll(e){
-        createMonthGrid(this.date, grid, config.main);
+        createMonthGrid(this.date, monthGrid, config.main);
         createWeekGrid(this.date);
         createDailyGrid(this.date);
         this.updateOverlayDisplay();
@@ -70,7 +66,6 @@ const modalEvents = document.querySelector(".event-container")
         theme(this.date)
         renderEvents()
     }
-///sto pensando di fare un refactor grosso ai bottoni, ora mi sono accorto che posso gestire la logica passando dei parametri nei punti giusti, ma richede un refactor strutturale dei bottoni, solo 2 e non 6, e cio che dovrebbe cambiare è solo l'overlay all'interno che mostra mese o settimana o giorno.
     nextMonth(){
         this.showedMonth++;
         this.date = this.date.add(1, "month");
@@ -148,18 +143,6 @@ const modalEvents = document.querySelector(".event-container")
 }
 export const overlay = new CalendarLogic
 
-// function initNavInfo(){
-//     const displayMonth = overlay.date.month(overlay.showedMonth).format("MMMM");
-//     const currentMonday = overlay.date.weekday(0).format("DD MMMM");
-//     const currentSunday = overlay.date.weekday(6).format("DD MMMM");
-//     const showDailyDate = overlay.date.format("DD MMMM");
-//     const year = overlay.year;
-
-//     currentMonthDisplay.innerHTML=`${displayMonth}`;
-//     currentWeekDisplay.innerText =`${currentMonday} - ${currentSunday}`
-//     currentDailyDisplay.innerHTML=`${showDailyDate}`
-//     currentYearDisplay.innerHTML= `${year}`;
-// }
 
 function highlightDayMonth(button) {
     const selectedDate = button.dataset.day;
@@ -281,13 +264,12 @@ function bindCalendarEvents(){
         overlay.nextDay();
         overlay.syncAll()
     })
-    grid.addEventListener("click", handleMonthGridClick)
+    monthGrid.addEventListener("click", handleMonthGridClick)
     weekGrid.addEventListener("click", handleClickWeek )
     dayGrid.addEventListener("click", handleDailyClick)
 }
 
 export default function initCalendar(){
-    // initNavInfo()
     bindCalendarEvents()
     //in questo modo faccio partire la costruzione della griglia del mese senza dover chiamare la stessa funzione a parte, nell'init principale in index 
     overlay.syncAll()

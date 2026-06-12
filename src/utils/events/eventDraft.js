@@ -2,13 +2,16 @@ import createElement from "../helpers/createElement.js";
 import { createMessage } from "../helpers/createElement.js";
 import { timeToMinutes } from "../helpers/timeHelper.js";
 
-
-const eventContainer = document.querySelector(".event-form")
-const firstRow = document.querySelector(".event-description")
-const toHourInput = document.querySelector(".input-hour.to");
-const toMinuteInput = document.querySelector(".input-minute.to");
-const fourthRow = document.querySelector("#row-time")
-const dateRow = document.querySelector("#row-date")
+import { 
+  modalEvents,
+  eventForm as eventContainer,
+  inputTitle,
+  eventDescriptionRow as firstRow,
+  toHourInput,
+  toMinuteInput,
+  timeRow,
+  dateRow
+ } from "../helpers/dom/eventModalDom.js";
 
 export const eventDraft = {
   title: "",
@@ -81,7 +84,7 @@ export function validateTimeRange(timeDraft){
   const toMinutes = timeToMinutes(`${to.hour}:${to.minute}`);
 
   if(fromMinutes >= toMinutes){
-    createMessage("l'orario di fine deve essere nello stesso giorno", fourthRow, eventContainer)
+    createMessage("l'orario di fine deve essere nello stesso giorno", timeRow, eventContainer)
     timeDraft.to.hour = ""
     timeDraft.to.minute = ""
     updateEventDraft("to", "")
@@ -96,20 +99,20 @@ export function validateTimeRange(timeDraft){
 
 export function validatorEventDraft(){
   if(!eventDraft.title){
-    createMessage("inserisci un titolo", firstRow, eventContainer)
+    createMessage("inserisci un titolo", inputTitle, firstRow)
     return false
   }
   if (!eventDraft.date) {
-  createMessage("seleziona una data", dateRow, eventContainer);
+  createMessage("seleziona una data", dateRow, modalEvents);
   return false;
 }
   if (!eventDraft.allDay) {
     if (!eventDraft.from || !eventDraft.to) {
-      createMessage("inserisci entrambi gli orari", fourthRow, eventContainer);
+      createMessage("inserisci entrambi gli orari", timeRow, modalEvents);
       return false;
     } 
      if (!validateTimeRange(timeDraft)) {
-      createMessage("seleziona un orario", fourthRow, eventContainer);
+      createMessage("seleziona un orario", timeRow,modalEvents);
       return false;
     }
   }  else {
