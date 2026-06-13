@@ -51,20 +51,27 @@ import { config } from "./utils/config/config.js";
         <div 
             class="${gridConfig.boxGrid} ${dayClass}"
             data-action="create-event"
+            data-day="${dataDayID}"
             >
-         <div
-          class="${gridConfig.insideBoxGrid}"
-           data-day="${dataDayID}"
-           >
+          <div class="${gridConfig.firstRowMonth}">
+            <div class="${gridConfig.insideBoxGrid}">
+                <button
+                    type="button"
+                    class="${gridConfig.numberBox}"
+                    data-day="${dataDayID}"
+                    data-action="select-date"
+                    >
+                    ${dayNumber}
+                </button>
+            </div>
             <button
                 type="button"
-                class="${gridConfig.numberBox}"
-                data-day="${dataDayID}"
-                data-action="select-date"
-                >
-                 ${dayNumber}
+                class="${gridConfig.todoContainer}"
+                data-action="open-todo"
+            >
+            📝
             </button>
-         </div>
+          </div>
          ${gridConfig.eventsContainer ? `
             <div class="${gridConfig.eventAllDay}"></div>
             <div class="${gridConfig.eventsContainer}"></div>` : ""}

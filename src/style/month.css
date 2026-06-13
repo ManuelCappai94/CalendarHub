@@ -115,6 +115,11 @@ div.box-grid  {
     padding: 0;
     width: 100%;
 }
+.fist-row-month{
+    width: 100%;
+    display: flex ;
+    justify-content: space-between;
+}
 
 
 @media screen and (min-width: 992px) {

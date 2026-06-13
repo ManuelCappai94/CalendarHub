@@ -9,7 +9,9 @@ export const config = {
         colorOffset: "offset",
         today: "today",
         eventsContainer: "monthly-events-container",
-        eventAllDay: "event-allDay-container"
+        eventAllDay: "event-allDay-container",
+        firstRowMonth: "fist-row-month",
+        todoContainer: "todo-container-month"
     },
     mini: {
         boxesContainer: "mini-boxes-container",
@@ -20,5 +22,7 @@ export const config = {
          colorBox: "mini-set",
         colorOffset: "mini-offset",
         today: "mini-today",
+           firstRowMonth: "mini-fist-row-month",
+        todoContainer: "mini-todo-container-month"
     }
 }

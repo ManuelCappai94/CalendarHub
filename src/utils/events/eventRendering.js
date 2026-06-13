@@ -32,7 +32,7 @@ function renderMonthEvents(allEvents){
        container.innerHTML = "";
        allDayContainer.innerHTML = "";
     
-       const dataDay = box.firstElementChild.dataset.day;
+       const dataDay = box.dataset.day;
        const eventOfDay = allEvents.filter( event => event.date === dataDay);
     
        eventOfDay.sort((a, b) => {
@@ -46,7 +46,7 @@ function renderMonthEvents(allEvents){
   
         if(event.allDay){
           const eventElement = createElement(
-           box.querySelector(".event-allDay-container") ,
+           allDayContainer,
            "monthly-event",
            `<span>Oggi:</span> <p>${event.title}</p>`,
            "div",
@@ -62,7 +62,7 @@ function renderMonthEvents(allEvents){
           }
         }else{
            const eventElement =  createElement(
-            box.querySelector(".monthly-events-container"), 
+            container, 
               `monthly-event`,
               `<span class="icon-month">${event.icon}</span> <span class="title-month">${event.title}</span> `,
               "div",

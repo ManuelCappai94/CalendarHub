@@ -29,3 +29,12 @@ export function deleteItemsFromLocalStorage(currentId, activeId){
       //faccio il return di modTodo, cosi che posso usare questo array per accedere al numero variante di attività completate
       return modTodo
 }
+
+export function deleteTodoListFromLocalStorage(currentId){
+    const allTodo = getTodoFromLocalStorage()
+    const  updateTodos = allTodo.filter(todo => todo.id !== currentId)
+   
+    saveTodo(updateTodos)
+    
+    return updateTodos
+}

@@ -101,8 +101,9 @@ let originalSeriesDate = null;
 
 export const getData = (e)=>{
     let date, time;
-    if(e.target.classList.contains("box-grid")){
-        date = e.target.firstElementChild.dataset.day
+     const monthCell = e.target.closest(".box-grid");
+    if(monthCell){
+        date = e.target.dataset.day
         time = dayjs().minute(0).format("HH:mm")
         return {
             date: date,

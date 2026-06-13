@@ -178,3 +178,9 @@
     color: var(--background);
     border-radius: 10px;
 }
+.mini-fist-row-month{
+
+}
+.mini-todo-container-month{
+    display: none;
+}

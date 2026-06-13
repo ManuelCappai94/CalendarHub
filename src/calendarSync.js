@@ -118,7 +118,7 @@ import {
     highLightDayinMonth(){
         const highLight = document.querySelectorAll(".box-grid")
         highLight.forEach((box)=> {
-            if(box.firstElementChild.dataset.day === this.date.format("YYYY-MM-DD")){
+            if(box.dataset.day === this.date.format("YYYY-MM-DD")){
                 box.classList.add("selected")
             }
         })
@@ -162,9 +162,20 @@ function handleMonthGridClick(e){
 
     const selectedBtn = e.target.closest('[data-action="select-date"]')
     const cell = e.target.closest('[data-action="create-event"]')
+    const todo = e.target.closest('[data-action="open-todo"]')
+    const  selectBtnAndTodoContainer = e.target.closest(".fist-row-month")
     if(selectedBtn){
         e.stopPropagation()
         highlightDayMonth(selectedBtn)
+        return
+    }
+      if(todo){
+        e.stopPropagation()
+        console.log("ehi sono la todo aprimi")
+        return
+    }
+    if(selectBtnAndTodoContainer){
+        e.stopPropagation()
         return
     }
     if(cell){
@@ -172,6 +183,7 @@ function handleMonthGridClick(e){
         handleOpenCreate(e)
         return
     }
+  
 }
 
 function highLightWeek(e){

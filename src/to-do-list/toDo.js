@@ -5,6 +5,7 @@ import {
       toDoHeader,
       headerDate,
       headerTitle,
+      deleteList,
       toDoItemsContainer,
       addNewItemContainer,
       itemInput,
@@ -22,11 +23,25 @@ import {
          } from "./toDoDraft.js"
 
 import globalDate from "../state.js"
-import { saveTodo, getTodoFromLocalStorage, deleteItemsFromLocalStorage } from "./toDoStorage.js"
+import { 
+    saveTodo,
+     getTodoFromLocalStorage,
+      deleteItemsFromLocalStorage,
+       deleteTodoListFromLocalStorage
+     } from "./toDoStorage.js"
+
 import { createMessage } from "../utils/helpers/createElement.js"
 import createElement from "../utils/helpers/createElement.js"
 
+const EMPTY_TODO_MESSAGE = "Nessuna attività"
 let activeTodoList = null;
+
+function cleanActiveTodoUi(){
+    addNewItemContainer.classList.remove("show-add-new-item")
+    toDoItemsContainer.innerHTML = ""
+    toDoProgress.classList.remove("show-modal")
+    toDoProgress.innerText = EMPTY_TODO_MESSAGE
+}
 
 export function openTodo(){
     const viewportWidth = window.innerWidth
@@ -47,7 +62,7 @@ function initHeader(){
     toDoHeader.classList.add("show-title-header")
     headerDate.innerText = ""
     headerDate.innerText = date
-    initTodoDraft(date)
+    initTodoDraft(currentDay)
     
 }
 function titleValidator(title){
@@ -56,17 +71,23 @@ function titleValidator(title){
 }
 
 function closeToDoList(){
-    resetStates()
+    resetStates("close")
     toDoHeader.classList.remove("show-title-header")
     createList.classList.remove("show-modal")
-    addNewItemContainer.classList.remove("show-add-new-item")
-    toDoItemsContainer.innerHTML = "";
-    toDoProgress.classList.remove("show-modal")
+    cleanActiveTodoUi()
     activeTodoList = null
 }
 
 function handleCreateTodoList(){
-    newToDoBtn.addEventListener("click", initHeader)
+    newToDoBtn.addEventListener("click", ()=>{
+        if(!activeTodoList){
+            return initHeader()
+        } else {
+            resetStates("delete")
+            cleanActiveTodoUi()
+            activeTodoList = null
+        }
+    })
 
     headerTitle.addEventListener("change", ()=> {
         const isValid = titleValidator(headerTitle)
@@ -103,7 +124,7 @@ function updateToDoCounter(updateList){
     const total = updatedActiveList.items.length
     const completed = updatedActiveList.items.filter(todoItem => todoItem.completed).length
        if (total === 0) {
-        toDoProgress.innerText = "Nessuna attività"
+        toDoProgress.innerText = EMPTY_TODO_MESSAGE
         return
     }
     toDoProgress.innerText = `${completed}/${total} attività completate`
@@ -141,6 +162,15 @@ function deleteItems(id, item){
       const modTodo = deleteItemsFromLocalStorage(id, activeTodoList)
         item.remove()
         updateToDoCounter(modTodo)
+}
+
+function deleteAndCleanTodoList(){
+    if (!activeTodoList) return
+
+    deleteTodoListFromLocalStorage(activeTodoList)
+    resetStates("delete")
+    cleanActiveTodoUi()
+    activeTodoList = null
 }
 
 function handleTodoItemActions(e) {
@@ -235,6 +265,8 @@ export function initToDobinds(){
     handleCreateItems()
      
     toDoItemsContainer.addEventListener("click", handleTodoItemActions)
+
+    deleteList.addEventListener("click", deleteAndCleanTodoList)
 
     closeToDo.addEventListener("click", closeToDoList)
 }

@@ -26,12 +26,17 @@ export const createNewTodo = (date, title) => {
     toDoDraft.items = []
 }
 
-export function resetStates(){
+export function resetStates(type){
     headerTitle.value = ""
-    toDoDraft.date = ""
     toDoDraft.id = ""
     toDoDraft.items = []
     toDoDraft.title = ""
+
+    if(type === "close"){
+        toDoDraft.date = ""
+        return
+    }
+  
 }
 
 export const resetToDoItemsValues = () =>{
