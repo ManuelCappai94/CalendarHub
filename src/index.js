@@ -9,7 +9,6 @@ import { initiMiniCalendarInputs } from "./miniCalendar/miniCalendar.js";
 import { initToDobinds } from "./to-do-list/toDo.js";
 
 
-///blocca tutti i comportamenti di selezione del testo della padina di defualt con il doppio click e la selezione
 document.addEventListener('selectstart', (e) => {
   e.preventDefault();
 });

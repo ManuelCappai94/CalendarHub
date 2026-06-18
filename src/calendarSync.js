@@ -9,6 +9,9 @@ import { handleOpenCreate } from "./eventCreation/eventLogic.js";
 import { theme } from "./utils/theme.js";
 import { renderEvents} from "./utils/events/eventRendering.js";
 import { renderExtraInfo } from "./eventCreation/infoBanner.js";
+import { initRenderBadge } from "./to-do-list/toDoBadgeRendering.js";
+import { openContextualMenu, closeContextualMenu } from "./to-do-list/todoBadgeActions.js";
+import { getSelectedTodo } from "./to-do-list/toDo.js";
 
 import {
     monthGrid, 
@@ -65,6 +68,7 @@ import {
         this.highLightDay()
         theme(this.date)
         renderEvents()
+        initRenderBadge()
     }
     nextMonth(){
         this.showedMonth++;
@@ -163,7 +167,16 @@ function handleMonthGridClick(e){
     const selectedBtn = e.target.closest('[data-action="select-date"]')
     const cell = e.target.closest('[data-action="create-event"]')
     const todo = e.target.closest('[data-action="open-todo"]')
+    const itemContextualMenu = e.target.closest('[data-action="rehydrate-todo"]')
     const  selectBtnAndTodoContainer = e.target.closest(".fist-row-month")
+
+    if(itemContextualMenu){
+        e.stopPropagation()
+        getSelectedTodo(itemContextualMenu.dataset.id)
+        closeContextualMenu()
+        return
+    }
+ 
     if(selectedBtn){
         e.stopPropagation()
         highlightDayMonth(selectedBtn)
@@ -171,9 +184,11 @@ function handleMonthGridClick(e){
     }
       if(todo){
         e.stopPropagation()
-        console.log("ehi sono la todo aprimi")
+        openContextualMenu(cell.dataset.day, cell)
+        
         return
     }
+  
     if(selectBtnAndTodoContainer){
         e.stopPropagation()
         return
@@ -183,7 +198,7 @@ function handleMonthGridClick(e){
         handleOpenCreate(e)
         return
     }
-  
+
 }
 
 function highLightWeek(e){

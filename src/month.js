@@ -69,7 +69,7 @@ import { config } from "./utils/config/config.js";
                 class="${gridConfig.todoContainer}"
                 data-action="open-todo"
             >
-            📝
+            
             </button>
           </div>
          ${gridConfig.eventsContainer ? `

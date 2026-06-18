@@ -32,6 +32,8 @@ import {
 
 import { createMessage } from "../utils/helpers/createElement.js"
 import createElement from "../utils/helpers/createElement.js"
+import { initRenderBadge } from "./toDoBadgeRendering.js"
+import { handleOutsideContextualMenuClick } from "./todoBadgeActions.js"
 
 const EMPTY_TODO_MESSAGE = "Nessuna attività"
 let activeTodoList = null;
@@ -45,26 +47,64 @@ function cleanActiveTodoUi(){
 
 export function openTodo(){
     const viewportWidth = window.innerWidth
-    createList.classList.toggle("show-modal")
+    createList.classList.add("show-modal")
     const toDoWidth = createList.clientWidth
     let toDoPosition = viewportWidth/2 - toDoWidth/2
     
     createList.style.left = `${toDoPosition}px`
 }
 
+export function getSelectedTodo(todoId){
+    const todos = getTodoFromLocalStorage()
+    const currentTodo = todos.find(todo => todo.id === todoId)
+    if (!currentTodo) return
+    openTodo()
+    rehydrateTodoList(currentTodo)
+}
+
+function rehydrateTodoList(todo){
+    const todos = getTodoFromLocalStorage()
+
+    activeTodoList = todo.id;
+
+    cleanActiveTodoUi()
+
+    headerTitle.value = todo.title
+    renderTodoHeader(todo.date)
+
+    toDoProgress.classList.add("show-modal")
+    addNewItemContainer.classList.add("show-add-new-item")
+
+    todo.items.forEach(item => {
+        renderTodoItem(item)
+    })
+// Sync draft date so "New" creates another list for the same rehydrated day.
+    initTodoDraft(todo.date)
+
+    updateToDoCounter(todos)
+}
+
+function formatTodoHeaderDate(fullDate) {
+    const month = fullDate.slice(5, 7)
+    const day = fullDate.slice(8, 10)
+
+    return `${day}-${month}`
+}
+
+function renderTodoHeader(fullDate) {
+    const date = formatTodoHeaderDate(fullDate)
+
+    toDoHeader.classList.add("show-title-header")
+    headerDate.textContent = date
+}
 
 function initHeader(){
-    let month, day;
     const currentDay = globalDate.date.format("YYYY-MM-DD")
-        month = currentDay.slice(5, 7)
-        day = currentDay.slice(8, 10)
-    const date = `${day}-${month}`
-    toDoHeader.classList.add("show-title-header")
-    headerDate.innerText = ""
-    headerDate.innerText = date
-    initTodoDraft(currentDay)
-    
+
+    renderTodoHeader(currentDay)
+    initTodoDraft(currentDay) 
 }
+
 function titleValidator(title){
    if(!title.value.trim()) return false 
    return true
@@ -97,13 +137,14 @@ function handleCreateTodoList(){
          const existingTodo = getTodoFromLocalStorage()
 
         if(!activeTodoList){
-            const newToDo = createNewTodo(date, title)
+          createNewTodo(date, title)
            
             existingTodo.push({...toDoDraft})
             activeTodoList = toDoDraft.id
             saveTodo(existingTodo)  
             toDoProgress.classList.add("show-modal")
             addNewItemContainer.classList.add("show-add-new-item")
+            initRenderBadge()
             return
         }
      const updatedTodos = existingTodo.map(todo => {
@@ -168,6 +209,7 @@ function deleteAndCleanTodoList(){
     if (!activeTodoList) return
 
     deleteTodoListFromLocalStorage(activeTodoList)
+     initRenderBadge()
     resetStates("delete")
     cleanActiveTodoUi()
     activeTodoList = null
@@ -193,6 +235,36 @@ function handleTodoItemActions(e) {
     }
 }
 
+function renderTodoItem(todoItem) {
+    createElement(
+        toDoItemsContainer,
+        "todo-item",
+        `<button type="button" class="check-btn ${todoItem.completed ? "checked" : ""}" aria-label="Completa attività">
+            <svg viewBox="0 0 24 24" class="todo-check-icon">
+                <rect x="3" y="3" width="18" height="18" rx="4"></rect>
+                <path d="M7 12.5l3 3 7-7"></path>
+            </svg>
+        </button>
+
+        <strong class="title-item">${todoItem.title}</strong>
+
+        <button type="button" class="delete-item-todo-btn show-delete" aria-label="Elimina attività">
+            <svg viewBox="0 0 24 24" class="todo-delete-icon">
+                <path d="M3 6h18"></path>
+                <path d="M8 6V4h8v2"></path>
+                <path d="M6 6l1 15h10l1-15"></path>
+                <path d="M10 11v6"></path>
+                <path d="M14 11v6"></path>
+            </svg>
+        </button>`,
+        "article",
+        {
+            html: true,
+            dataset: { id: todoItem.id }
+        }
+    )
+}
+
 function handleCreateItems(){
     
     itemInput.addEventListener("change", ()=>{
@@ -212,33 +284,8 @@ function handleCreateItems(){
                 id : crypto.randomUUID()
             }
           //add "checked" to the check-btn
-            createElement(
-                toDoItemsContainer,
-                 "todo-item",
-                `<button type="button" class="check-btn" aria-label="Completa attività">
-                    <svg viewBox="0 0 24 24" class="todo-check-icon">
-                        <rect x="3" y="3" width="18" height="18" rx="4"></rect>
-                        <path d="M7 12.5l3 3 7-7"></path>
-                    </svg>
-                </button>
+            renderTodoItem(newItem)
 
-                <strong class="title-item">${newItem.title}</strong>
-
-                <button type="button" class="delete-item-todo-btn show-delete" aria-label="Elimina attività">
-                    <svg viewBox="0 0 24 24" class="todo-delete-icon">
-                        <path d="M3 6h18"></path>
-                        <path d="M8 6V4h8v2"></path>
-                        <path d="M6 6l1 15h10l1-15"></path>
-                        <path d="M10 11v6"></path>
-                        <path d="M14 11v6"></path>
-                    </svg>
-                </button>`,
-                "article",
-                {
-                    html: true, 
-                    dataset: {id: newItem.id}
-                }
-             )
              const existingTodo = getTodoFromLocalStorage()
              const modTodo = existingTodo.map(item => {
                 return item.id === activeTodoList
@@ -263,7 +310,8 @@ function handleCreateItems(){
 export function initToDobinds(){
     handleCreateTodoList()
     handleCreateItems()
-     
+    handleOutsideContextualMenuClick()
+
     toDoItemsContainer.addEventListener("click", handleTodoItemActions)
 
     deleteList.addEventListener("click", deleteAndCleanTodoList)

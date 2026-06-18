@@ -183,3 +183,47 @@
 .show-modal {
     display: block;
 }
+.contextual-menu{
+    position: absolute;
+    background: var(--textModal);
+    min-width: 2rem;
+    /* max-width: 5rem; */
+    z-index: 40;
+    max-height: 5rem;
+    overflow-y: auto;
+    scrollbar-width: none;
+    border-radius: 8px;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+.contextual-menu-list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.contextual-menu-list li {
+    border: 1px solid black;
+    /* margin-bottom: 5px; */
+    /* border-radius: 4px; */
+    overflow-x: hidden;
+    padding: 0.1rem;
+    height: 1.2rem;
+    overflow-y: hidden;
+      font-family: "Kaushan Script", cursive;
+      width: 2.5rem;
+      cursor: pointer;
+}
+
+@media screen and (min-width:992px) {
+    .contextual-menu{
+        width: 7rem;
+    }
+    .contextual-menu-list li {
+      width: 7rem;
+}
+.contextual-menu-list li:hover{
+    background-color: var(--offsetMini);
+    color: var(--textModal);
+}
+}

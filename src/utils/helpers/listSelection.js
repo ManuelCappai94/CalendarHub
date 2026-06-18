@@ -14,9 +14,10 @@
 export function handleOutSideClick(selector, list, className){
     document.addEventListener("click", (e) => {
         const inside = e.target.closest(selector)
-
         if(!inside){
             list.classList.remove(className)
         }
     })
 }
+
+// export function handleOutSideClick

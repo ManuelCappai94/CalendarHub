@@ -1,12 +1,9 @@
 
 
 #month-body{
-    /* background: blueviolet; */
-    
     width: 100%;
     box-sizing: border-box; /*larghezza e altezza includono anche padding e bordo, il contenuto si restringe automaticamente, assicura che il layout resti allineato */  
     /* border-left: 1px solid black;   */
-    
 }
 .month-view {
     display: none;
@@ -65,36 +62,35 @@
 
 
 div.box-grid  {
-    /* border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black; */
+
     border: 1px solid black;
-    /* height: 5rem; */
     display:flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 2px; 
-    overflow: hidden; /*cosi il testo non sborda fuori */  
+    /* overflow: hidden; */
+    z-index: 10;
+  
 }
-.box-grid:hover{
+/* .box-grid:hover{
     transform:scale(1.1)
-}
-.box-grid:active{
+} */
+/* .box-grid:active{
     animation: wiggle 1.5s ease-in-out;
-}
+} */
 
 /* .grid{
     user-select: none;
 } */
-@keyframes wiggle {
+/* @keyframes wiggle {
  0% {transform:  rotate(0deg) scale(1.2);}
   25% { transform: rotate(-8deg) scale(1.2); }
   50% { transform: rotate(8deg) scale(1.2); }
   75% { transform: rotate(-4deg) scale(1.2); }
   100% { transform: rotate(0deg) scale(1.2); }
-}
+} */
 .inside-box {
-    width: 1.4rem;
+    width: 1.2rem;
     border: 1px solid black;
     border-radius: 10px;
     background: white;
@@ -105,9 +101,7 @@ div.box-grid  {
     
 }
 .number-box {
-    font-size: 1rem;
-    /* font-weight: normal; */
-    /* cursor: default; così il mouse sopra al numero rimane standard */
+    font-size: 0.9rem;
     font-family: "Kaushan Script", cursive;
     font-weight: bold; 
     border: none;
@@ -119,6 +113,32 @@ div.box-grid  {
     width: 100%;
     display: flex ;
     justify-content: space-between;
+}
+.todo-container-month {
+    position: relative;
+    display: none;
+    background: none;
+    border: none;
+    padding: 0;
+}
+.todo-count{
+    /* border: 1px solid black; */
+    border-radius: 40px;
+    padding: 0.1rem;
+    width: 0.8rem;
+    background-color: var(--darker);
+    color: var(--textModal);
+    font-size: 0.5rem;
+    font-family: "Kaushan Script", cursive;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.todo-icon{
+font-size: 1.1rem;
+}
+.show-todo-btn {
+    display: block;
 }
 
 
@@ -141,14 +161,28 @@ height: 8rem;
 .inside-box {
     width: 2rem;
     border: 2px solid black;
-    border-radius: 100px;
+    border-radius: 100px;   
+}
 
-       
+.inside-box:hover{
+    transform: scale(1.2);
+    background-color: var(--offsetMini);
 }
 .number-box {
     font-size: 1.2rem;
-        /* display: flex;
-    justify-content: center;
-    align-items: center; */
 }
+.number-box:hover{
+    color: var(--textModal);
+}
+.todo-container-month:hover{
+    transform: scale(1.2);
+}
+.todo-count{
+    width: 1rem;
+    font-size: 0.7rem;
+}
+.todo-icon{
+    font-size: 1.5rem;
+}
+
 }
