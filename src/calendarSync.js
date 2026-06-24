@@ -166,14 +166,15 @@ function handleMonthGridClick(e){
 
     const selectedBtn = e.target.closest('[data-action="select-date"]')
     const cell = e.target.closest('[data-action="create-event"]')
-    const todo = e.target.closest('[data-action="open-todo"]')
+    const todo = e.target.closest('.todo-btn-header')
     const itemContextualMenu = e.target.closest('[data-action="rehydrate-todo"]')
     const  selectBtnAndTodoContainer = e.target.closest(".fist-row-month")
+    const badgeContainer = e.target.closest(".todo-container-month")
 
     if(itemContextualMenu){
         e.stopPropagation()
         getSelectedTodo(itemContextualMenu.dataset.id)
-        closeContextualMenu()
+        closeContextualMenu(monthGrid)
         return
     }
  
@@ -184,8 +185,7 @@ function handleMonthGridClick(e){
     }
       if(todo){
         e.stopPropagation()
-        openContextualMenu(cell.dataset.day, cell)
-        
+        openContextualMenu(cell.dataset.day, badgeContainer, monthGrid, cell)
         return
     }
   
@@ -222,9 +222,24 @@ function OpenModalWeek (e){
 
 function handleClickWeek(e){
     const eventElement = e.target.closest(".weekly-event,.week-allDay-event")
+    const todo = e.target.closest(".todo-btn-header")
+    const header = e.target.closest(".week-day-display")
+    const itemContextualMenu = e.target.closest('[data-action="rehydrate-todo"]')
+    const badgeContainer = e.target.closest(".week-todo-container")
+    if(itemContextualMenu){
+        e.stopPropagation()
+        getSelectedTodo(itemContextualMenu.dataset.id)
+        closeContextualMenu(weekGrid)
+        return
+    }
     if(eventElement){
          e.stopPropagation()
         renderExtraInfo(eventElement, e)
+        return
+    }
+    if(todo){
+        e.stopPropagation()
+        openContextualMenu(header.dataset.day, badgeContainer, weekGrid)
         return
     }
     if(e.target.classList.contains("week-box") || e.target.classList.contains("week-half-box" )){
@@ -241,8 +256,23 @@ function handleDailyClick (e){
 const selectHour = document.querySelectorAll(".day-box");
     const selectHalfhour = document.querySelectorAll(".day-half-box");
     const eventElement = e.target.closest(".daily-event, .daily-allDay-event")
+    const badgeContainer = e.target.closest(".daily-todo-container")
+    const todo = e.target.closest(".todo-btn-header")
+    const header = e.target.closest(".daily-header")
+    const itemContextualMenu = e.target.closest('[data-action="rehydrate-todo"]')
+     if(itemContextualMenu){
+        e.stopPropagation()
+        getSelectedTodo(itemContextualMenu.dataset.id)
+        closeContextualMenu(dayGrid)
+        return
+    }
+    if(todo){
+        e.stopPropagation()
+        openContextualMenu(header.dataset.day, badgeContainer, dayGrid)
+        return
+    }
     if(eventElement){
-         e.stopPropagation()
+        e.stopPropagation()
         renderExtraInfo(eventElement, e)
         return
     }

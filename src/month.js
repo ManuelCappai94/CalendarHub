@@ -64,13 +64,8 @@ import { config } from "./utils/config/config.js";
                     ${dayNumber}
                 </button>
             </div>
-            <button
-                type="button"
-                class="${gridConfig.todoContainer}"
-                data-action="open-todo"
-            >
-            
-            </button>
+            <div class="${gridConfig.todoContainer}">
+            </div>
           </div>
          ${gridConfig.eventsContainer ? `
             <div class="${gridConfig.eventAllDay}"></div>

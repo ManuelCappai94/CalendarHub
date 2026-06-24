@@ -15,18 +15,22 @@
     scrollbar-width: none;
 }
 .daily-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     position: sticky;
     top: 0;
     background: var(--timeCell);
     z-index: 60;
     box-sizing: border-box;
-    border: 3px solid black;
-    display: grid;
-    grid-template-columns: 40% 60%;
-    align-items: center;
+    border: 3px solid black; 
 }
 .daily-current-header{
-    font-size: 1.2rem;
+    max-width: 8rem;
+}
+.daily-current-header h1{
+    font-size: 1rem;
     margin: 0 1rem;
     text-transform: capitalize;
     font-family: "Kaushan Script", cursive;
@@ -101,6 +105,9 @@
 .first { 
     border-top: 1px solid black;
 }
+.daily-todo-container{
+    position: relative;
+}
 
 /*******************show-section*****************************/
 .show-section {
@@ -120,8 +127,10 @@
     margin: 0;
 }
 .daily-current-header{
+    max-width: unset;
+}
+.daily-current-header h1{
     font-size: 2rem;
-
 }
 
 

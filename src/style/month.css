@@ -62,7 +62,7 @@
 
 
 div.box-grid  {
-
+    position: relative;
     border: 1px solid black;
     display:flex;
     flex-direction: column;
@@ -72,23 +72,7 @@ div.box-grid  {
     z-index: 10;
   
 }
-/* .box-grid:hover{
-    transform:scale(1.1)
-} */
-/* .box-grid:active{
-    animation: wiggle 1.5s ease-in-out;
-} */
 
-/* .grid{
-    user-select: none;
-} */
-/* @keyframes wiggle {
- 0% {transform:  rotate(0deg) scale(1.2);}
-  25% { transform: rotate(-8deg) scale(1.2); }
-  50% { transform: rotate(8deg) scale(1.2); }
-  75% { transform: rotate(-4deg) scale(1.2); }
-  100% { transform: rotate(0deg) scale(1.2); }
-} */
 .inside-box {
     width: 1.2rem;
     border: 1px solid black;
@@ -121,22 +105,7 @@ div.box-grid  {
     border: none;
     padding: 0;
 }
-.todo-count{
-    /* border: 1px solid black; */
-    border-radius: 40px;
-    padding: 0.1rem;
-    width: 0.8rem;
-    background-color: var(--darker);
-    color: var(--textModal);
-    font-size: 0.5rem;
-    font-family: "Kaushan Script", cursive;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-}
-.todo-icon{
-font-size: 1.1rem;
-}
+
 .show-todo-btn {
     display: block;
 }
@@ -174,15 +143,7 @@ height: 8rem;
 .number-box:hover{
     color: var(--textModal);
 }
-.todo-container-month:hover{
-    transform: scale(1.2);
-}
-.todo-count{
-    width: 1rem;
-    font-size: 0.7rem;
-}
-.todo-icon{
-    font-size: 1.5rem;
-}
+
+
 
 }

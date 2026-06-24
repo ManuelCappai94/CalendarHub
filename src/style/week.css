@@ -2,15 +2,11 @@
     width: 100%;   
     margin: 0;
 }
-
-
-/* nelle colonne, il primo valore è una grandezza fissa che immposto, nella seconda ne faccio ripetere 7 volte con nuna misura da 10 rem */
 #full-week-view {
   display: flex;
   width: 100%;
   overflow: auto;
   max-height: 80vh
-  /* overflow-y: auto; */
 }
 .time-lable, .week-box, .week-half-box, .week-day-display{
     box-sizing: border-box;
@@ -28,12 +24,9 @@
     z-index: 30;
     padding: 0;
     margin: 0;
-  /* flex: 0 0 2.8rem; */
   z-index: 50;
-  
-
 }
-/* caselle contenente orario */
+
 
 .time-week{
     list-style-type: none;
@@ -92,12 +85,11 @@
 }
 
 .week-day-display {
-    /* position: sticky; */
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    /* top: 0; */
     height: 4rem;
     list-style-type: none;
     text-align: left;
@@ -106,8 +98,6 @@
     border-left: 1px solid black;
     background-color: var(--timeCell);
     opacity: 1;
-    
-   
 }
 .midnight {
       border-top: 1px solid black;
@@ -143,25 +133,36 @@
     
 }
 .week-half-box{
-border-bottom: 2px solid black;
-border-right: 1px solid black;
+    border-bottom: 2px solid black;
+    border-right: 1px solid black;
 }
 
-
-/* per far ereditare alcune proprietà ai figli di una lista lista, bisogna usare inherit: */
 .is-today  {
    background-color: var(--today) ;
 }
 
 .selected-week {
-    background-color: var(--navBar) !important;
+    background-color: var(--navBar) ;
 }
 
 .selected-time {
-    background-color: var(--Rosi) !important;
+    background-color: var(--Rosi) ;
 }
 .normal-week {
     background-color: var(--body);
+}
+.week-header-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.2rem;
+}
+.week-all-day-container {
+    flex: 1;
+}
+.week-todo-container {
+    position: relative;
 }
 
 @media  screen and (min-width: 760px) {
@@ -197,14 +198,14 @@ border-right: 1px solid black;
     box-shadow: var(--light-shadow);
 }
 .week-day-display {
-  /* position:fixed; */
+    
     width: 10rem;
     height: 82px;
     text-align: left;
 }
-.week-day-display:hover{
+/* .week-day-display:hover{
     transform: scale(1.1);
-}
+} */
 .day-label {
  font-size: 28px;   
   z-index: 20;

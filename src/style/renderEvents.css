@@ -14,7 +14,6 @@
 }
 .monthly-event {
   display: flex;
-  
   gap: 0.2rem;
  position: relative;
   font-size: 0.7rem;
@@ -31,8 +30,8 @@
   font-family:"Joti One", serif;
   padding: 0.1rem;
 
-/* white-space: nowrap; */
 }
+
 .icon-month{
   display: none;
   font-size: 0.7rem;
@@ -47,13 +46,13 @@
  
 }
 .render-allDay{
-  /* font-size: 1rem; */
+ 
   display: -webkit-box;
-  /* width: 100%; */
   gap: 0.4rem;
  margin-bottom: 0.2rem;
  font-family:"Kaushan Script", cursive;
  font-size: 0.7rem;
+ flex: 1;
 }
 .render-allDay span{
 display: none;
@@ -64,29 +63,32 @@ display: none;
 }
 .week-allDay-event{
   display: flex;
- /* max-width: 95%; */
   overflow: hidden;
   gap: 0.2rem;
 font-family:"Kaushan Script", cursive;
 box-shadow: var(--light-shadow);
 font-size: 0.8rem;
+ cursor: pointer;
 }
 .all-event-start-text{
   display: none;
 }
 .week-allDay-event p {
   display: flex;
-  /* overflow: hidden;  */
+}
+.daily-allDay-container{
+  flex: 1
 }
 .daily-allDay-event{
   display: flex;
   max-width: 90%;
   overflow: hidden;
   gap: 0.3rem;
-font-family:"Kaushan Script", cursive;
-font-weight: bold;
-box-shadow: var(--light-shadow);
-padding: 0.2rem;
+  font-family:"Kaushan Script", cursive;
+  font-weight: bold;
+  box-shadow: var(--light-shadow);
+  padding: 0.2rem;
+  cursor: pointer;
 }
 
 .daily-event, .weekly-event{
@@ -98,15 +100,12 @@ padding: 0.2rem;
     border-radius: 10px;
     padding: 0 0.3rem;
     font-family: "Joti One", serif;
-    /* color: var(--textModal); */
     overflow: hidden;
     box-sizing: border-box;
     font-size: 1rem;
     box-shadow: var(--light-shadow);
-    /* display: flex;
-    justify-content: left;
-    align-items: center;
-    gap: 0.4rem */
+     cursor: pointer;
+ 
 }
 .render-time, .render-title{
   margin: 0.1rem 0.2rem;
@@ -116,10 +115,7 @@ padding: 0.2rem;
   display: none;
 }
 .weekly-event .render-title, .monthly-event span{
-  /* margin: 0; */
-  /* overflow-wrap: anywhere; */
   word-break: break-word;
-  /* margin-left: 0.2rem; */
 }
 .daily-event {
   display: flex;
@@ -147,8 +143,8 @@ padding: 0.2rem;
   font-weight: bold;
   background-image: repeating-linear-gradient(
     45deg,
-     rgba(14, 11, 11, 0.363) 0,
-     rgba(14, 0, 0, 0.3) 1px,
+     rgba(14, 11, 11, 0.26) 0,
+     rgba(14, 0, 0, 0.212) 1px,
       transparent 4px,
     transparent 7px
   );
@@ -178,7 +174,7 @@ padding: 0.2rem;
 @media screen and (min-width:992px) {
 
   .monthly-events-container{
-    width: 100%;
+    width: 95%;
   }
   .icon-month{
   display: block  
@@ -199,6 +195,7 @@ padding: 0.2rem;
    display: block;
 }
 .daily-allDay-container{
+  flex: unset;
   width: 20rem;
 }
 .week-allDay-event .all-event-start-text{

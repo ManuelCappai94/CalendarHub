@@ -10,15 +10,15 @@ function createDailyGrid(currentview){
 
     let dataDay = currentview.format("YYYY-MM-DD");
     const dailyDate = currentview.format("dddd, DD")
-    const dailyHeader = createElement(dayGrid, "daily-header", null, "div")
+    const dailyHeader = createElement(dayGrid, "daily-header", null, "div", {dataset : {day : dataDay}})
      createElement(dailyHeader, "daily-allDay-container", null, "div")
     createElement(dailyHeader, "daily-todo-container", null, "div")
     const dailyMain = createElement(dayGrid, "daily-main", null, "div")
     const div = createElement(dailyMain, "ul-day-time", null, "div" )
     const list = createElement(div, "day-list", null, "ul")
     dailyHeader.insertAdjacentHTML("afterbegin", `
-        <div>
-            <h1 class="daily-current-header">${dailyDate}</h1>
+        <div class="daily-current-header">
+            <h1>${dailyDate}</h1>
         </div>
         `)
 
