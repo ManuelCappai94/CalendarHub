@@ -93,7 +93,6 @@ export function renderDailyEvents(allEvents){
     const dailybox = document.querySelector(".day-box")
     const dataDay = dailybox.parentElement.dataset.day
     const height = dailybox.getBoundingClientRect().height
-    // const width = dailybox.getBoundingClientRect().width
   renderHelper(
     height,
      container,
@@ -114,10 +113,8 @@ export function renderWeeklyEvents(allEvents){
     
     const weeklyBox = document.querySelector(".week-box")
     const height = weeklyBox.getBoundingClientRect().height
-    // const width = weeklyBox.getBoundingClientRect().width
     const dataDay = container.dataset.day
  
-    // console.log(height /30)
     renderHelper(
       height,
        container,
@@ -199,7 +196,6 @@ export function renderWeeklyEvents(allEvents){
           
           return other.id === event.id
         })
-        // console.log(overlapIndex)
         const width = 95 / overlaps.length
         const left = overlapIndex * width
         
