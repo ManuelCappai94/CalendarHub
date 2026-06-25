@@ -1,3 +1,4 @@
+const todoLayer = document.querySelector(".todo-layer")
 const createList = document.querySelector(".todo-panel")
 const newToDoBtn = createList.querySelector(".new-list")
 const toDoHeader = createList.querySelector(".to-do-title")
@@ -11,4 +12,4 @@ const itemInput = addNewItemContainer.querySelector(".todo-input")
 const addItemBtn = addNewItemContainer.querySelector(".add-todo-btn")
 const toDoProgress = createList.querySelector(".todo-progress")
 
-export {createList, newToDoBtn, closeToDo, toDoHeader, headerDate, headerTitle, deleteList, toDoItemsContainer, addNewItemContainer, itemInput, addItemBtn, toDoProgress}
+export {todoLayer, createList, newToDoBtn, closeToDo, toDoHeader, headerDate, headerTitle, deleteList, toDoItemsContainer, addNewItemContainer, itemInput, addItemBtn, toDoProgress}

@@ -1,4 +1,5 @@
 import { 
+    todoLayer,
     createList,
      newToDoBtn,
       closeToDo,
@@ -48,6 +49,7 @@ function cleanActiveTodoUi(){
 export function openTodo(){
     const viewportWidth = window.innerWidth
     createList.classList.add("show-modal")
+    todoLayer.classList.add("show-modal")
     const toDoWidth = createList.clientWidth
     let toDoPosition = viewportWidth/2 - toDoWidth/2
     
@@ -113,6 +115,7 @@ function titleValidator(title){
 function closeToDoList(){
     resetStates("close")
     toDoHeader.classList.remove("show-title-header")
+    todoLayer.classList.remove("show-modal")
     createList.classList.remove("show-modal")
     cleanActiveTodoUi()
     activeTodoList = null

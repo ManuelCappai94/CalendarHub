@@ -1,3 +1,13 @@
+.todo-layer{
+    position: fixed;
+    inset: 0;
+    z-index: 399;
+    background: rgba(71, 70, 70, 0.404); 
+    display: none;
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+
 .todo-panel {
     position: fixed;
     z-index: 400;
