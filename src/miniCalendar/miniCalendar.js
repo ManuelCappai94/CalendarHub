@@ -7,6 +7,7 @@ import {
     monthInput,
     dayInput
 } from "../utils/helpers/dom/miniCalendarDom.js"
+
 import dayjs from "../day.js";
 import { overlay } from "../calendarSync.js";
 import createMonthGrid from "../month.js";
@@ -18,11 +19,10 @@ import { updateUntilUIAndDraft } from "../utils/events/repeatEventsUi.js";
 import { validateAndReturnCustomDate } from "../eventCreation/repeatcustomDates.js";
 import { initMonthList, initYearList } from "./miniCalendarCarousels.js";
 import { handleListSelection } from "../utils/helpers/listSelection.js";
-//NODO NAV
-const displayOverlay = document.querySelectorAll(".display-overlay")
 
-//NODO MODALE EVENTI
-const eventDateDiv = document.querySelector(".event-date")
+import { displayOverlays } from "../utils/helpers/dom/mainCalendarDom.js";
+
+import { eventDateDiv } from "../utils/helpers/dom/eventModalDom.js";
 
 let miniLocalDate = null;
 let miniCalendarCommitTarget = "normal";
@@ -45,7 +45,7 @@ export function openMiniCalendar(type, date, commitTarget = type) {
       
         createMiniCalendar(miniLocalDate);
         showModal.classList.add("show-mini-calendar");
-        displayOverlay.forEach(item => {
+        displayOverlays.forEach(item => {
            display = item.closest(".show-display")
            if(!display)return
 

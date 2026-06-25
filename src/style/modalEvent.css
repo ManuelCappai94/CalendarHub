@@ -11,7 +11,6 @@
     position: fixed;
     max-width: 95dvw;
     border: 3px solid black;
-    /* height: 400px; */
     background: var(--textModal);
     color: currentColor;
     border-radius: 15px;
@@ -27,7 +26,6 @@
 }
 .show-date{
     display: flex;
-    /* color: var(--textModal); */
     justify-content: flex-start;
     margin-left: 1rem;
     gap: 1rem;
@@ -39,7 +37,6 @@
 }
 .first-row-date{
     text-transform: capitalize;
-    /* font-family: "Joti One", serif; */
 }
 /*****************PRIMA RIGA **************************** */
 .event-description {
@@ -58,18 +55,13 @@ margin-left: 0.5rem;
     width: 2.5rem;
     height: 2.5rem;
     font-size: 1.2rem;
-     background-color: var(--background);
-    /* border-radius: 4px; */
-  /* padding-inline: 4px; */
+    background-color: var(--background);
     border: 2px solid black ;
     border-radius: 20px;
-   /* text-align: center; */
    padding: 0;
    box-shadow: var(--light-shadow);
-   /* color: var(--background); */
 }
 
-/* queste misure sono da modificare, userò fit-content e dipenderanno da quante icone vorrò inserire */
 .icons-list{
     position: absolute;
     width: fit-content;
@@ -98,9 +90,6 @@ margin-left: 0.5rem;
     gap: 1rem;
 }
 
-#title-container{
-    /* width: 9rem; */
-}
 .input-name{
     border-radius: 8px;
     width: 40dvi;
@@ -180,19 +169,7 @@ margin-left: 0.5rem;
     gap: 1rem;
     align-items: center;
 }
-/* #color-btn, .mini-calendar-btn, .listed-time, .event-repeat-btn, .open-minicalendar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 3rem;
-    height: 2rem;
-    font-size: 1.2rem;
-    border-radius: 10px;
-    font-family: "Lacquer", system-ui;
-    box-shadow: var(--light-shadow);
-    background: var(--background);
-    padding: 0;
-} */
+
 .event-repeat-btn{
     color: var(--textModal);
     font-weight: bold;
@@ -247,12 +224,10 @@ margin-left: 0.5rem;
 #urgent-container, #all-day, .desc-text{
     display: flex;
     align-items: center;
-    /* text-shadow: var(--light-shadow); */
     font-family: "Lacquer", system-ui;
     font-weight: bold;
     gap: 0.2rem;
-     /* color: var(--textModal); */
-      font-size: 0.9rem;
+    font-size: 0.9rem;
 }
 
 #urgent-btn{
@@ -260,9 +235,7 @@ margin-left: 0.5rem;
     border: none;
    color: currentColor;
 }
-.square-checkbox{
-    
-}
+
 .checkBox{
     opacity: 0;
 }
@@ -293,9 +266,6 @@ margin-left: 0.5rem;
 }
 .input-time {
     width: 3rem;
-}
-.date-icon{
-    /* position: relative; */
 }
 #all-day{
     gap:1rem;
@@ -335,7 +305,6 @@ margin-left: 0.5rem;
   display: flex;
   align-items: center;
   width: fit-content;
-  /* gap: 0.2rem; */
     border-radius: 5px;
     border: 2px solid black;
     box-shadow: var(--light-shadow);
@@ -345,23 +314,17 @@ margin-left: 0.5rem;
 .input-hour,
 .input-minute {
   width: 1.5rem;
-  /* border-radius: 5px; */
- background-color: transparent;
+  background-color: transparent;
   text-align: center;
   border: none;
   font-weight: bold;
-  /* box-shadow: var(--light-shadow); */
 }
 
 .time-separator {
   color: var(--background);
   font-weight: bold;
 }
-/* .input-time{
-    border-radius: 5px;
-    border: 2px solid black;
-    box-shadow: var(--light-shadow);
-} */
+
 .listed-time{
     width: 2rem;
     height: 1.5rem;
@@ -410,10 +373,6 @@ margin-left: 0.5rem;
     width: fit-content;
     top: -2rem;
     left: 0;
-    
-    /* left: 50%;
-    transform: translate(50%, 50%);  */
-  
     font-size: 1.5rem;
     padding: 0.2rem;
     background-color: var(--background);
@@ -443,7 +402,6 @@ margin-left: 0.5rem;
     align-items: center;
     gap: 0.4rem;
     font-family: "Lacquer", system-ui;
-    /* color: var(--textModal); */
 }
 /*****************Ultima Riga **************************** */
 #notification-row {
@@ -468,7 +426,6 @@ margin-left: 0.5rem;
     display: none;
     position: fixed;
     list-style: none;
-    /* bottom: -50%; */
     transform: translateY(-50%);
     left: "";
     border: 2px solid black;
@@ -510,9 +467,7 @@ margin-left: 0.5rem;
     #44413e81 100%
   );
   color: #fff4df;
-  /* border-bottom: 1px solid rgba(255, 244, 223, 0.25); */
-  /* color: var(--textModal); */
-  /* border-bottom: 1px solid black; */
+
 }
 
 .current-event-mode h3 {
@@ -527,89 +482,48 @@ margin-left: 0.5rem;
   margin-top: 0.25rem;
   font-size: 0.75rem;
   line-height: 1.2;
-  /* opacity: 0.8; */
    font-family: "Joti One", serif;
-   /* color: rgba(255, 244, 223, 0.78); */
 }
 
-/* .show-menù {
-    display: block;
-} */
+
 
 
 @media screen and (min-width:992px){
    .event-container {
-    /* width: 400px; */
     width: 400px;
 }
-/* #icons-btn{
-    width: 32px;
-    height: 32px;
-} */
+
 .icon-list-item:hover{
  background-color: var(--lighter);
 }
-#title-container{
-    /* width: 9rem; */
-}
+
 .input-name{
   width: 12rem;
 }
-/* .btn-description{
-    width: 4.5rem;
-    height: 2rem; 
-} */
+
 .category-selector {
    
     gap: 2rem;
     margin-left: 5%;
 }
-/* #color-btn{
-    width: 4.5rem;
-    height: 2rem; 
-} */
-/* .desc{
-    top: -80%;
-    width: 12rem;
-    left: -85%;
-}
-.category{
-    top: -35%;
-    left: -20%;
-}
-.mini-calendar-tut{
-    top: -80%;
-    left: -100%;
-} */
-/* .color-list{
-   
-} */
-.show-color-list{
 
+.show-color-list{
     top: -1rem;
     left: -1rem;
-
 }
-/* .description-area{
-    
-} */
+
 
 .description-area-text{
- 
     width: 20rem;
     min-height: 7rem;
-    /* height: fit-content; */
     max-height: 12rem;
-
 }
 .urgent-text{
-    
     font-size: 1rem;
 }
 .wrong-time-alert{
     top: -3rem;
     font-size: 1.8rem;
-
 }
 
 }

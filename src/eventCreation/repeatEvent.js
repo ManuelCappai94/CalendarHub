@@ -190,7 +190,6 @@ export function initRepeatEvents(){
     
     modeBtn.addEventListener("click", ()=>{
         modeList.classList.toggle("show-mode-list")
-        console.log(repeatEventsDraft)
     })
 
     handleListSelection(
@@ -199,8 +198,6 @@ export function initRepeatEvents(){
          (li) =>{
             repeatUiState = li.dataset.repeatType
             const date = unitlDateDefault("normal")
-            // temporanyStorageForCustomDates = [...repeatEventsDraft.customDates]
-            // console.log(temporanyStorageForCustomDates)
             initRepeatDraft(repeatUiState, date)
             intervalInput.value = repeatEventsDraft.interval
             modeBtn.innerText = li.innerText
@@ -219,7 +216,6 @@ export function initRepeatEvents(){
 
         updateRepeatDraft("interval", newValue)
         updateIntervaltext(repeatUiState, repeatEventsDraft.interval)
-        console.log(repeatUiState)
     })
 
     dayOfWeekList.addEventListener("click", (e)=>{
@@ -231,15 +227,12 @@ export function initRepeatEvents(){
         if(selectedDays.includes(dayIndex))return
         selectedDays.push(dayIndex)
         selectedDays.sort((a, b) => a - b)
-        console.log(selectedDays)
        } else {
         if(selectedDays.includes(dayIndex)){
            selectedDays = selectedDays.filter(day => day !== dayIndex)
-            console.log(selectedDays)
         }
        }
       updateRepeatDraft("weekdays", selectedDays)
-      console.log(repeatEventsDraft)
     })
     untilMiniCalendarBtn.addEventListener("click", ()=>{
         if(editMode){

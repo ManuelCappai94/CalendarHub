@@ -48,9 +48,8 @@ import {
     smallMessage,
     iconBtn,
     iconsList
-    
-
 } from "../utils/helpers/dom/eventModalDom.js"
+
 import {repeatContainer as repeatModal, repeatOverlay} from "../utils/helpers/dom/repeatModalDom.js"
 
 
@@ -119,7 +118,6 @@ export const getData = (e)=>{
     }    
 }
 
-//da spostare initEventDraft e cleanEventDraft in EventDraft.js
 
 function classRemovalHelper(sections){
     sections.forEach(item =>{
@@ -254,7 +252,6 @@ export function preCompilerEdit(event, mode){
     setTimeUIAndDraft(timeDraft, "to", event.to )
 
     notificationBtn.innerText = event.notification
-    console.log(eventDraft, editingEventId)
 }
 
 function updateTimeInput(part, value){
@@ -370,7 +367,6 @@ export function saveEvent(){
           id: crypto.randomUUID(),
           ...eventDraft
         }
-        // console.log(updatedEvents, newEvent)
         updatedEvents.push(newEvent)
         saveEventsInLocalStorage(updatedEvents)
          createMessage("l'occorrenza è stata modificata!", modalEvents, document.body)

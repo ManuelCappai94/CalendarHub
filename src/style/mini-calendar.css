@@ -5,14 +5,11 @@
     top: "";
     left: "";
     width: 10rem ;
-    /* height: 40px; */
     background: var(--background);
     border: 3px solid black;
     border-radius: 10px;
     box-shadow: var(--strong-shadow);
     color: var(--textModal);
-    /* backdrop-filter: blur(5px);  */
-
 }
 .mini-calendar-layer{
     position: fixed;
@@ -102,9 +99,6 @@
     grid-template-columns: repeat(7, 1fr);
    
 }
-.mini-box-grid{
-    
-}
 
 .mini-inside-box{
    border: none;
@@ -177,9 +171,6 @@
     background-color: var(--textModal);
     color: var(--background);
     border-radius: 10px;
-}
-.mini-fist-row-month{
-
 }
 .mini-todo-container-month{
     display: none;
