@@ -1,4 +1,5 @@
 import { tutorialSlides } from "./utils/data/tutorialData.js";
+import createElement from "./utils/helpers/createElement.js"
 
 const TUTORIAL_KEY = "calendar_tutorial_seen"
 let currentSlide = 0;
@@ -9,22 +10,40 @@ function createTutorialOverlay(){
     overlay.classList.add("tutorial-overlay")
 
     overlay.innerHTML = `
-    <div class="tutorial-modal">
-      <button type="button" class="tutorial-close">×</button>
-      <div class="tutorial-content">
-        <div class="tutorial-image-wrapper">
-          <img class="tutorial-image" src="" alt="tutorial slide">
-        </div>
-        <div class="tutorial-text">
-          <h2 class="tutorial-title"></h2>
-          <p class="tutorial-description"></p>
-        </div>
+    <article
+     class="tutorial-modal"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="tutorial-title"
+     >
+      <button
+       type="button"
+        class="tutorial-close"
+         aria-label="Chiudi tutorial"
+         >×</button>
+      <div class="tutorial-container">
+        <nav class="tutorial-navigation" aria-label="Sezioni tutorial">
+        
+        </nav>
+        <section class="main-tutorial" aria-labelledby="tutorial-title">
+          <div class="tutorial-content">
+            <div class="tutorial-image-wrapper">
+              <img class="tutorial-image" src="" alt="tutorial slide">
+            </div>
+
+            <div class="tutorial-text">
+              <h2 id="tutorial-title" class="tutorial-title"></h2>
+              <p class="tutorial-description"></p>
+            </div>
+
+          </div>
+          <div class="tutorial-actions">
+            <button type="button" class="tutorial-prev">Indietro</button>
+            <button type="button" class="tutorial-next">Avanti</button>
+          </div>
+        </section>
       </div>
-      <div class="tutorial-actions">
-        <button type="button" class="tutorial-prev">Indietro</button>
-        <button type="button" class="tutorial-next">Avanti</button>
-      </div>
-    </div>
+    </article>
     `;
     document.body.appendChild(overlay)
     tutorialOverlay = overlay;
@@ -32,7 +51,20 @@ function createTutorialOverlay(){
   overlay.querySelector(".tutorial-close").addEventListener("click", finishTutorial);
   overlay.querySelector(".tutorial-prev").addEventListener("click", prevSlide);
   overlay.querySelector(".tutorial-next").addEventListener("click", nextSlide);
+  overlay.querySelector(".tutorial-navigation").addEventListener("click", goToChapter)
 
+}
+function renderNavTutorial(){
+ const nav = document.querySelector(".tutorial-navigation")
+  nav.innerHTML = "";
+  const getChapters = Array.from(
+    new Set(
+      tutorialSlides.map(item => item.chapter)
+    )
+  )
+  getChapters.forEach(chapter =>{
+    createElement(nav, "tutorial-navigation-btns", chapter, "button", { attributes : {type : "button"}, dataset: { chapter }} )
+  })
 }
 
 function renderTutorial(index){
@@ -58,6 +90,8 @@ export function openTutorial(){
     }
     tutorialOverlay.classList.add("show")
     renderTutorial(currentSlide)
+    renderNavTutorial()
+    highLightCurrentChapter()
 }
 function nextSlide(){
     if(currentSlide >= tutorialSlides.length - 1){
@@ -66,17 +100,43 @@ function nextSlide(){
     }
     currentSlide++;
     renderTutorial(currentSlide)
+    highLightCurrentChapter()
 }
 
 function prevSlide(){
     if(currentSlide === 0) return;
     currentSlide--;
     renderTutorial(currentSlide)
+    highLightCurrentChapter()
 }
 
 function closeTutorial(){
     if(!tutorialOverlay)return;
     tutorialOverlay.classList.remove("show")
+}
+function goToChapter(e){
+  const btn = e.target.closest(".tutorial-navigation-btns")
+  if(btn){
+    const currentChapter = tutorialSlides.findIndex( item => item.chapter === btn.dataset.chapter)
+    if(currentChapter === -1)return
+    currentSlide = currentChapter
+    renderTutorial(currentSlide)
+     highLightCurrentChapter()
+  }
+}
+function highLightCurrentChapter(){
+  const btns = tutorialOverlay.querySelectorAll(".tutorial-navigation-btns")
+  const current = tutorialSlides[currentSlide]
+  btns.forEach(btn => {
+    if(btn.classList.contains("active-chapter")){
+      btn.classList.remove("active-chapter")
+      btn.removeAttribute("aria-current")
+    }
+    if(btn.dataset.chapter === current.chapter){
+      btn.classList.add("active-chapter")
+      btn.setAttribute("aria-current", "true")
+    }
+  })
 }
 
 function finishTutorial() {

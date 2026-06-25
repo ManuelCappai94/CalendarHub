@@ -112,18 +112,48 @@ export const tutorialSlides = [
 
   // ---------------- TODO ----------------
 
-  {
+{
     chapter: "ToDo List",
     image: "./images/tutorial/slide-16.png",
-    title: "ToDo List",
-    text: "🚧 Work in progress! Questa sezione sarà disponibile in un prossimo aggiornamento e permetterà di gestire attività e promemoria."
+    title: "Aprire la ToDo List",
+    text: "Premi il pulsante dedicato nella barra superiore per aprire il pannello della ToDo List. All’interno del pannello, premi “New” per iniziare a creare una nuova lista di attività. Premi il pulsante a croce per chiudere il pannello."
+  },
+  {
+    chapter: "ToDo List",
+    image: "./images/tutorial/slide-17.png",
+    title: "Creare una nuova lista",
+    text: "Inserisci un titolo per creare una ToDo List collegata alla data attualmente selezionata nel calendario. Una volta inserito il titolo, la lista verrà salvata automaticamente. Puoi eliminarla in qualsiasi momento usando il pulsante a forma di cestino accanto al titolo."
+  },
+  {
+    chapter: "ToDo List",
+    image: "./images/tutorial/slide-18.png",
+    title: "Aggiungere attività",
+    text: "Per aggiungere una nuova attività, scrivi il contenuto nel campo “Nuova attività” e premi il pulsante accanto alla casella di testo. Puoi aggiungere tutte le attività che vuoi alla lista corrente."
+  },
+  {
+    chapter: "ToDo List",
+    image: "./images/tutorial/slide-19.png",
+    title: "Gestire le attività",
+    text: "Ogni attività può essere marcata come completata o riportata come non completata. Puoi anche eliminarla usando il pulsante dedicato accanto all’attività. Il contatore della lista si aggiornerà automaticamente."
+  },
+  {
+    chapter: "ToDo List",
+    image: "./images/tutorial/slide-20.png",
+    title: "Indicatori nel calendario",
+    text: "Quando crei una ToDo List, CalendarHub mostra un’icona nel calendario per indicare che in quella giornata sono presenti una o più liste. L’indicatore è visibile nella vista mensile, settimanale e giornaliera."
+  },
+  {
+    chapter: "ToDo List",
+    image: "./images/tutorial/slide-21.png",
+    title: "Riaprire una lista salvata",
+    text: "Premendo sull’icona della ToDo List si apre un menu con le liste presenti per quella giornata. Cliccando su una lista salvata, potrai riaprirla, modificarla, completare attività, eliminarle o cancellare l’intera lista."
   },
 
   // ---------------- FINE ----------------
 
   {
     chapter: "Fine",
-    image: "./images/tutorial/slide-17.png",
+    image: "./images/tutorial/slide-22.png",
     title: "Fine del tutorial",
     text: "Hai completato la guida! 🎉 Ora sei pronto per usare CalendarHub ed esplorare tutte le funzionalità disponibili. Per rivedere il tutorial premi il pulsante dedicato in alto!"
   }

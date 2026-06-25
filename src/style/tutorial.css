@@ -1,88 +1,285 @@
-.tutorial-overlay{
+.tutorial-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(4px);
   display: none;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   z-index: 9999;
+  padding: 0.75rem;
 }
 
-.tutorial-overlay.show{
+.tutorial-overlay.show {
   display: flex;
 }
-.tutorial-close{
-  position: sticky;
-  left: 90%;
-  margin-bottom: 1rem;
-  border-radius: 20px;
+
+.tutorial-modal {
+  width: 100%;
+  max-height: 92dvh;
+  background: var(--textModal);
+  border-radius: 14px;
+  padding: 1rem;
+  position: relative;
+  overflow: auto;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.tutorial-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid black;
+  border-radius: 50%;
+  background: var(--textModal);
   font-weight: bold;
   font-size: 1rem;
-}
-.tutorial-modal{
-  width: min(900px, 90vw);
-  background: var(--textModal);
-  border-radius: 16px;
-  padding: 20px;
-  position: relative;
-  
+  box-shadow: var(--light-shadow);
+  cursor: pointer;
+  z-index: 2;
 }
 
-.tutorial-content{
-  
-  gap: 20px;
-}
-
-.tutorial-image-wrapper{
+.tutorial-container {
   display: flex;
-  
-  flex: 1;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: unset;
+  padding-top: 2.2rem;
+}
+
+.tutorial-navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow-x: auto;
+  gap: 0.5rem;
+  border: 2px solid black;
+  padding: 0.55rem;
+  background-color: var(--lighter);
+  border-radius: 10px;
+}
+
+.tutorial-navigation-btns,
+.tutorial-prev,
+.tutorial-next {
+  border: 2px solid black;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  background-color: #fff8e8;
+  padding: 0.35rem 0.5rem;
+  box-shadow: -1px 2px 3px 1px rgba(0, 0, 0, 0.55);
+  cursor: pointer;
+}
+
+.tutorial-navigation-btns {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: 0.72rem;
+  padding: 0.35rem 0.55rem;
+}
+
+.tutorial-navigation-btns:hover,
+.tutorial-navigation-btns:focus-visible,
+.tutorial-prev:hover,
+.tutorial-prev:focus-visible,
+.tutorial-next:hover,
+.tutorial-next:focus-visible {
+  transform: translateY(-1px);
+  outline: 2px solid black;
+  outline-offset: 2px;
+}
+
+.tutorial-navigation-btns.active-chapter {
+  background: #f6d77a;
+  font-weight: bold;
+  transform: scale(1.04);
+}
+
+.main-tutorial {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.tutorial-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: unset;
+}
+
+.tutorial-image-wrapper {
+  display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.tutorial-image{
   width: 100%;
-  /* display: block; */
+  min-height: 220px;
+  max-height: 300px;
+}
+
+.tutorial-image {
+  width: 100%;
+  max-height: 200px;
   border-radius: 12px;
-  height: auto;
   object-fit: contain;
+  display: block;
 }
 
-.tutorial-text{
-  flex: 1;
+.tutorial-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: none;
 }
 
-.tutorial-text h2, .tutorial-text p {
-
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+.tutorial-text h2,
+.tutorial-text p {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
-.tutorial-actions{
+.tutorial-text h2 {
+  font-size: 1.55rem;
+  line-height: 1.08;
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.tutorial-text p {
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.tutorial-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-@media screen and (min-width: 992px) {
-.tutorial-modal{
-    min-height: 400px;
-}
-.tutorial-content{
-    display: flex;
+/* Tablet */
+@media screen and (min-width: 601px) {
+  .tutorial-overlay {
     align-items: center;
-    justify-content: center;
-    min-height: 380px;
-}
-.tutorial-text{
+    padding: 1rem;
+  }
+
+  .tutorial-modal {
+    width: min(760px, 94vw);
+    max-height: 90dvh;
+    border-radius: 18px;
+    padding: 1.2rem;
+  }
+
+  .tutorial-close {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .tutorial-container {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 1rem;
+    min-height: unset;
+    padding-top: 2rem;
+  }
+
+  .tutorial-navigation {
+    flex-direction: column;
+    justify-content: space-around;
+    overflow-x: visible;
+    gap: 0.75rem;
+    padding: 0.6rem;
+    border-radius: 12px;
+  }
+
+  .tutorial-navigation-btns {
+    flex: initial;
+    white-space: normal;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.5rem;
+  }
+
+  .tutorial-content {
     display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+    flex-direction: column;
+    gap: 1rem;
+    min-height: unset;
+  }
+
+  .tutorial-image-wrapper {
+    width: auto;
+    min-height: initial;
+    max-height: none;
+  }
+
+  .tutorial-image {
+    max-height: 260px;
+  }
+
+  .tutorial-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 48ch;
+  }
+
+  .tutorial-text h2 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    line-height: 1.05;
+    margin-top: 0.4rem;
+  }
+
+  .tutorial-text p {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.35;
+  }
+
+  .tutorial-actions {
+    margin-top: 1.2rem;
+  }
 }
-.tutorial-text h2{
-    font-size: 2rem;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
-}
+
+/* Desktop */
+@media screen and (min-width: 992px) {
+  .tutorial-modal {
+    width: min(960px, 94vw);
+    padding: 1.4rem;
+  }
+
+  .tutorial-container {
+    grid-template-columns: 120px 1fr;
+    gap: 1.5rem;
+    min-height: 430px;
+  }
+
+  .tutorial-content {
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(260px, 0.9fr);
+    gap: 1.5rem;
+    align-items: center;
+    min-height: 360px;
+  }
+
+  .tutorial-image {
+    max-height: 340px;
+  }
+
+  .tutorial-text {
+    display: block;
+    max-width: 38ch;
+  }
+
+  .tutorial-text h2 {
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+    line-height: 1.05;
+    margin-top: revert;
+  }
+
+  .tutorial-text p {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    line-height: 1.35;
+  }
 }
