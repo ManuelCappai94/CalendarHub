@@ -17,8 +17,8 @@ import {
         displayOverlayMonth, 
         resetBtn as reset,
         newTodoBtn,
-        tutorialBtn
-
+        tutorialBtn,
+        currentYearDisplay
 } from "./utils/helpers/dom/mainCalendarDom.js"
 
 let currentState = 0;
@@ -45,6 +45,7 @@ function bindNavEvents(){
         allOverlays.forEach(overlay => {
         overlay.addEventListener("click", ()=>openMiniCalendar("normal"))
         })
+        currentYearDisplay.addEventListener("click", (e)=> openMiniCalendar("normal", null, "normal", e.currentTarget))
         monthBtn.addEventListener("click", () => {
          switchView(0)
         })

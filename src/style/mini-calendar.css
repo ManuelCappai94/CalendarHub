@@ -129,7 +129,7 @@
     display: none;
     position: absolute;
     top: 10%;
-
+    width: 5.5rem;
     max-height: 100px;
     overflow-y: auto;
     background:var(--darker);
@@ -137,19 +137,19 @@
     z-index: 10;
 }
 .month-lists{
-    left: -100%;
-    width: 100%;
+    left: -5.5rem;
+  
 }
 .year-lists{
     left: 100%;
-    width: 100%;
+   
 }
 
 .show-carousel{
     display: block;
 }
 .mini-month-item, .mini-year-item {
-    padding: 4px 8px;
+    padding: 4px 4px;
     cursor: pointer;
     color: var(--textModal);
 }
@@ -174,4 +174,21 @@
 }
 .mini-todo-container-month{
     display: none;
+}
+@media screen and (min-width:992px) {
+.month-lists, .year-lists{
+    width: 8rem;
+}
+.month-lists{
+    left: -8rem;
+  
+}
+.year-lists{
+    left: 100%;
+   
+}
+
+    .mini-month-item, .mini-year-item {
+    padding: 4px 8px;
+}
 }

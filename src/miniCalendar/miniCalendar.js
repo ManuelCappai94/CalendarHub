@@ -34,7 +34,7 @@ let miniCalendarCommitTarget = "normal";
     dayInput.value = miniLocalDate.format("DD");
 }
 
-export function openMiniCalendar(type, date, commitTarget = type) {
+export function openMiniCalendar(type, date, commitTarget = type, anchorElement = null) {
     let display, top, left;
     miniCalendarCommitTarget = commitTarget;
 
@@ -45,14 +45,21 @@ export function openMiniCalendar(type, date, commitTarget = type) {
       
         createMiniCalendar(miniLocalDate);
         showModal.classList.add("show-mini-calendar");
-        displayOverlays.forEach(item => {
-           display = item.closest(".show-display")
-           if(!display)return
 
-           const displayRect = display.getBoundingClientRect()
-           top = displayRect.top
-           left = displayRect.left + 150
-        })  
+      if (anchorElement) {
+            const rect = anchorElement.getBoundingClientRect();
+            top = rect.top;
+            left = rect.left - 120;
+        } else {
+            displayOverlays.forEach(item => {
+                const display = item.closest(".show-display");
+                if (!display) return;
+
+                const displayRect = display.getBoundingClientRect();
+                top = displayRect.top;
+                left = displayRect.left + 80 ;
+            });
+        }
     }
     if(type === "event"){
         miniLocalDate = dayjs(date);
@@ -62,7 +69,7 @@ export function openMiniCalendar(type, date, commitTarget = type) {
 
         const eventDateDivRect =  eventDateDiv.getBoundingClientRect()
         top = eventDateDivRect.top - miniCalendar.clientHeight/2
-        left = eventDateDivRect.left + 100
+        left = eventDateDivRect.left + 80
     }
      calendarContainer.style.top = `${top}px`
      calendarContainer.style.left = `${left}px`
@@ -181,6 +188,7 @@ function createMiniCalendar(newDate){
 
     initMonthList(monthBtn, monthList, onDatePartSelect, newDate.month())
     initYearList(yearBtn, yearList,onDatePartSelect,  newDate.year())
+    
 
     const gridCalendar = createElement(div, "mini-grid", null, "div")
     const actionsCont = createElement(div, "mini-actions",  null, "div")
