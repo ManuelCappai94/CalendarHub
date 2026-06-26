@@ -2,7 +2,7 @@ import { formatDate } from "./eventsUI.js"
 import { createMessage } from "../helpers/createElement.js"
 import { updateRepeatDraft } from "./repeatEventsDraft.js"
 import dateValidator from "../helpers/dateValidator.js"
-
+import dayjs from "../../day.js"
 import { header } from "../helpers/dom/eventModalDom.js"
 import { repeatContainer, intervalText, untilContainer, untilText } from "../helpers/dom/repeatModalDom.js"
 

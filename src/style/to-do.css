@@ -13,7 +13,7 @@
     z-index: 400;
     top: 10%;
     border-radius: 20px;
-    background-image: url("../../images/righe.png");
+    background-image: url("/images/righe.png");
     background-size: 20rem;
     opacity: 0.95;
     border: 2px solid black;

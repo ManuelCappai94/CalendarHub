@@ -78,6 +78,22 @@ The project is designed as a long-term architecture-focused application rather t
 
 ## 🚀 Current Version
 
+### v0.9.1 – Dependency setup refactor and info banner fix
+
+Version 0.9.1 improves the internal project setup and fixes a contextual UI positioning issue.
+
+Main changes:
+
+* Migrated Day.js from local browser scripts to npm package imports
+* Added Vite as development and build tool
+* Added npm project setup with package.json and package-lock.json
+* Added .gitignore for dependencies and build output
+* Removed the old local Day.js library files
+* Fixed an info banner positioning issue when opening contextual event details near the bottom of the viewport
+* Improved floating UI measurement timing by recalculating the banner position after the browser layout update
+
+CalendarHub remains a vanilla JavaScript application. Vite is used only as a development and build tool.
+
 ### v0.9 – ToDo List, tutorial navigation and UI refinement
 
 Version 0.9 expands CalendarHub with a complete date-based ToDo List system and improves several parts of the user experience.
@@ -176,19 +192,19 @@ Version 0.9 improves the tutorial with:
 
 ### 📅 Month View
 
-![Month View](./images/screenshots/month.jpeg)
+![Month View](./public/images/screenshots/month.jpeg)
 
 ### 📆 Week View
 
-![Week View](./images/screenshots/week+events.png)
+![Week View](./public/images/screenshots/week+events.png)
 
 ### 📆 Daily View + Event System
 
-![Daily View](./images/screenshots/modal+daily.png)
+![Daily View](./public/images/screenshots/modal+daily.png)
 
 ### 📌 Contextual Info Banner
 
-![Contextual Info Banner](./images/screenshots/contextual_info_banner.png)
+![Contextual Info Banner](./public/images/screenshots/contextual_info_banner.png)
 
 ---
 
@@ -200,7 +216,36 @@ Version 0.9 improves the tutorial with:
 * CSS Grid
 * Flexbox
 * Day.js
+* npm
+* Vite
 * localStorage
+
+---
+
+## 🛠️ Installation & Local Development
+
+Clone the repository:
+
+git clone https://github.com/ManuelCappai94/CalendarHub.git
+cd CalendarHub
+
+- Install dependencies:
+
+- npm install
+
+- Start the development server:
+
+- npm run dev
+
+- Build the project for production:
+
+- npm run build
+
+- Preview the production build locally:
+
+- npm run preview
+
+The project uses npm for dependency management and Vite as a development/build tool. The final production build remains a static web application.
 
 ---
 

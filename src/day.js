@@ -1,12 +1,22 @@
-dayjs.extend(window.dayjs_plugin_customParseFormat);
-dayjs.extend(window.dayjs_plugin_isoWeek)
-dayjs.extend(window.dayjs_plugin_weekday)
-dayjs.extend(window.dayjs_plugin_dayOfYear)
-dayjs.extend(window.dayjs_plugin_localeData)
-dayjs.extend(window.dayjs_plugin_isSameOrBefore)
+import dayjs from "dayjs";
 
-dayjs.locale("it-ch")
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import isoWeek from "dayjs/plugin/isoWeek";
+import weekday from "dayjs/plugin/weekday";
+import dayOfYear from "dayjs/plugin/dayOfYear";
+import localeData from "dayjs/plugin/localeData";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 
+import "dayjs/locale/it-ch";
 
-export default dayjs; 
+dayjs.extend(customParseFormat);
+dayjs.extend(isoWeek);
+dayjs.extend(weekday);
+dayjs.extend(dayOfYear);
+dayjs.extend(localeData);
+dayjs.extend(isSameOrBefore);
+
+dayjs.locale("it-ch");
+
+export default dayjs;
 

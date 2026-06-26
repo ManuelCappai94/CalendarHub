@@ -92,6 +92,7 @@
 
 .display-overlay.month{
     transform: translateX(0.5rem);
+    
 }
 
 
@@ -100,6 +101,7 @@
     background: transparent;
     border: none;
     text-transform: capitalize; /*solo prima lettera maiusocla*/
+    width: 9rem;
 }
 
 

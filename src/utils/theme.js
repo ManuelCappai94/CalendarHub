@@ -1,12 +1,17 @@
 import dayjs from "../day.js"
 import { prevThemeImage as prev, nextThemeImage as next} from "./helpers/dom/mainCalendarDom.js"
 
+const backgroundImage = (fileName) => {
+  return `${import.meta.env.BASE_URL}images/background/${fileName}`;
+};
+
 const seasonalBackgrounds = {
-  spring: "./images/background/primavera.png",
-  summer: "./images/background/estate.png",
-  autumn: "./images/background/autunno.png",
-  winter: "./images/background/inverno.png"
-}
+  spring: backgroundImage("primavera.png"),
+  summer: backgroundImage("estate.png"),
+  autumn: backgroundImage("autunno.png"),
+  winter: backgroundImage("inverno.png")
+};
+
 export function preloadSeasonlBackgrounds (){
     Object.values(seasonalBackgrounds).forEach((src)=> {
         const img = new Image()

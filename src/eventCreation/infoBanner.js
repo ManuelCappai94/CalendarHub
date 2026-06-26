@@ -49,15 +49,17 @@
       "div"
     )
     const close = createElement(optionsBanner, "close-banner", "x", "button")
+    const infoWrapper = createElement(optionsBanner, "info-wrapper", null, "div")
+
     const infoSection = createElement(
-      optionsBanner,
+      infoWrapper,
       "info-section",
       null,
       "section",
       {html:true}
     )
     const optionsSection = createElement(
-      optionsBanner, 
+      infoWrapper, 
       "options-section",
       null,
       "section",
@@ -139,8 +141,11 @@ function getOptionButtons(isRepeatedEvent){
     banner.classList.add(`event-${selectedEvent.color}`)
     modalLayer.classList.add("show-mini-calendar-layer");
     banner.classList.add("show-option-banner")
-
-    getFloatingPosition(banner, target, isDailyview)
+    // aggiunto per compensare il calcolo iniziale dell'altezza dell'info banner che al primo click non è ancora stato calcolato
+    requestAnimationFrame(()=>{
+      getFloatingPosition(banner, target, isDailyview)
+    })
+    
     getOptionButtons(isRepeatedEvent)
 
     colorClass = selectedEvent.color

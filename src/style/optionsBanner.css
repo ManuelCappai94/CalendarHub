@@ -1,19 +1,24 @@
 /*usiamo modal overlay da modalEvent*/
 .option-banner-container {
-  /* min-width: 15rem;
-  max-width: 20rem; */
  width: 90dvw;
- /* min-height: 8rem; */
+  min-height: 8rem;
   height: fit-content;
+  overflow-y: auto;
   z-index: 1001;
-  /* background-color: var(--navBar); */
   position: fixed;
   display: none;
   border: 3px solid black;
   border-radius: 10px;
   padding: 0.2rem;
+  box-sizing: border-box;
 }
 /*con currentColor ripesco il colore passato al banner tramite variabile*/
+.info-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 9rem;
+}
 .info-title{
 display: flex;
 align-items: center;
@@ -73,5 +78,7 @@ font-weight: bold;
 @media screen and (min-width:992px) {
   .option-banner-container{
     width: 20rem;
+    min-height: 8rem;
+  
   }
 }
