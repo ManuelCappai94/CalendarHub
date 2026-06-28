@@ -53,10 +53,11 @@ import {
         const sunday = this.date.weekday(6).format("DD MMMM");
         const showDailyDate = this.date.format("DD MMMM");
         const year = this.date.year();
-        currentMonthDisplay.innerHTML=`${displayMonth}`; 
-        currentWeekDisplay.innerText =`${monday} - ${sunday}`
-        currentDailyDisplay.innerHTML=`${showDailyDate}`
-        currentYearDisplay.innerHTML= `${year}`;
+        
+        currentMonthDisplay.textContent = displayMonth;
+        currentWeekDisplay.textContent = `${monday} - ${sunday}`;
+        currentDailyDisplay.textContent = showDailyDate;
+        currentYearDisplay.textContent = year;
     }
 //questo metodo wrappa tutte le funzioni
     syncAll(e){
